@@ -1,0 +1,3098 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="zEPsmCiUMYzW5KVXAxVHyi">
+<head data-page-node-id="SadBkLREcefMwPCqZNoA1T">
+<meta charset="UTF-8" data-page-node-id="9ShFKmBZBTocPFmtAbzRRC">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="7Ey2vTcEowX9HWHBnMqgrK">
+<title>求职投递管理</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2NCA2NCc+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9J2JnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+CjxzdG9wIG9mZnNldD0nMCcgc3RvcC1jb2xvcj0nIzNiODJmNicvPgo8c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyM2MzY2ZjEnLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSdjYXNlJyB4MT0nMCcgeTE9JzAnIHgyPScwJyB5Mj0nMSc+CjxzdG9wIG9mZnNldD0nMCcgc3RvcC1jb2xvcj0nI2ZmZmZmZicvPgo8c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyNkYmVhZmUnLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSdzaGluZScgeDE9JzAnIHkxPScwJyB4Mj0nMCcgeTI9JzEnPgo8c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmZmZmYnIHN0b3Atb3BhY2l0eT0nMC41NScvPgo8c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyNmZmZmZmYnIHN0b3Atb3BhY2l0eT0nMCcvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHdpZHRoPSc2NCcgaGVpZ2h0PSc2NCcgcng9JzE0JyBmaWxsPSd1cmwoI2JnKScvPgo8cGF0aCBkPSdNMjYgMjN2LTZoNGE0IDQgMCAwMTQtNGg0YTQgNCAwIDAxNCA0djYnIGZpbGw9J25vbmUnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLXdpZHRoPSczLjUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPgo8cmVjdCB4PScxMScgeT0nMjInIHdpZHRoPSc0MicgaGVpZ2h0PSczMScgcng9JzUnIGZpbGw9J3VybChjYXNlKScvPgo8cmVjdCB4PScxMScgeT0nMjInIHdpZHRoPSc0MicgaGVpZ2h0PScxNCcgcng9JzUnIGZpbGw9J3VybChzaGluZSknLz4KPHJlY3QgeD0nMTEnIHk9JzMyJyB3aWR0aD0nNDInIGhlaWdodD0nMicgZmlsbD0nIzY0NzQ4Yicgb3BhY2l0eT0nMC4yNScvPgo8Y2lyY2xlIGN4PSczMicgY3k9JzM4JyByPScxLjUnIGZpbGw9JyM2NDc0OGInIG9wYWNpdHk9JzAuNCcvPgo8L3N2Zz4=">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2NCA2NCc+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9J2JnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+CjxzdG9wIG9mZnNldD0nMCcgc3RvcC1jb2xvcj0nIzNiODJmNicvPgo8c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyM2MzY2ZjEnLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSdjYXNlJyB4MT0nMCcgeTE9JzAnIHgyPScwJyB5Mj0nMSc+CjxzdG9wIG9mZnNldD0nMCcgc3RvcC1jb2xvcj0nI2ZmZmZmZicvPgo8c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyNkYmVhZmUnLz4KPC9saW5lYXJHcmFkaWVudD4KPGxpbmVhckdyYWRpZW50IGlkPSdzaGluZScgeDE9JzAnIHkxPScwJyB4Mj0nMCcgeTI9JzEnPgo8c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmZmZmYnIHN0b3Atb3BhY2l0eT0nMC41NScvPgo8c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyNmZmZmZmYnIHN0b3Atb3BhY2l0eT0nMCcvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHdpZHRoPSc2NCcgaGVpZ2h0PSc2NCcgcng9JzE0JyBmaWxsPSd1cmwoI2JnKScvPgo8cGF0aCBkPSdNMjYgMjN2LTZoNGE0IDQgMCAwMTQtNGg0YTQgNCAwIDAxNCA0djYnIGZpbGw9J25vbmUnIHN0cm9rZT0nI2ZmZmZmZicgc3Ryb2tlLXdpZHRoPSczLjUnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcvPgo8cmVjdCB4PScxMScgeT0nMjInIHdpZHRoPSc0MicgaGVpZ2h0PSczMScgcng9JzUnIGZpbGw9J3VybChjYXNlKScvPgo8cmVjdCB4PScxMScgeT0nMjInIHdpZHRoPSc0MicgaGVpZ2h0PScxNCcgcng9JzUnIGZpbGw9J3VybChzaGluZSknLz4KPHJlY3QgeD0nMTEnIHk9JzMyJyB3aWR0aD0nNDInIGhlaWdodD0nMicgZmlsbD0nIzY0NzQ4Yicgb3BhY2l0eT0nMC4yNScvPgo8Y2lyY2xlIGN4PSczMicgY3k9JzM4JyByPScxLjUnIGZpbGw9JyM2NDc0OGInIG9wYWNpdHk9JzAuNCcvPgo8L3N2Zz4=">
+<link rel="mask-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2NCA2NCc+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9J2JnJyB4MT0nMCcgeTE9JzAnIHgyPScxJyB5Mj0nMSc+CjxzdG9wIG9mZnNldD0nMCcgc3RvcC1jb2xvcj0nIzNiODJmNicvPgo8c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9JyM2MzY2ZjEnLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8cmVjdCB3aWR0aD0nNjQnIGhlaWdodD0nNjQnIHJ4PScxNCcgZmlsbD0ndXJsKCNiZyknLz4KPHBhdGggZD0nTTI2IDIzdi02YTQgNCAwIDAxNC00aDRhNCA0IDAgMDE0IDR2NicgZmlsbD0nbm9uZScgc3Ryb2tlPScjZmZmZmZmJyBzdHJva2Utd2lkdGg9JzMuNScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJy8+CjxyZWN0IHg9JzExJyB5PScyMicgd2lkdGg9JzQyJyBoZWlnaHQ9JzMxJyByeD0nNScgZmlsbD0nI2ZmZmZmZicvPgo8cmVjdCB4PScxMScgeT0nMzInIHdpZHRoPSc0MicgaGVpZ2h0PScyJyBmaWxsPScjNjQ3NDhiJyBvcGFjaXR5PScwLjI1Jy8+Cjwvc3ZnPg==" color="#3b82f6">
+<style data-page-node-id="C9BNo1KqiMzifRyWi5lRkU">
+/* =========================================================
+   全局样式与变量
+   ========================================================= */
+:root{
+  --primary:#3b82f6;        /* 主色调：蓝色 */
+  --primary-dark:#2563eb;
+  --primary-soft:rgba(59,130,246,.18);  /* 选中态浅蓝光环 */
+  --bg:#f5f7fa;             /* 页面背景色 */
+  --card:#ffffff;
+  --text:#1f2937;
+  --text-light:#6b7280;
+  --border:#e5e7eb;
+  --danger:#ef4444;
+  --success:#22c55e;
+  --warning:#f97316;
+  --radius:12px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 30px rgba(30,58,138,.10),0 3px 10px rgba(0,0,0,.06);
+  --gradient:linear-gradient(135deg,#3b82f6 0%,#6366f1 100%);
+  --gradient-bar:linear-gradient(90deg,#3b82f6,#6366f1);
+  --track-bg:#eef2f7;       /* 条形 / 进度轨道底色 */
+  /* 主题扩展变量：表面色、悬停、标签、图表等，暗色模式下统一覆盖 */
+  --surface:#ffffff;       /* 弹窗 / 头部 / 次要按钮等表面 */
+  --hover:#f1f5f9;         /* 悬停底色 */
+  --tag-bg:#eff6ff; --tag-color:#2563eb;
+  --chip-bg:#f8fafc;       /* 联系记录底色 */
+  --cal-other:#fafbfc;     /* 非本月日历格 */
+  --tab-active-bg:#eff6ff;
+  --danger-ghost-bg:#fef2f2;
+  --canvas-grid:#e5e7eb; --canvas-text:#9ca3af; --canvas-line:#3b82f6;
+  --chart-center:#1f2937;
+}
+/* =========================================================
+   暗色主题：[data-theme="dark"] 覆盖变量
+   ========================================================= */
+[data-theme="dark"]{
+  --primary:#60a5fa; --primary-dark:#3b82f6; --primary-soft:rgba(96,165,250,.22);
+  --bg:#0f172a; --surface:#1e293b; --card:#1e293b;
+  --text:#e2e8f0; --text-light:#94a3b8; --border:#334155;
+  --hover:#334155; --tag-bg:#1e3a5f; --tag-color:#93c5fd;
+  --chip-bg:#172033; --cal-other:#172033;
+  --tab-active-bg:#1e3a5f;
+  --danger-ghost-bg:#3f1d1d;
+  --shadow:0 1px 3px rgba(0,0,0,.35),0 4px 14px rgba(0,0,0,.45);
+  --shadow-lg:0 12px 34px rgba(0,0,0,.5);
+  --gradient:linear-gradient(135deg,#60a5fa 0%,#818cf8 100%);
+  --gradient-bar:linear-gradient(90deg,#60a5fa,#818cf8);
+  --track-bg:#334155;
+  --canvas-grid:#334155; --canvas-text:#94a3b8; --canvas-line:#60a5fa;
+  --chart-center:#e2e8f0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:radial-gradient(900px 520px at 88% -8%,var(--primary-soft),transparent 55%),var(--bg);
+  background-attachment:fixed;
+  color:var(--text);font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:14px;color:var(--text)}
+.hidden{display:none !important}
+.muted-text{color:var(--text-light);font-size:12.5px}
+.warn-text{color:var(--warning);font-size:12.5px}
+.ok-text{color:var(--success);font-size:12.5px}
+
+/* =========================================================
+   顶部导航
+   ========================================================= */
+.app-header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.header-inner{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:800;white-space:nowrap}
+.brand-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:var(--gradient);box-shadow:0 4px 12px rgba(59,130,246,.32);font-size:15px;flex-shrink:0}
+.brand-text{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.3px}
+/* 移动端：Tab 变为可横向滚动的顶部栏 */
+.tabs{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{border:none;background:none;padding:8px 13px;font-size:14px;color:var(--text-light);border-radius:10px;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s}
+.tab-btn:hover{background:var(--hover);color:var(--text)}
+.tab-btn.active{color:#fff;font-weight:600;background:var(--gradient);box-shadow:0 4px 12px rgba(59,130,246,.30)}
+.tab-badge{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;margin-left:4px;border-radius:999px;background:var(--danger);color:#fff;font-size:10px}
+
+main{max-width:1100px;margin:0 auto;padding:16px}
+.tab-panel{animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.app-footer{max-width:1100px;margin:18px auto 30px;padding:0 16px;text-align:center;color:#9ca3af;font-size:12px}
+
+/* =========================================================
+   卡片与按钮
+   ========================================================= */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;transition:box-shadow .2s,border-color .2s}
+.card:hover{box-shadow:var(--shadow-lg);border-color:var(--primary-soft)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;border:none;border-radius:9px;padding:8px 14px;font-size:13.5px;transition:background .15s,opacity .15s,box-shadow .15s,transform .12s,border-color .15s;text-decoration:none}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-primary{background:var(--gradient);color:#fff;box-shadow:0 4px 12px rgba(59,130,246,.25)}
+.btn-primary:hover{filter:brightness(1.06);box-shadow:0 6px 16px rgba(59,130,246,.35);transform:translateY(-1px)}
+.btn-primary:active{transform:translateY(0)}
+.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--hover);border-color:var(--primary);transform:translateY(-1px)}
+.btn-secondary:active{transform:translateY(0)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-danger:hover{background:#dc2626}
+.btn-danger-ghost{background:var(--surface);color:var(--danger);border:1px solid #fecaca}
+.btn-danger-ghost:hover{background:var(--danger-ghost-bg)}
+.btn-ghost{background:transparent;color:var(--text-light)}
+.btn-ghost:hover{background:var(--hover);color:var(--text)}
+.btn-sm{padding:5px 10px;font-size:12.5px;border-radius:7px}
+.btn-link-danger{border:none;background:none;color:var(--danger);font-size:12px;margin-left:auto}
+
+/* =========================================================
+   表单
+   ========================================================= */
+.form-field{margin-bottom:12px}
+.form-field label{display:block;font-size:13px;color:var(--text-light);margin-bottom:4px}
+.req{color:var(--danger)}
+.form-field input,.form-field select,.form-field textarea,.filter-bar input,.filter-bar select{
+  width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--card);outline:none;transition:border-color .15s,box-shadow .15s;
+}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus,.filter-bar input:focus,.filter-bar select:focus{
+  border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,130,246,.12);
+}
+textarea{resize:vertical;min-height:60px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.field-full{grid-column:1/-1}
+.radio-line{display:flex;align-items:center;gap:6px;font-size:13.5px;padding:4px 0;cursor:pointer}
+.radio-line input{width:auto}
+
+/* =========================================================
+   筛选区与列表工具栏
+   ========================================================= */
+.filter-card{padding:12px 14px}
+.filter-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.filter-bar .fld{flex:0 0 auto;min-width:0;width:auto}
+#searchInput{flex:1 1 190px;min-width:150px}
+#filterTag{flex:0 1 130px;min-width:100px}
+.date-range{flex:0 0 auto;display:flex;align-items:center;gap:6px}
+.date-range input{flex:1;min-width:0;width:118px}
+.filter-tools{display:flex;align-items:center;gap:6px;margin-left:auto;flex:0 0 auto}
+.filter-tools .sort{width:auto}
+.list-toolbar{display:flex;justify-content:space-between;align-items:center;margin:14px 0 10px;gap:10px;flex-wrap:wrap}
+#listCount,#resumeCount,#followCount{color:var(--text-light);font-size:13px}
+
+/* =========================================================
+   投递记录卡片
+   ========================================================= */
+.app-card{margin-bottom:12px;transition:box-shadow .2s,transform .2s,border-color .2s}
+.app-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);border-color:var(--primary-soft)}
+.app-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.app-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
+.app-title .company{font-weight:700}
+.sep{color:var(--text-light)}
+.app-actions{display:flex;gap:6px;flex-shrink:0}
+.app-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;color:var(--text-light);font-size:12.5px}
+.app-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:var(--tag-bg);color:var(--tag-color);border-radius:999px;padding:1px 9px;font-size:12px}
+.app-card-bottom{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.app-link{color:var(--primary);text-decoration:none;font-size:12.5px}
+.app-link:hover{text-decoration:underline}
+/* 状态徽章（颜色由内联样式注入） */
+.badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;line-height:1.5}
+.status-badge{cursor:pointer;border:1px solid transparent;font-weight:500}
+.status-badge:hover{filter:brightness(.95)}
+/* 跟进日期高亮：过期红 / 今天橙 / 临近黄 / 正常绿 */
+.fu-chip{font-size:12px;border-radius:6px;padding:2px 8px}
+.fu-chip.fu-overdue{background:#fee2e2;color:#b91c1c;font-weight:600}
+.fu-chip.fu-today{background:#ffedd5;color:#c2410c;font-weight:600}
+.fu-chip.fu-soon{background:#fef3c7;color:#b45309}
+.fu-chip.fu-ok{background:#dcfce7;color:#15803d}
+.empty-card{text-align:center;padding:40px 16px;color:var(--text-light)}
+.empty-card:hover{transform:none;box-shadow:var(--shadow);border-color:var(--border)}
+
+/* =========================================================
+   弹窗（模态框）
+   ========================================================= */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:100}
+.modal{background:var(--surface);border-radius:14px;width:100%;max-width:560px;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:modalIn .18s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.modal-lg{max-width:760px}
+.modal-sm{max-width:420px}
+.modal-header{position:relative;display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
+.modal-header::after{content:'';position:absolute;left:18px;right:18px;bottom:0;height:2px;border-radius:2px;background:var(--gradient-bar);opacity:.85}
+.modal-header h2{font-size:16px}
+.modal-close{border:none;background:none;font-size:16px;color:var(--text-light);padding:4px 8px;border-radius:6px}
+.modal-close:hover{background:var(--hover)}
+.modal-body{padding:16px 18px;overflow-y:auto}
+.modal-footer{display:flex;justify-content:flex-end;gap:10px;padding:12px 18px;border-top:1px solid var(--border)}
+
+/* 联系记录 */
+.contact-section{margin-top:16px;border-top:1px dashed var(--border);padding-top:12px}
+.contact-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.contact-header h3{font-size:14px}
+.contact-item{background:var(--chip-bg);border:1px solid var(--border);border-radius:8px;padding:8px 10px;margin-top:8px}
+.contact-item.small{padding:6px 8px;margin-top:6px}
+.contact-head{display:flex;align-items:center;gap:8px}
+.contact-type{background:#e0f2fe;color:#0369a1;border-radius:6px;padding:0 6px;font-size:12px;flex-shrink:0}
+.contact-content{margin-top:4px;white-space:pre-wrap;word-break:break-all}
+.contact-empty{padding:8px 0}
+
+/* 附件区域 */
+.file-info{font-size:13px;margin-bottom:6px}
+.file-actions{display:flex;gap:8px}
+
+/* 状态选择器 */
+.status-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.status-opt{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:13px}
+.status-opt:hover{border-color:var(--primary)}
+.status-opt.current{outline:2px solid var(--primary)}
+.status-opt .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* =========================================================
+   简历版本库
+   ========================================================= */
+.resume-card{margin-bottom:12px;transition:box-shadow .2s,transform .2s,border-color .2s}
+.resume-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);border-color:var(--primary-soft)}
+.resume-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.resume-name{font-weight:700;font-size:15px}
+.resume-desc{margin-top:6px;color:var(--text-light);font-size:13px}
+
+/* =========================================================
+   跟进提醒
+   ========================================================= */
+.fu-item{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;border-left:4px solid transparent}
+.fu-overdue-item{border-left-color:var(--danger)}
+.fu-today-item{border-left-color:var(--warning)}
+.fu-future-item{border-left-color:var(--success)}
+.fu-title{font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fu-days{font-weight:600}
+.fu-days-overdue{color:var(--danger)}
+.fu-days-today{color:var(--warning)}
+.fu-days-future{color:var(--success)}
+.fu-actions{display:flex;gap:8px;flex-shrink:0}
+
+/* =========================================================
+   面试日历
+   ========================================================= */
+.cal-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.cal-title{font-size:16px;font-weight:700}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+.cal-weekdays span{text-align:center;font-size:12px;color:var(--text-light);padding:4px 0}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-cell{min-height:92px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:4px 5px;overflow:hidden}
+.cal-cell.other-month{background:var(--cal-other);opacity:.55}
+.cal-cell.today{border-color:var(--primary);box-shadow:0 0 0 2px rgba(59,130,246,.15)}
+.cal-date{font-size:12px;color:var(--text-light)}
+.cal-cell.today .cal-date{color:var(--primary);font-weight:700}
+.interview-chip{margin-top:3px;font-size:11px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:5px;padding:1px 5px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.interview-chip:hover{background:#ffedd5}
+.cal-more{font-size:10px;color:var(--text-light);margin-top:2px}
+.empty-hint{text-align:center;color:var(--text-light);padding:14px 0 4px}
+.iv-title{font-size:16px;font-weight:700;display:flex;gap:6px;flex-wrap:wrap}
+.modal-body h4{margin:14px 0 6px;font-size:13.5px}
+
+/* =========================================================
+   统计看板
+   ========================================================= */
+.stat-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.stat-card{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 16px;text-align:center;transition:box-shadow .2s,transform .2s}
+.stat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-bar)}
+.stat-value{font-size:27px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
+.stat-label{font-size:12.5px;color:var(--text-light);margin-top:4px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stats-grid .card h3{font-size:14px;margin-bottom:12px}
+/* 纯 CSS 彩色条形图 */
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.bar-label{width:72px;font-size:12px;color:var(--text-light);text-align:right;flex-shrink:0}
+.bar-track{flex:1;background:var(--track-bg);border-radius:6px;height:18px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;transition:width .3s}
+.bar-num{width:26px;font-size:12px;color:var(--text-light)}
+canvas{display:block;width:100%}
+.channel-wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+#channelCanvas{width:200px;height:200px;flex-shrink:0}
+#channelLegend{flex:1;min-width:150px}
+.legend-row{display:flex;align-items:center;gap:6px;font-size:12.5px;margin-bottom:5px}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.legend-num{color:var(--text-light);margin-left:auto}
+.tag-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:13px}
+.tag-rank{width:18px;height:18px;border-radius:50%;background:#eff6ff;color:var(--primary);font-size:11px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.tag-count{margin-left:auto;color:var(--text-light);font-size:12px}
+
+/* =========================================================
+   数据管理
+   ========================================================= */
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.data-grid .card h3{font-size:14px;margin-bottom:8px}
+.data-grid .card p{margin-bottom:12px}
+.storage-bar{height:10px;background:var(--track-bg);border-radius:6px;overflow:hidden;margin:8px 0}
+.storage-fill{height:100%;background:var(--primary);border-radius:6px;transition:width .3s}
+.storage-fill.warn{background:var(--warning)}
+.storage-fill.danger{background:var(--danger)}
+.storage-hint{font-size:12.5px;margin-top:6px}
+
+/* =========================================================
+   轻提示 Toast
+   ========================================================= */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  opacity:0;transition:.25s;background:#1f2937;color:#fff;padding:10px 18px;
+  border-radius:8px;z-index:300;pointer-events:none;max-width:90vw;font-size:13.5px;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.error{background:var(--danger)}
+#toast.success{background:var(--success)}
+.hidden-input{display:none}
+
+/* =========================================================
+   移动端适配（<768px）
+   ========================================================= */
+@media (max-width:768px){
+  .header-inner{padding:8px 12px;gap:8px}
+  .brand{font-size:15px}
+  main{padding:12px}
+  .filter-bar{flex-direction:column;align-items:stretch}
+  .filter-bar .fld,.filter-bar #searchInput,.filter-bar #filterTag{flex:1 1 auto;min-width:0;width:100%}
+  .date-range{width:100%}
+  .date-range input{width:auto;flex:1}
+  .filter-tools{margin-left:0;width:100%;justify-content:flex-end}
+  .form-grid{grid-template-columns:1fr}
+  .app-card-top{flex-direction:column;align-items:flex-start;gap:8px}
+  .stats-grid{grid-template-columns:1fr}
+  .data-grid{grid-template-columns:1fr}
+  .fu-item{flex-direction:column;align-items:stretch}
+  .fu-actions{justify-content:flex-end}
+  .cal-cell{min-height:64px}
+  .interview-chip{font-size:10px;padding:0 3px}
+  .modal{max-width:100%}
+  .status-options{grid-template-columns:1fr}
+}
+
+/* =========================================================
+   主题切换 / 星标 / 批量 / 通知 相关组件
+   ========================================================= */
+/* 头部右侧操作按钮区（主题切换） */
+.header-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.theme-toggle{font-size:15px;line-height:1;padding:6px 9px}
+
+/* 投递卡片：星标按钮与复选框 */
+.app-check-wrap{display:none;flex-shrink:0}
+#appList.batch-mode .app-check-wrap{display:inline-flex;align-items:center}
+.app-check{width:16px;height:16px;accent-color:var(--primary);cursor:pointer}
+.star-btn{font-size:14px;line-height:1;padding:5px 8px}
+.star-btn.starred{color:var(--warning)}
+.app-card.starred-card{border-left:4px solid var(--warning)}
+
+/* 批量操作条 */
+.batch-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.batch-count{font-size:13px;color:var(--text-light)}
+
+/* 通知提示条 */
+.notify-banner{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;background:var(--tag-bg);color:var(--tag-color);font-size:13px;margin-bottom:10px}
+.notify-banner.hidden{display:none}
+
+/* ===== 网站导航 / 内置浏览面板 ===== */
+.auto-check{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-light);cursor:pointer;user-select:none}
+.auto-check input{width:auto}
+
+.mon-layout{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}
+@media (max-width:880px){ .mon-layout{grid-template-columns:1fr} }
+
+/* 左侧栏：网站导航列表 + 代理设置 */
+.mon-sidebar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;position:sticky;top:74px;max-height:calc(100vh - 92px);display:flex;flex-direction:column;min-height:0}
+.mon-sidebar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}
+.mon-sidebar-head h3{font-size:15px;font-weight:700}
+.mon-add{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.mon-add input{padding:9px 11px;border:1px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg);color:var(--text);outline:none;transition:.15s}
+.mon-add input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.mon-add .row{display:flex;gap:8px}
+.mon-add .row input{flex:1;min-width:0}
+.mon-site-list{display:flex;flex-direction:column;gap:8px;overflow-y:auto;flex:1 1 auto;min-height:180px;padding-right:3px;margin-right:-3px}
+.mon-site-list::-webkit-scrollbar{width:7px}
+.mon-site-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.mon-empty-list{font-size:13px;line-height:1.7;text-align:center;padding:30px 10px}
+
+/* 网站导航卡片（点击即在右侧打开） */
+.mon-site{display:flex;align-items:center;gap:11px;padding:10px 11px;border:1px solid var(--border);border-radius:12px;background:var(--card);cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s,background .15s;position:relative}
+.mon-site:hover{border-color:var(--primary);box-shadow:var(--shadow)}
+.mon-site.active{border-color:var(--primary);background:var(--tab-active-bg);box-shadow:0 0 0 3px var(--primary-soft)}
+.mon-avatar{flex:0 0 40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:17px;overflow:hidden;position:relative}
+.mon-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.mon-site-body{flex:1;min-width:0}
+.mon-site-name{display:block;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mon-site-domain{font-size:12px;color:var(--text-light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.mon-del{opacity:0;flex:0 0 auto;border:none;background:none;color:var(--text-light);font-size:13px;line-height:1;padding:5px 7px;border-radius:7px;cursor:pointer;transition:opacity .15s,color .15s,background .15s}
+.mon-site:hover .mon-del,.mon-site.active .mon-del{opacity:1}
+.mon-del:hover{color:var(--danger);background:var(--danger-ghost-bg)}
+
+/* 右侧浏览器 */
+.mon-browser{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--card);min-height:560px}
+.mon-browser-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg);border-bottom:1px solid var(--border)}
+.mon-addr{flex:1;font-size:13px;color:var(--text-light);background:var(--card);border:1px solid var(--border);border-radius:9px;padding:7px 11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mon-frame-wrap{position:relative;flex:1;min-height:500px;background:#fff}
+.mon-iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff;display:block}
+.mon-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--text-light);text-align:center;padding:24px}
+.mon-empty-inner{max-width:380px}
+.mon-empty-icon{font-size:48px;margin-bottom:12px}
+.mon-empty p{margin:5px 0;line-height:1.65;font-size:14px}
+.mon-empty strong{color:var(--text)}
+
+/* 代理设置（折叠在左侧栏底部，不影响右侧展示） */
+.mon-settings{flex:0 0 auto;margin-top:10px;border-top:1px dashed var(--border)}
+.mon-settings summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--text-light);padding:9px 2px 2px;outline:none;list-style:none;display:flex;align-items:center;gap:6px}
+.mon-settings summary::-webkit-details-marker{display:none}
+.mon-settings summary:hover{color:var(--text)}
+.mon-settings summary::after{content:'▾';margin-left:auto;font-size:11px;transition:transform .15s}
+.mon-settings[open] summary::after{transform:rotate(180deg)}
+.mon-proxy-field{display:flex;flex-direction:column;gap:9px;padding:10px 2px 2px}
+.mon-proxy-field .row{display:flex;gap:8px}
+.mon-proxy-field input{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:12.5px;outline:none;transition:border-color .15s,box-shadow .15s}
+.mon-proxy-field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.mon-proxy-field .btn{flex-shrink:0}
+.mon-help{font-size:12px;color:var(--text-light);line-height:1.7;margin:0}
+.mon-help code{background:var(--tag-bg);padding:1px 5px;border-radius:4px}
+
+/* ===== 综合测评（提醒 / 筛选 / 卡片） ===== */
+.asm-chip{cursor:pointer;font-weight:600;transition:filter .15s,transform .1s}
+.asm-chip:hover{filter:brightness(.96)}
+.asm-chip:active{transform:scale(.97)}
+.asm-pending{background:#fff7ed;color:#ea580c;border:1px solid #fdba74}
+.asm-done{background:#ecfdf5;color:#059669;border:1px solid #6ee7b7}
+/* 列表顶部待测评提醒条 */
+.asm-banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(135deg,#fff7ed,#fffbeb);border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:13.5px}
+.asm-banner b{font-size:15px}
+.asm-banner .btn{margin-left:auto}
+.asm-banner .btn+.btn{margin-left:0}
+/* 跟进提醒页的待测评列表 */
+.asm-item{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 10px;border-bottom:1px solid var(--border)}
+.asm-item:last-child{border-bottom:none}
+.asm-item .asm-company{font-weight:600;flex:1;min-width:160px}
+.asm-item .app-link{margin:0}
+</style>
+</head><body data-page-node-id="fz7PXNEwvP8Vx76doE4NFK">
+
+<!-- ===================== 顶部导航 ===================== -->
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand"><span class="brand-badge">💼</span><span class="brand-text">求职投递管理</span></div>
+    <nav class="tabs" id="tabNav">
+      <button class="tab-btn active" data-tab="list">📋 投递列表</button>
+      <button class="tab-btn" data-tab="stats">📊 统计看板</button>
+      <button class="tab-btn" data-tab="resume">📄 简历版本库</button>
+      <button class="tab-btn" data-tab="followup">⏰ 跟进提醒<span id="followBadge" class="tab-badge hidden"></span></button>
+      <button class="tab-btn" data-tab="calendar">🗓️ 面试日历</button>
+      <button class="tab-btn" data-tab="data">💾 数据管理</button>
+      <button class="tab-btn" data-tab="monitor">🌐 网站导航</button>
+    </nav>
+    <div class="header-actions">
+      <button id="themeToggleBtn" class="btn btn-ghost btn-sm theme-toggle" title="切换深色 / 浅色主题">🌙</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ===================== 1. 投递列表 ===================== -->
+  <section id="panel-list" class="tab-panel">
+    <div class="card filter-card">
+      <div class="filter-bar">
+        <input id="searchInput" type="text" class="fld" placeholder="🔍 搜索公司或职位…">
+        <select id="filterStatus" class="fld">
+          <option value="">全部状态</option>
+          <option>已投递</option><option>简历被查看</option><option>初筛通过</option>
+          <option>面试中</option><option>二面</option><option>终面</option>
+          <option>Offer</option><option>已拒绝</option><option>已入职</option>
+        </select>
+        <select id="filterChannel" class="fld">
+          <option value="">全部渠道</option>
+          <option>BOSS直聘</option><option>智联招聘</option><option>猎聘</option>
+          <option>公司官网</option><option>内推</option><option>其他</option>
+        </select>
+        <select id="filterAssessment" class="fld">
+          <option value="">全部测评</option>
+          <option>未测评</option><option>已测评</option>
+        </select>
+        <input id="filterTag" type="text" class="fld" placeholder="标签筛选…">
+        <div class="date-range">
+          <input type="date" id="filterDateFrom" title="开始日期">
+          <span class="muted-text">至</span>
+          <input type="date" id="filterDateTo" title="结束日期">
+        </div>
+        <div class="filter-tools">
+          <select id="sortBy" class="fld sort">
+            <option value="applyDate">按投递日期</option>
+            <option value="company">按公司名称</option>
+            <option value="status">按状态</option>
+          </select>
+          <button id="sortDirBtn" class="btn btn-secondary btn-sm">↓ 降序</button>
+          <button id="resetFiltersBtn" class="btn btn-ghost btn-sm">重置</button>
+        </div>
+      </div>
+    </div>
+    <div class="list-toolbar">
+      <span id="listCount"></span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="exportCsvBtn" class="btn btn-secondary">⬇ 导出 CSV</button>
+        <button id="batchModeBtn" class="btn btn-secondary">☑ 批量管理</button>
+        <button id="addAppBtn" class="btn btn-primary">＋ 添加记录</button>
+      </div>
+    </div>
+    <div id="batchBar" class="card batch-bar hidden">
+      <label class="radio-line" style="gap:6px"><input type="checkbox" id="selectAllChk"> 全选当前结果</label>
+      <span id="batchCount" class="batch-count">已选 0 项</span>
+      <button id="batchStatusBtn" class="btn btn-secondary btn-sm">批量改状态</button>
+      <button id="batchDeleteBtn" class="btn btn-danger btn-sm">批量删除</button>
+      <button id="batchExitBtn" class="btn btn-ghost btn-sm">退出批量</button>
+    </div>
+    <div id="assessmentBanner" class="asm-banner hidden"></div>
+    <div id="appList"></div>
+  </section>
+
+  <!-- ===================== 2. 统计看板 ===================== -->
+  <section id="panel-stats" class="tab-panel hidden">
+    <div class="stat-cards" id="statCards"></div>
+    <div class="stats-grid">
+      <div class="card"><h3>各状态分布</h3><div id="statusBars"></div></div>
+      <div class="card"><h3>最近 14 天投递趋势</h3><canvas id="trendCanvas"></canvas></div>
+      <div class="card"><h3>渠道分布</h3>
+        <div class="channel-wrap">
+          <canvas id="channelCanvas"></canvas>
+          <div id="channelLegend"></div>
+        </div>
+      </div>
+      <div class="card"><h3>常用标签 Top 10</h3><div id="tagStats"></div></div>
+    </div>
+  </section>
+
+  <!-- ===================== 3. 简历版本库 ===================== -->
+  <section id="panel-resume" class="tab-panel hidden">
+    <div class="list-toolbar">
+      <span id="resumeCount"></span>
+      <button id="addResumeBtn" class="btn btn-primary">＋ 添加简历版本</button>
+    </div>
+    <div id="resumeList"></div>
+  </section>
+
+  <!-- ===================== 4. 跟进提醒 ===================== -->
+  <section id="panel-followup" class="tab-panel hidden">
+    <div id="notifyBanner" class="notify-banner hidden"></div>
+    <div class="list-toolbar">
+      <span id="followCount"></span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="notifyToggleBtn" class="btn btn-secondary">🔔 开启桌面提醒</button>
+        <button id="markAllFollowedBtn" class="btn btn-secondary">全部标记已跟进</button>
+      </div>
+    </div>
+    <div id="followList"></div>
+    <div class="card" style="margin-top:14px">
+      <h3>📝 待测评提醒</h3>
+      <p class="muted-text" style="margin:2px 0 10px">投递后企业常会发来综合测评，记得及时完成。点击「去测评」打开链接，完成后点「标记已测评」即可；也可在「投递列表」里直接点卡片上的状态标签切换。</p>
+      <div id="assessmentReminderList"></div>
+    </div>
+  </section>
+
+  <!-- ===================== 5. 面试日历 ===================== -->
+  <section id="panel-calendar" class="tab-panel hidden">
+    <div class="card">
+      <div class="cal-header">
+        <button id="calPrevBtn" class="btn btn-secondary btn-sm">‹ 上月</button>
+        <div class="cal-title" id="calTitle"></div>
+        <div style="display:flex;gap:8px">
+          <button id="calTodayBtn" class="btn btn-secondary btn-sm">今天</button>
+          <button id="calNextBtn" class="btn btn-secondary btn-sm">下月 ›</button>
+        </div>
+      </div>
+      <div class="cal-weekdays">
+        <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+      </div>
+      <div id="calGrid" class="calendar-grid"></div>
+      <div id="calEmptyHint" class="empty-hint hidden">本月暂无面试</div>
+    </div>
+  </section>
+
+  <!-- ===================== 6. 数据管理 ===================== -->
+  <section id="panel-data" class="tab-panel hidden">
+    <div class="data-grid">
+      <div class="card">
+        <h3>📤 导出数据</h3>
+        <p class="muted-text">将全部投递记录与简历版本库导出为 JSON 文件，可用于备份或迁移。</p>
+        <button id="exportBtn" class="btn btn-primary">导出 JSON 备份</button>
+      </div>
+      <div class="card">
+        <h3>📥 导入数据</h3>
+        <p class="muted-text">选择此前导出的 JSON 备份文件，支持合并（去重）或覆盖两种模式。</p>
+        <button id="importPickBtn" class="btn btn-secondary">选择 JSON 文件</button>
+        <input type="file" id="importFileInput" accept=".json,application/json" class="hidden-input">
+      </div>
+      <div class="card">
+        <h3>📥 导入 Excel / CSV</h3>
+        <p class="muted-text">直接选择你电脑里的 <b>.xlsx / .xls / .csv</b> 文件即可导入（Excel 无需先转 CSV）；表头支持「公司名称 / 职位名称 / 工作地点 / 薪资范围 / 招聘渠道 / 投递日期 / 当前状态 / 下次跟进日期 / 面试时间 / 简历版本 / 标签 / 职位链接 / 测评链接 / 测评状态 / 备注」等中文列。必填仅「公司名称 + 职位名称」，其余为空也行（测评状态缺省按「未测评」处理）。支持合并（按公司+职位去重）或覆盖两种模式，导入后渠道、状态会与系统选项自动匹配。</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button id="importCsvPickBtn" class="btn btn-secondary">选择 Excel / CSV 文件</button>
+          <button id="downloadTemplateBtn" class="btn btn-ghost">⬇ 下载导入模板</button>
+        </div>
+        <input type="file" id="importCsvInput" accept=".csv,text/csv,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="hidden-input">
+      </div>
+      <div class="card">
+        <h3>💾 存储占用</h3>
+        <div class="storage-bar" id="storageBar"></div>
+        <div id="storageText" class="muted-text"></div>
+        <div id="storageHint" class="storage-hint muted-text"></div>
+      </div>
+      <div class="card">
+        <h3>🗑️ 清空数据</h3>
+        <p class="muted-text">删除所有投递记录与简历版本。操作不可恢复，建议先导出备份。</p>
+        <button id="clearDataBtn" class="btn btn-danger">清空所有数据</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-monitor" class="tab-panel hidden">
+    <div class="mon-layout">
+      <!-- 左侧：网站导航列表 + 代理设置 -->
+      <aside class="mon-sidebar">
+        <div class="mon-sidebar-head">
+          <h3>🌐 网站导航</h3>
+        </div>
+        <div class="mon-add">
+          <input id="newMonName" placeholder="名称，如：校招汇总">
+          <div class="row">
+            <input id="newMonUrl" placeholder="网址 URL，如 https://…">
+            <button id="addMonBtn" class="btn btn-primary btn-sm">＋ 添加</button>
+          </div>
+        </div>
+        <div class="mon-site-list" id="monitorList"></div>
+        <details class="mon-settings">
+          <summary>⚙️ 代理设置</summary>
+          <div class="mon-proxy-field">
+            <label class="auto-check"><input type="checkbox" id="monUseProxy"> 勾选后通过代理加载网站</label>
+            <div class="row">
+              <input id="proxyTemplate" placeholder="代理地址模板（含 {url}，如 http://localhost:8787/?url={url}）">
+              <button id="saveProxyBtn" class="btn btn-secondary btn-sm">保存</button>
+            </div>
+            <p class="mon-help">正常内嵌浏览<strong>无需代理</strong>；仅当某网站禁止被内嵌（右侧显示空白）时才需要。可在本目录运行 <code>monitor-proxy.py</code>，再填入上方本地代理地址。</p>
+          </div>
+        </details>
+      </aside>
+
+      <!-- 右侧：页面展示 -->
+      <div class="mon-browser">
+        <div class="mon-browser-bar">
+          <button id="monRefreshBtn" class="btn btn-ghost btn-sm" title="刷新当前网站">⟳ 刷新</button>
+          <div class="mon-addr" id="monAddr">未选择网站</div>
+          <button id="monNewTabBtn" class="btn btn-ghost btn-sm" title="在新窗口打开">↗ 新窗口</button>
+        </div>
+        <div class="mon-frame-wrap">
+          <iframe id="monFrame" class="mon-iframe" referrerpolicy="no-referrer" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"></iframe>
+          <div class="mon-empty" id="monEmpty">
+            <div class="mon-empty-inner">
+              <div class="mon-empty-icon">🌐</div>
+              <p>在左侧点一个网站，即可在右侧<strong>内嵌浏览</strong>它的内容</p>
+              <p class="muted-text">点「＋ 添加」把常用的招聘 / 信息站点加入导航，随时打开查看。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===================== 弹窗：添加/编辑投递记录 ===================== -->
+<div class="modal-overlay hidden" id="appModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h2 id="appModalTitle">添加投递记录</h2>
+      <button class="modal-close" data-close="appModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label>公司名称 <span class="req">*</span></label><input id="fCompany" type="text" placeholder="如：字节跳动"></div>
+        <div class="form-field"><label>职位名称 <span class="req">*</span></label><input id="fPosition" type="text" placeholder="如：前端开发工程师"></div>
+        <div class="form-field"><label>工作地点</label><input id="fLocation" type="text" placeholder="如：北京"></div>
+        <div class="form-field"><label>薪资范围</label><input id="fSalary" type="text" placeholder="如：20-35K·15薪"></div>
+        <div class="form-field"><label>招聘渠道</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="fChannel" style="flex:1"></select>
+            <button type="button" id="addChannelBtn" class="btn btn-ghost btn-sm" title="新增自定义渠道（输过即记住）">＋ 自定义</button>
+          </div>
+        </div>
+        <div class="form-field"><label>投递日期 <span class="req">*</span></label><input type="date" id="fApplyDate"></div>
+        <div class="form-field"><label>当前状态</label>
+          <select id="fStatus">
+            <option>已投递</option><option>简历被查看</option><option>初筛通过</option>
+            <option>面试中</option><option>二面</option><option>终面</option>
+            <option>Offer</option><option>已拒绝</option><option>已入职</option>
+          </select>
+        </div>
+        <div class="form-field"><label>下次跟进日期</label><input type="date" id="fFollowUpDate"></div>
+        <div class="form-field field-full"><label>职位链接</label><input id="fJobLink" type="text" placeholder="https://…"></div>
+        <div class="form-field"><label>面试时间</label><input type="datetime-local" id="fInterviewDate"></div>
+        <div class="form-field"><label>简历版本</label>
+          <input id="fResumeVersion" type="text" list="resumeVersionList" placeholder="选择或输入新版本名">
+          <datalist id="resumeVersionList"></datalist>
+        </div>
+        <div class="form-field"><label>综合测评状态</label>
+          <select id="fAssessmentStatus">
+            <option>未测评</option><option>已测评</option>
+          </select>
+        </div>
+        <div class="form-field field-full"><label>测评链接</label><input id="fAssessmentLink" type="text" placeholder="企业发来的综合测评 / 测评系统链接 https://…"></div>
+        <div class="form-field field-full"><label>标签（用逗号分隔）</label><input id="fTags" type="text" placeholder="如：前端, 大厂, 远程"></div>
+        <div class="form-field field-full"><label>简历附件</label>
+          <div id="fileArea"></div>
+          <input type="file" id="appFileInput" accept=".pdf,.doc,.docx" class="hidden-input">
+        </div>
+        <div class="form-field field-full"><label>备注</label><textarea id="fNotes" rows="3" placeholder="岗位 JD 要点、内推人、注意事项等"></textarea></div>
+      </div>
+      <!-- 联系记录子区域 -->
+      <div class="contact-section">
+        <div class="contact-header">
+          <h3>📞 联系记录</h3>
+          <button type="button" class="btn btn-secondary btn-sm" id="addContactBtn">＋ 添加联系记录</button>
+        </div>
+        <div id="contactList"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="appModalCancel">取消</button>
+      <button class="btn btn-primary" id="appModalSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 弹窗：添加联系记录 ===================== -->
+<div class="modal-overlay hidden" id="contactModal">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2>添加联系记录</h2>
+      <button class="modal-close" data-close="contactModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-field"><label>时间</label><input type="datetime-local" id="cTime"></div>
+      <div class="form-field"><label>类型</label>
+        <select id="cType"><option>电话</option><option>邮件</option><option>微信</option><option>面试</option><option>其他</option></select>
+      </div>
+      <div class="form-field"><label>内容</label><textarea id="cContent" rows="3" placeholder="沟通内容…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button id="contactModalCancel" class="btn btn-secondary">取消</button>
+      <button id="contactModalSave" class="btn btn-primary">添加</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 弹窗：快速切换状态 ===================== -->
+<div class="modal-overlay hidden" id="statusModal">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2>切换状态</h2>
+      <button class="modal-close" data-close="statusModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="statusModalSubtitle" class="muted-text"></div>
+      <div id="statusOptions" class="status-options"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 弹窗：批量改状态 ===================== -->
+<div class="modal-overlay hidden" id="batchStatusModal">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2>批量改状态</h2>
+      <button class="modal-close" data-close="batchStatusModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="batchStatusSubtitle" class="muted-text"></div>
+      <div id="batchStatusOptions" class="status-options"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 弹窗：简历版本 添加/编辑 ===================== -->
+<div class="modal-overlay hidden" id="resumeModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="resumeModalTitle">添加简历版本</h2>
+      <button class="modal-close" data-close="resumeModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-field"><label>版本名称 <span class="req">*</span></label><input id="rName" type="text" placeholder="如：通用版-前端"></div>
+      <div class="form-field"><label>描述</label><textarea id="rDesc" rows="2" placeholder="适用场景、主要差异等"></textarea></div>
+      <div class="form-field"><label>简历文件</label>
+        <div id="resumeFileArea"></div>
+        <input type="file" id="resumeFileInput" accept=".pdf,.doc,.docx" class="hidden-input">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="resumeModalCancel" class="btn btn-secondary">取消</button>
+      <button id="resumeModalSave" class="btn btn-primary">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 弹窗：面试详情 ===================== -->
+<div class="modal-overlay hidden" id="interviewModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>🗓️ 面试详情</h2>
+      <button class="modal-close" data-close="interviewModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="iv-title"><span id="ivCompany"></span><span class="sep">·</span><span id="ivPosition"></span></div>
+      <div class="app-meta" style="margin-top:8px">
+        <span id="ivTime"></span><span id="ivLocation"></span>
+      </div>
+      <h4>联系记录</h4><div id="ivContacts"></div>
+      <h4>备注</h4><div id="ivNotes" class="muted-text"></div>
+    </div>
+    <div class="modal-footer">
+      <button id="interviewModalClose" class="btn btn-secondary">关闭</button>
+      <button id="ivEditBtn" class="btn btn-primary">编辑该记录</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 弹窗：完成跟进 ===================== -->
+<div class="modal-overlay hidden" id="followUpModal">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2>完成跟进</h2>
+      <button class="modal-close" data-close="followUpModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="fuSubtitle" class="muted-text" style="margin-bottom:10px"></p>
+      <div class="form-field"><label>联系类型（可选）</label>
+        <select id="fuType"><option>电话</option><option>邮件</option><option>微信</option><option>面试</option><option>其他</option></select>
+      </div>
+      <div class="form-field"><label>跟进内容（填写则同时添加一条联系记录）</label><textarea id="fuContent" rows="3" placeholder="本次跟进沟通了什么…"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button id="fuCancelBtn" class="btn btn-secondary">取消</button>
+      <button id="fuOkBtn" class="btn btn-primary">完成跟进</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 弹窗：导入选项 ===================== -->
+<div class="modal-overlay hidden" id="importModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>导入数据</h2>
+      <button class="modal-close" data-close="importModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="importInfo" style="margin-bottom:12px"></p>
+      <div class="form-field">
+        <label>导入模式</label>
+        <label class="radio-line"><input type="radio" name="importMode" value="merge" checked> 合并模式（与现有数据合并，自动去重）</label>
+        <label class="radio-line"><input type="radio" name="importMode" value="overwrite"> 覆盖模式（清空现有数据后导入）</label>
+      </div>
+      <div class="form-field" id="dupOptions">
+        <label>重复记录处理（公司 + 职位 + 投递日期相同视为重复）</label>
+        <label class="radio-line"><input type="radio" name="dupStrategy" value="skip" checked> 跳过重复记录</label>
+        <label class="radio-line"><input type="radio" name="dupStrategy" value="overwrite"> 用导入数据覆盖现有记录</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="importCancelBtn" class="btn btn-secondary">取消</button>
+      <button id="importOkBtn" class="btn btn-primary">开始导入</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 弹窗：通用确认框 ===================== -->
+<div class="modal-overlay hidden" id="confirmModal">
+  <div class="modal modal-sm">
+    <div class="modal-header"><h2 id="confirmTitle">确认</h2></div>
+    <div class="modal-body"><p id="confirmMessage"></p></div>
+    <div class="modal-footer">
+      <button id="confirmCancelBtn" class="btn btn-secondary">取消</button>
+      <button id="confirmOkBtn" class="btn btn-primary">确定</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<footer class="app-footer">数据仅保存在本机浏览器 localStorage 中，建议定期在「数据管理」中导出备份</footer><script>
+'use strict';
+/* =========================================================
+ * 一、常量定义
+ * ========================================================= */
+// localStorage 键名
+const KEY_APPS = 'job_applications';      // 投递记录
+const KEY_RESUMES = 'resume_versions';    // 简历版本库
+const KEY_SETTINGS = 'settings';          // 应用设置（上次 Tab、筛选条件等）
+const KEY_CUSTOM_CHANNELS = 'custom_channels'; // 用户自定义的招聘渠道（输过即记住）
+
+// 状态列表（固定顺序，同时也是“按状态排序”时的自定义顺序，可自行调整）
+const STATUSES = ['已投递','简历被查看','初筛通过','面试中','二面','终面','Offer','已拒绝','已入职'];
+
+// 综合测评状态（默认“未测评”，投递后由使用者自行改为“已测评”以便筛选 / 提醒）
+const ASSESSMENT_STATUSES = ['未测评','已测评'];
+const ASSESSMENT_COLORS = {'未测评':'#f97316','已测评':'#22c55e'};
+// 各状态对应的显示颜色
+const STATUS_COLORS = {
+  '已投递':'#6b7280', '简历被查看':'#3b82f6', '初筛通过':'#06b6d4',
+  '面试中':'#f97316', '二面':'#ea580c', '终面':'#8b5cf6',
+  'Offer':'#22c55e', '已拒绝':'#ef4444', '已入职':'#eab308'
+};
+// 招聘渠道：尽量覆盖市面上常见平台；导入时渠道取值宽松，不在列表中的也会原样保留
+const CHANNELS = [
+  'BOSS直聘','智联招聘','前程无忧(51job)','猎聘','拉勾招聘','实习僧',
+  '牛客网','脉脉','领英 LinkedIn','大街网','海投网','应届生求职网','校招/双选会',
+  '58同城','赶集网','猎头推荐','内部推荐(内推)','公司官网','微信公众号','其他'
+];
+const CONTACT_TYPES = ['电话','邮件','微信','面试','其他'];               // 联系类型
+// 统计“面试转化率”时视为已进入面试流程的状态
+const INTERVIEW_STATUSES = ['面试中','二面','终面','Offer','已入职'];
+
+// 附件与存储限制
+const ALLOWED_FILE_EXT = ['pdf','doc','docx'];
+const MAX_FILE_SIZE = 2 * 1024 * 1024;   // 单个附件 2MB，超过仅保存文件名
+const QUOTA_BYTES = 5 * 1024 * 1024;     // localStorage 约 5MB 上限
+const WARN_BYTES = 4 * 1024 * 1024;      // 总量超过 4MB 时提醒用户
+
+/* =========================================================
+ * 二、全局状态
+ * ========================================================= */
+let applications = [];        // 投递记录数组
+let resumeVersions = [];      // 简历版本数组
+let customChannels = [];      // 用户自定义招聘渠道（输过一次即记住）
+
+// 默认筛选/排序条件
+const DEFAULT_FILTERS = {status:'',search:'',dateFrom:'',dateTo:'',channel:'',tag:'',assessment:'',sortBy:'applyDate',sortDir:'desc'};
+let settings = {lastTab:'list', filters:{...DEFAULT_FILTERS}, theme:'light', notifyEnabled:false, proxyTemplate:'', monitors:defaultMonitors()};
+
+// 默认导航网站（首次打开时预置用户提供的站点）
+function defaultMonitors(){
+  return [{
+    id: 'm_' + Date.now().toString(36),
+    name: '校园招聘汇总',
+    url: 'https://campus.sma-wiki.cn/campus/campus_recruit.html?channel=sq'
+  }];
+}
+
+let currentTab = 'list';                 // 当前激活的 Tab
+let calendarCursor = {year:2026, month:0}; // 面试日历当前显示的月份（month 从 0 开始）
+let editingAppId = null;                 // 正在编辑的投递记录 id（null = 新建）
+let draftContacts = [];                  // 编辑弹窗中的联系记录草稿
+let pendingFile = null;                  // 投递表单附件暂存 {name, file, data, tooBig}
+let editingResumeId = null;              // 正在编辑的简历版本 id
+let resumePendingFile = null;            // 简历表单附件暂存
+let statusPickerAppId = null;            // 状态选择器对应的记录 id
+let interviewAppId = null;               // 面试详情对应的记录 id
+let fuAppId = null;                      // 完成跟进对应的记录 id
+let importPayload = null;                // 待导入的数据
+let modalStack = [];                     // 已打开弹窗栈（用于 Esc 关闭）
+let confirmResolver = null;              // Promise 化的确认框回调
+let selectedAppIds = new Set();          // 批量管理中已勾选的记录 id
+let toastTimer = null;
+
+// 快捷取元素函数
+const $ = id => document.getElementById(id);
+
+/* =========================================================
+ * 三、工具函数
+ * ========================================================= */
+// 生成唯一 id（时间戳 36 进制 + 随机串）
+function genId(){ return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,9); }
+
+// 数字补零
+const pad2 = n => String(n).padStart(2,'0');
+
+// Date 对象 -> YYYY-MM-DD
+function toISODate(d){ return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
+
+// 今天的日期字符串
+function todayStr(){ return toISODate(new Date()); }
+function nowDateStr(){ return toISODate(new Date()); }
+
+// 当前时间字符串（YYYY-MM-DD HH:mm）
+function nowDateTimeStr(){
+  const d = new Date();
+  return toISODate(d) + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+}
+
+// 显示格式：2025年1月1日
+function fmtDateCN(iso){
+  if(!iso) return '';
+  const parts = String(iso).split('-').map(Number);
+  if(parts.length !== 3 || !parts[0]) return iso;
+  return parts[0] + '年' + parts[1] + '月' + parts[2] + '日';
+}
+
+// 计算目标日期距今天的天数（负数 = 已过期）
+function daysUntil(iso){
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const p = String(iso).split('-').map(Number);
+  const target = new Date(p[0], p[1]-1, p[2]);
+  return Math.round((target - today) / 86400000);
+}
+
+// 跟进日期的口语化描述：今天 / 明天 / N天后 / 已过期N天
+function describeFollowUp(iso){
+  const d = daysUntil(iso);
+  if(d < 0) return '已过期 ' + (-d) + ' 天';
+  if(d === 0) return '今天';
+  if(d === 1) return '明天';
+  return d + ' 天后';
+}
+
+// 解析标签字符串（支持中英文逗号）
+function parseTags(s){ return String(s||'').split(/[,，]/).map(x=>x.trim()).filter(Boolean); }
+
+// HTML 转义，防止用户输入破坏页面结构
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// 防抖
+function debounce(fn, ms){
+  let t;
+  return function(...args){ clearTimeout(t); t = setTimeout(()=>fn.apply(this,args), ms); };
+}
+
+// 校验文件扩展名是否为 PDF/DOC/DOCX
+function isAllowedFile(name){
+  const ext = (String(name).split('.').pop() || '').toLowerCase();
+  return ALLOWED_FILE_EXT.includes(ext);
+}
+
+// FileReader 读取文件为 DataURL（Promise 封装）
+function readFileAsDataURL(file){
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(fr.result);
+    fr.onerror = () => reject(fr.error);
+    fr.readAsDataURL(file);
+  });
+}
+
+// 字节数格式化显示
+function formatBytes(bytes){
+  if(bytes < 1024) return bytes + ' B';
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1024/1024).toFixed(2) + ' MB';
+}
+
+// 下载 Blob 文件
+function downloadBlob(filename, blob){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+
+/* =========================================================
+ * 四、数据存储（localStorage）
+ * ========================================================= */
+// 读取全部数据到内存
+function loadAll(){
+  try{
+    applications = JSON.parse(localStorage.getItem(KEY_APPS) || '[]');
+    if(!Array.isArray(applications)) applications = [];
+  }catch(e){ applications = []; }
+  try{
+    resumeVersions = JSON.parse(localStorage.getItem(KEY_RESUMES) || '[]');
+    if(!Array.isArray(resumeVersions)) resumeVersions = [];
+  }catch(e){ resumeVersions = []; }
+  try{
+    const s = JSON.parse(localStorage.getItem(KEY_SETTINGS) || '{}');
+    settings = {
+      lastTab:s.lastTab || 'list',
+      filters:{...DEFAULT_FILTERS, ...(s.filters||{})},
+      theme:s.theme || 'light',
+      notifyEnabled:!!s.notifyEnabled,
+      proxyTemplate: s.proxyTemplate || '',
+      monitors: Array.isArray(s.monitors) && s.monitors.length ? s.monitors : defaultMonitors()
+    };
+  }catch(e){ settings = {lastTab:'list', filters:{...DEFAULT_FILTERS}, theme:'light', notifyEnabled:false, proxyTemplate:'', monitors:defaultMonitors()}; }
+  // 数据兜底：确保 contactRecords 存在
+  applications.forEach(a => { if(!Array.isArray(a.contactRecords)) a.contactRecords = []; });
+  try{
+    customChannels = JSON.parse(localStorage.getItem(KEY_CUSTOM_CHANNELS) || '[]');
+    if(!Array.isArray(customChannels)) customChannels = [];
+  }catch(e){ customChannels = []; }
+}
+
+// 内置渠道 + 自定义渠道（去重、保序），用于下拉与导入匹配
+function allChannels(){
+  const seen = new Set(); const out = [];
+  CHANNELS.concat(customChannels).forEach(c => {
+    const v = String(c).trim();
+    if(v && !seen.has(v)){ seen.add(v); out.push(v); }
+  });
+  return out;
+}
+
+// 新增一个自定义渠道并持久化（重复则忽略），返回是否新增成功
+function addCustomChannel(name){
+  const v = String(name || '').trim();
+  if(!v) return false;
+  if(allChannels().includes(v)) return false;
+  customChannels.push(v);
+  try{ localStorage.setItem(KEY_CUSTOM_CHANNELS, JSON.stringify(customChannels)); }catch(e){}
+  return true;
+}
+
+// 保存投递记录（捕获超出配额的异常）
+function saveApplications(){
+  try{ localStorage.setItem(KEY_APPS, JSON.stringify(applications)); return true; }
+  catch(e){ toast('保存失败：浏览器存储空间不足，请到「数据管理」清理或移除附件内容','error'); return false; }
+}
+
+// 保存简历版本库
+function saveResumes(){
+  try{ localStorage.setItem(KEY_RESUMES, JSON.stringify(resumeVersions)); return true; }
+  catch(e){ toast('保存失败：浏览器存储空间不足','error'); return false; }
+}
+
+// 保存设置
+function saveSettings(){
+  try{ localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings)); }catch(e){ /* 设置保存失败可忽略 */ }
+}
+
+// 估算指定数据集占用的字节数（localStorage 按 UTF-16 存储，每字符约 2 字节）
+function estimateBytesFor(apps, resumes){
+  const settingsLen = (localStorage.getItem(KEY_SETTINGS) || '').length;
+  return (JSON.stringify(apps).length + JSON.stringify(resumes).length + settingsLen) * 2;
+}
+
+// 估算当前已占用空间
+function getStorageBytes(){
+  return [KEY_APPS, KEY_RESUMES, KEY_SETTINGS]
+    .reduce((sum, k) => sum + (localStorage.getItem(k) || '').length * 2, 0);
+}
+
+// 提交投递记录变更：保存 + 刷新界面 + 更新提醒角标
+function commitApps(){
+  if(!saveApplications()) return false;
+  renderCurrent(); updateFollowBadge();
+  return true;
+}
+
+// 提交简历版本变更
+function commitResumes(){
+  if(!saveResumes()) return false;
+  renderCurrent(); updateFollowBadge();
+  return true;
+}
+
+/* =========================================================
+ * 五、弹窗基础设施 / Toast / 确认框
+ * ========================================================= */
+function showModal(id){
+  $(id).classList.remove('hidden');
+  modalStack = modalStack.filter(x => x !== id);
+  modalStack.push(id);
+  document.body.style.overflow = 'hidden';
+}
+
+function hideModal(id){
+  $(id).classList.add('hidden');
+  modalStack = modalStack.filter(x => x !== id);
+  if(!modalStack.length) document.body.style.overflow = '';
+  // 确认框被关闭（含 Esc / 点遮罩）时视为取消
+  if(id === 'confirmModal' && confirmResolver){ confirmResolver(false); confirmResolver = null; }
+}
+
+// 轻提示：type 可为 info / success / error
+function toast(msg, type){
+  const el = $('toast');
+  el.textContent = msg;
+  el.className = 'show' + (type ? ' ' + type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ el.className = ''; }, 2600);
+}
+
+// Promise 化的确认框，用法：const ok = await showConfirm(标题, 内容, {okText, danger})
+function showConfirm(title, message, opts){
+  opts = opts || {};
+  $('confirmTitle').textContent = title;
+  $('confirmMessage').textContent = message;
+  const okBtn = $('confirmOkBtn');
+  okBtn.textContent = opts.okText || '确定';
+  $('confirmCancelBtn').textContent = opts.cancelText || '取消';
+  okBtn.className = 'btn ' + (opts.danger ? 'btn-danger' : 'btn-primary');
+  showModal('confirmModal');
+  return new Promise(res => { confirmResolver = res; });
+}
+
+function resolveConfirm(v){
+  if(confirmResolver){ confirmResolver(v); confirmResolver = null; }
+  hideModal('confirmModal');
+}
+
+/* =========================================================
+ * 六、Tab 导航
+ * ========================================================= */
+const TAB_NAMES = ['list','stats','resume','followup','calendar','data','monitor'];
+
+function switchTab(name){
+  currentTab = name;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+  $('panel-' + name).classList.remove('hidden');
+  settings.lastTab = name;
+  saveSettings();
+  renderCurrent();
+  window.scrollTo({top:0});
+}
+
+// 根据当前 Tab 渲染对应模块
+function renderCurrent(){
+  if(currentTab === 'list') renderList();
+  else if(currentTab === 'stats') renderStats();
+  else if(currentTab === 'resume') renderResumes();
+  else if(currentTab === 'followup') renderFollowUps();
+  else if(currentTab === 'calendar') renderCalendar();
+  else if(currentTab === 'data') renderData();
+  else if(currentTab === 'monitor') renderMonitors();
+}
+
+/* =========================================================
+ * 六·五、主题切换（浅色 / 深色）
+ * ========================================================= */
+function applyTheme(){
+  const t = settings.theme === 'dark' ? 'dark' : 'light';
+  if(t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
+  const btn = $('themeToggleBtn');
+  if(btn) btn.textContent = t === 'dark' ? '☀️' : '🌙';
+}
+function toggleTheme(){
+  settings.theme = settings.theme === 'dark' ? 'light' : 'dark';
+  saveSettings(); applyTheme(); renderCurrent();
+}
+
+/* =========================================================
+ * 七、投递列表：筛选、排序、渲染
+ * ========================================================= */
+// 状态徽章（点击可快速切换状态）
+function statusBadgeHtml(status){
+  const c = STATUS_COLORS[status] || '#6b7280';
+  return '<button type="button" class="badge status-badge" data-action="status" style="background:' + c + '1a;color:' + c + ';border:1px solid ' + c + '55">' + escapeHtml(status) + '</button>';
+}
+
+// 综合测评状态小标签（点击可切换 未测评 / 已测评）
+function assessmentChipHtml(a){
+  const done = (a.assessmentStatus || '未测评') === '已测评';
+  const cls = done ? 'asm-done' : 'asm-pending';
+  const txt = done ? '✅ 已测评' : '📝 待测评';
+  return '<button type="button" class="badge asm-chip ' + cls + '" data-action="assessment" title="点击切换测评状态（用于筛选 / 提醒）">' + txt + '</button>';
+}
+function assessmentLinkHtml(a){
+  return a.assessmentLink ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '';
+}
+
+// 跟进日期高亮提示
+function followUpHtml(iso){
+  const days = daysUntil(iso);
+  let cls = 'fu-ok';
+  if(days < 0) cls = 'fu-overdue';
+  else if(days === 0) cls = 'fu-today';
+  else if(days <= 3) cls = 'fu-soon';
+  return '<span class="fu-chip ' + cls + '">⏰ 跟进：' + fmtDateCN(iso) + '（' + describeFollowUp(iso) + '）</span>';
+}
+
+// 按筛选条件过滤记录
+function getFilteredApps(){
+  const f = settings.filters;
+  const kw = f.search.trim().toLowerCase();
+  return applications.filter(a => {
+    if(f.status && a.status !== f.status) return false;
+    if(f.channel && (a.channel || '其他') !== f.channel) return false;
+    if(f.assessment && (a.assessmentStatus || '未测评') !== f.assessment) return false;
+    if(kw && !(a.company.toLowerCase().includes(kw) || a.position.toLowerCase().includes(kw))) return false;
+    if(f.dateFrom && a.applyDate < f.dateFrom) return false;
+    if(f.dateTo && a.applyDate > f.dateTo) return false;
+    if(f.tag){
+      const t = f.tag.trim().toLowerCase();
+      if(t && !parseTags(a.tags).some(x => x.toLowerCase().includes(t))) return false;
+    }
+    return true;
+  });
+}
+
+// 排序：投递日期 / 公司名称 / 状态（按 STATUSES 自定义顺序）
+function sortApps(arr){
+  const f = settings.filters;
+  const mul = f.sortDir === 'asc' ? 1 : -1;
+  const sorted = [...arr];
+  sorted.sort((a, b) => {
+    const sa = a.starred ? 1 : 0, sb = b.starred ? 1 : 0;
+    if(sa !== sb) return sb - sa; // 星标记录始终置顶
+    let r = 0;
+    if(f.sortBy === 'company') r = a.company.localeCompare(b.company, 'zh');
+    else if(f.sortBy === 'status') r = STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status);
+    else r = a.applyDate < b.applyDate ? -1 : (a.applyDate > b.applyDate ? 1 : 0);
+    if(r === 0) r = a.updatedAt < b.updatedAt ? 1 : -1; // 并列时按更新时间倒序
+    return r * mul;
+  });
+  return sorted;
+}
+
+// 单条记录卡片
+function appCardHtml(a){
+  const tags = parseTags(a.tags).map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('');
+  const link = a.jobLink ? '<a class="app-link" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>' : '';
+  const resumeFile = a.resumeFileName
+    ? '<span class="muted-text">📎 ' + escapeHtml(a.resumeFileName) + (a.resumeFileData ? '' : '（仅文件名）') + '</span>'
+    : '';
+  const checked = selectedAppIds.has(a.id) ? ' checked' : '';
+  return '<div class="card app-card' + (a.starred ? ' starred-card' : '') + '" data-id="' + a.id + '">'
+    + '<div class="app-card-top">'
+    +   '<label class="app-check-wrap"><input type="checkbox" class="app-check" value="' + a.id + '"' + checked + '></label>'
+    +   '<div class="app-title">' + statusBadgeHtml(a.status)
+    +     '<span class="company">' + escapeHtml(a.company) + '</span><span class="sep">·</span>'
+    +     '<span class="position">' + escapeHtml(a.position) + '</span>'
+    +   '</div>'
+    +   '<div class="app-actions">'
+    +     '<button type="button" class="btn btn-ghost btn-sm star-btn' + (a.starred ? ' starred' : '') + '" data-action="star" title="星标置顶">' + (a.starred ? '★' : '☆') + '</button>'
+    +     '<button type="button" class="btn btn-secondary btn-sm" data-action="duplicate">复制</button>'
+    +     '<button type="button" class="btn btn-secondary btn-sm" data-action="edit">编辑</button>'
+    +     '<button type="button" class="btn btn-danger-ghost btn-sm" data-action="delete">删除</button>'
+    +   '</div>'
+    + '</div>'
+    + '<div class="app-meta">'
+    +   '<span>📅 投递：' + fmtDateCN(a.applyDate) + '</span>'
+    +   (a.location ? '<span>📍 ' + escapeHtml(a.location) + '</span>' : '')
+    +   (a.salary ? '<span>💰 ' + escapeHtml(a.salary) + '</span>' : '')
+    +   '<span>📮 ' + escapeHtml(a.channel || '其他') + '</span>'
+    +   (a.resumeVersion ? '<span>📄 ' + escapeHtml(a.resumeVersion) + '</span>' : '')
+    +   (a.contactRecords && a.contactRecords.length ? '<span>💬 ' + a.contactRecords.length + ' 条联系</span>' : '')
+    +   (a.interviewDate ? '<span>🗓️ 面试：' + escapeHtml(a.interviewDate) + '</span>' : '')
+    + '</div>'
+    + (tags ? '<div class="app-tags">' + tags + '</div>' : '')
+    + '<div class="app-card-bottom">'
+    +   (a.nextFollowUpDate ? followUpHtml(a.nextFollowUpDate) : '')
+    +   link + assessmentLinkHtml(a) + assessmentChipHtml(a) + resumeFile
+    + '</div>'
+    + '</div>';
+}
+
+// 渲染投递列表
+function renderList(){
+  const filtered = sortApps(getFilteredApps());
+  $('listCount').textContent = filtered.length === applications.length
+    ? '共 ' + applications.length + ' 条记录'
+    : '筛选出 ' + filtered.length + ' 条 / 共 ' + applications.length + ' 条';
+  if(!filtered.length){
+    $('appList').innerHTML = '<div class="card empty-card">📭 '
+      + (applications.length ? '当前筛选条件下没有匹配的记录' : '还没有投递记录，点击下方按钮添加第一条吧')
+      + '<div style="margin-top:14px"><button type="button" class="btn btn-primary" data-action="add">＋ 添加记录</button></div></div>';
+    return;
+  }
+  $('appList').innerHTML = filtered.map(appCardHtml).join('');
+  renderAssessmentBanner();
+}
+
+// 快速切换状态选择器
+function openStatusPicker(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  statusPickerAppId = id;
+  $('statusModalSubtitle').textContent = app.company + ' · ' + app.position;
+  $('statusOptions').innerHTML = STATUSES.map(s => {
+    const c = STATUS_COLORS[s];
+    return '<button type="button" class="status-opt' + (s === app.status ? ' current' : '') + '" data-status="' + s + '">'
+      + '<span class="dot" style="background:' + c + '"></span>' + s + '</button>';
+  }).join('');
+  showModal('statusModal');
+}
+
+// 删除投递记录（二次确认）
+async function confirmDeleteApp(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  const ok = await showConfirm('删除确认', '确定删除「' + app.company + ' · ' + app.position + '」这条投递记录吗？此操作不可恢复。', {danger:true, okText:'删除'});
+  if(!ok) return;
+  applications = applications.filter(a => a.id !== id);
+  commitApps();
+  toast('已删除记录', 'success');
+}
+
+// 跟进提醒 Tab 上的角标：今天到期或已过期的数量
+function updateFollowBadge(){
+  const today = todayStr();
+  const n = applications.filter(a => a.nextFollowUpDate && a.nextFollowUpDate <= today).length;
+  const el = $('followBadge');
+  el.textContent = n;
+  el.classList.toggle('hidden', n === 0);
+}
+
+// 列表顶部「待测评」提醒条：有未测评记录时显示，并提供查看 / 一键标记
+function renderAssessmentBanner(){
+  const el = $('assessmentBanner');
+  if(!el) return;
+  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评');
+  if(!pending.length){ el.classList.add('hidden'); el.innerHTML = ''; return; }
+  el.classList.remove('hidden');
+  el.innerHTML = '📝 你有 <b>' + pending.length + '</b> 条投递尚未完成综合测评，别忘啦'
+    + '<button type="button" class="btn btn-ghost btn-sm" id="asmViewBtn">查看待测评</button>'
+    + '<button type="button" class="btn btn-ghost btn-sm" id="asmAllDoneBtn">全部标记已测评</button>';
+  $('asmViewBtn').addEventListener('click', () => switchTab('followup'));
+  $('asmAllDoneBtn').addEventListener('click', markAllAssessed);
+}
+
+// 跟进提醒页的「待测评」清单
+function renderAssessmentReminders(){
+  const el = $('assessmentReminderList');
+  if(!el) return;
+  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评');
+  if(!pending.length){
+    el.innerHTML = '<div class="muted-text">🎉 没有待测评的投递，综合测评已全部完成。</div>';
+    return;
+  }
+  el.innerHTML = pending.map(a => {
+    const link = a.assessmentLink
+      ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">🔗 去测评</a>'
+      : '<span class="muted-text">（未填测评链接，请在编辑里补充）</span>';
+    return '<div class="asm-item">'
+      + '<span class="asm-company">' + escapeHtml(a.company) + ' · ' + escapeHtml(a.position) + '</span>'
+      + '<span class="muted-text">' + escapeHtml(a.status) + ' · 投递 ' + fmtDateCN(a.applyDate) + '</span>'
+      + link
+      + '<button type="button" class="btn btn-secondary btn-sm" data-asm-done="' + a.id + '">标记已测评</button>'
+      + '</div>';
+  }).join('');
+}
+
+/* =========================================================
+ * 七·五、星标置顶 / 复制记录
+ * ========================================================= */
+// 切换星标
+function toggleStar(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  app.starred = !app.starred;
+  app.updatedAt = nowDateTimeStr();
+  commitApps();
+  toast(app.starred ? '已置顶星标' : '已取消星标', 'success');
+}
+
+// 复制一条记录为新的投递（新 id，保留联系方式与附件信息，重置时间）
+function duplicateApp(id){
+  const src = applications.find(a => a.id === id);
+  if(!src) return;
+  const now = nowDateTimeStr();
+  const copy = {
+    ...defaultAppFields(),
+    ...src,
+    id: genId(),
+    starred: false,
+    contactRecords: (src.contactRecords || []).map(c => ({...c})),
+    createdAt: now,
+    updatedAt: now
+  };
+  applications.unshift(copy);
+  commitApps();
+  toast('已复制为新的投递记录', 'success');
+}
+
+// 切换某条记录的「综合测评」状态（未测评 <-> 已测评），便于筛选与提醒
+function toggleAssessment(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  app.assessmentStatus = (app.assessmentStatus === '已测评') ? '未测评' : '已测评';
+  app.updatedAt = nowDateTimeStr();
+  commitApps();
+  renderList();
+  renderAssessmentBanner();
+  renderAssessmentReminders();
+  toast(app.assessmentStatus === '已测评' ? '已标记为「已测评」' : '已改回「待测评」', 'success');
+}
+
+// 一次性把全部「待测评」标记为「已测评」
+function markAllAssessed(){
+  let n = 0;
+  applications.forEach(a => {
+    if((a.assessmentStatus || '未测评') === '未测评'){
+      a.assessmentStatus = '已测评'; a.updatedAt = nowDateTimeStr(); n++;
+    }
+  });
+  if(n) commitApps();
+  renderList(); renderAssessmentBanner(); renderAssessmentReminders();
+  toast(n ? ('已将 ' + n + ' 条标记为已测评') : '没有待测评的记录', n ? 'success' : 'info');
+}
+
+/* =========================================================
+ * 七·六、批量操作（多选 / 全选 / 批量删除 / 批量改状态）
+ * ========================================================= */
+function setBatchMode(on){
+  const bar = $('batchBar');
+  if(on){
+    $('appList').classList.add('batch-mode');
+    bar.classList.remove('hidden');
+  }else{
+    $('appList').classList.remove('batch-mode');
+    bar.classList.add('hidden');
+    selectedAppIds.clear();
+    $('selectAllChk').checked = false;
+  }
+  updateBatchCount();
+}
+
+// 当前筛选结果（用于全选 / 计数）
+function currentFilteredApps(){ return getFilteredApps(); }
+
+function updateBatchCount(){
+  const n = selectedAppIds.size;
+  $('batchCount').textContent = '已选 ' + n + ' 项';
+  $('selectAllChk').checked = (function(){
+    const list = currentFilteredApps();
+    return list.length > 0 && list.every(a => selectedAppIds.has(a.id));
+  })();
+}
+
+async function batchDelete(){
+  if(!selectedAppIds.size){ toast('请先勾选要删除的记录', 'info'); return; }
+  const n = selectedAppIds.size;
+  const ok = await showConfirm('批量删除', '确定删除选中的 ' + n + ' 条投递记录吗？此操作不可恢复。', {danger:true, okText:'删除'});
+  if(!ok) return;
+  applications = applications.filter(a => !selectedAppIds.has(a.id));
+  selectedAppIds.clear();
+  $('selectAllChk').checked = false;
+  updateBatchCount();
+  commitApps();
+  toast('已删除 ' + n + ' 条记录', 'success');
+}
+
+function openBatchStatus(){
+  if(!selectedAppIds.size){ toast('请先勾选记录', 'info'); return; }
+  $('batchStatusSubtitle').textContent = '将以下 ' + selectedAppIds.size + ' 条记录统一改为：';
+  $('batchStatusOptions').innerHTML = STATUSES.map(s => {
+    const c = STATUS_COLORS[s];
+    return '<button type="button" class="status-opt" data-status="' + s + '">'
+      + '<span class="dot" style="background:' + c + '"></span>' + s + '</button>';
+  }).join('');
+  showModal('batchStatusModal');
+}
+
+function applyBatchStatus(status){
+  let n = 0;
+  const now = nowDateTimeStr();
+  applications.forEach(a => {
+    if(selectedAppIds.has(a.id)){ a.status = status; a.updatedAt = now; n++; }
+  });
+  hideModal('batchStatusModal');
+  commitApps();
+  toast('已更新 ' + n + ' 条记录状态为「' + status + '」', 'success');
+}
+
+/* =========================================================
+ * 七·七、导出 CSV（带 BOM，Excel 可直接打开中文）
+ * ========================================================= */
+function exportCsv(){
+  const headers = [
+    ['公司名称','company'],['职位名称','position'],['工作地点','location'],['薪资范围','salary'],
+    ['招聘渠道','channel'],['投递日期','applyDate'],['当前状态','status'],['下次跟进日期','nextFollowUpDate'],
+    ['面试时间','interviewDate'],['简历版本','resumeVersion'],['标签','tags'],['职位链接','jobLink'],
+    ['测评链接','assessmentLink'],['测评状态','assessmentStatus'],
+    ['备注','notes'],['星标','starred'],['联系记录数','contactRecords']
+  ];
+  const esc = v => {
+    const s = v == null ? '' : String(v);
+    return '"' + s.replace(/"/g, '""') + '"';
+  };
+  const rows = [headers.map(h => esc(h[0])).join(',')];
+  applications.forEach(a => {
+    rows.push(headers.map(([, key]) => {
+      if(key === 'contactRecords') return esc((a.contactRecords || []).length);
+      if(key === 'starred') return esc(a.starred ? '是' : '');
+      return esc(a[key]);
+    }).join(','));
+  });
+  const blob = new Blob(['﻿' + rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
+  downloadBlob('job_applications_' + todayStr() + '.csv', blob);
+  toast('已导出 CSV 文件', 'success');
+}
+
+// 把筛选控件的值同步为当前 settings（初始化 / 重置时使用）
+function syncFilterControls(){
+  const f = settings.filters;
+  $('searchInput').value = f.search;
+  $('filterStatus').value = f.status;
+  $('filterChannel').value = f.channel;
+  $('filterAssessment').value = f.assessment;
+  $('filterTag').value = f.tag;
+  $('filterDateFrom').value = f.dateFrom;
+  $('filterDateTo').value = f.dateTo;
+  $('sortBy').value = f.sortBy;
+  updateSortDirBtn();
+}
+
+function updateSortDirBtn(){
+  $('sortDirBtn').textContent = settings.filters.sortDir === 'desc' ? '↓ 降序' : '↑ 升序';
+}
+
+// 用 CHANNELS + 自定义渠道 生成「招聘渠道」下拉（表单 + 筛选），保证选项齐全且同步
+function populateChannelSelects(){
+  const opts = allChannels().map(c => '<option value="'+c+'">'+c+'</option>').join('');
+  const formSel = $('fChannel');
+  if(formSel) formSel.innerHTML = opts;
+  const filterSel = $('filterChannel');
+  if(filterSel) filterSel.innerHTML = '<option value="">全部渠道</option>' + opts;
+}
+
+// 「＋ 自定义」：让用户输入新渠道并记住（下次下拉里直接出现）
+function addCustomChannelFromInput(){
+  const name = window.prompt('输入自定义招聘渠道名称：', '');
+  if(name == null) return;              // 取消
+  const v = name.trim();
+  if(!v) return;
+  if(allChannels().includes(v)){
+    $('fChannel').value = v;
+    toast('该渠道已存在，已为你选中', 'success');
+    return;
+  }
+  addCustomChannel(v);
+  populateChannelSelects();
+  $('fChannel').value = v;
+  toast('已添加渠道「' + v + '」，以后会记住', 'success');
+}
+/* =========================================================
+ * 八、添加/编辑投递记录（模态框）
+ * ========================================================= */
+// 打开弹窗：传入 id 为编辑，否则为新建
+function openAppModal(id){
+  editingAppId = id || null;
+  const app = id ? applications.find(a => a.id === id) : null;
+  $('appModalTitle').textContent = app ? '编辑投递记录' : '添加投递记录';
+  $('fCompany').value = app ? app.company : '';
+  $('fPosition').value = app ? app.position : '';
+  $('fLocation').value = app ? (app.location || '') : '';
+  $('fSalary').value = app ? (app.salary || '') : '';
+  $('fChannel').value = app ? (app.channel || 'BOSS直聘') : 'BOSS直聘';
+  $('fApplyDate').value = app ? app.applyDate : todayStr();
+  $('fJobLink').value = app ? (app.jobLink || '') : '';
+  $('fStatus').value = app ? app.status : '已投递';
+  $('fTags').value = app ? (app.tags || '') : '';
+  $('fResumeVersion').value = app ? (app.resumeVersion || '') : '';
+  $('fNotes').value = app ? (app.notes || '') : '';
+  $('fFollowUpDate').value = app ? (app.nextFollowUpDate || '') : '';
+  $('fAssessmentStatus').value = app ? (app.assessmentStatus || '未测评') : '未测评';
+  $('fAssessmentLink').value = app ? (app.assessmentLink || '') : '';
+  // datetime-local 控件需要 YYYY-MM-DDTHH:mm 格式，存储格式为空格分隔
+  $('fInterviewDate').value = app && app.interviewDate ? app.interviewDate.replace(' ', 'T') : '';
+  // 简历版本下拉候选来自简历版本库（datalist 同时支持手动输入新名称）
+  $('resumeVersionList').innerHTML = resumeVersions.map(r => '<option value="' + escapeHtml(r.name) + '">').join('');
+  // 联系记录草稿（保存前不直接改动原数据，取消可放弃修改）
+  draftContacts = app && app.contactRecords ? app.contactRecords.map(c => ({...c})) : [];
+  // 附件：默认保留原文件
+  pendingFile = app && app.resumeFileName
+    ? {name:app.resumeFileName, data:app.resumeFileData || '', file:null, tooBig:false}
+    : null;
+  $('appFileInput').value = '';
+  renderContactList();
+  updateAppFileArea();
+  showModal('appModal');
+}
+
+// 渲染附件区域（选择 / 更换 / 移除）
+function updateFileArea(areaId, pf, fileInputId){
+  const area = $(areaId);
+  let html;
+  if(!pf){
+    html = '<div class="muted-text" style="margin-bottom:6px">未上传附件（支持 PDF / DOC / DOCX，不超过 2MB）</div>'
+      + '<button type="button" class="btn btn-secondary btn-sm" data-pick-file>选择文件</button>';
+  }else{
+    let note;
+    if(pf.tooBig) note = '<span class="warn-text">文件超过 2MB，将仅保存文件名</span>';
+    else if(pf.data) note = '<span class="ok-text">已包含文件内容</span>';
+    else if(pf.file) note = '<span class="ok-text">将保存文件内容</span>';
+    else note = '<span class="muted-text">仅保存文件名（无文件内容）</span>';
+    html = '<div class="file-info">📎 ' + escapeHtml(pf.name) + '　' + note + '</div>'
+      + '<div class="file-actions">'
+      + '<button type="button" class="btn btn-secondary btn-sm" data-pick-file>重新上传</button>'
+      + '<button type="button" class="btn btn-ghost btn-sm" data-remove-file>移除附件</button>'
+      + '</div>';
+  }
+  area.innerHTML = html;
+  area.querySelector('[data-pick-file]').onclick = () => $(fileInputId).click();
+  const rm = area.querySelector('[data-remove-file]');
+  if(rm) rm.onclick = () => {
+    if(areaId === 'fileArea'){ pendingFile = null; $('appFileInput').value = ''; updateAppFileArea(); }
+    else { resumePendingFile = null; $('resumeFileInput').value = ''; updateResumeFileArea(); }
+  };
+}
+function updateAppFileArea(){ updateFileArea('fileArea', pendingFile, 'appFileInput'); }
+function updateResumeFileArea(){ updateFileArea('resumeFileArea', resumePendingFile, 'resumeFileInput'); }
+
+// 选择附件文件：校验类型，超过 2MB 标记为仅保存文件名
+function onAppFileChange(e){
+  const f = e.target.files && e.target.files[0];
+  if(!f) return;
+  if(!isAllowedFile(f.name)){ toast('仅支持 PDF / DOC / DOCX 格式的文件', 'error'); e.target.value = ''; return; }
+  pendingFile = {name:f.name, file:f, data:'', tooBig:f.size > MAX_FILE_SIZE};
+  if(pendingFile.tooBig) toast('文件超过 2MB，将仅保存文件名', 'info');
+  updateAppFileArea();
+}
+
+// 保存投递记录（含表单验证、附件处理、容量检查）
+async function saveAppFromForm(){
+  const company = $('fCompany').value.trim();
+  const position = $('fPosition').value.trim();
+  // 必填项校验
+  if(!company){ toast('请填写公司名称', 'error'); $('fCompany').focus(); return; }
+  if(!position){ toast('请填写职位名称', 'error'); $('fPosition').focus(); return; }
+  const applyDate = $('fApplyDate').value;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(applyDate)){ toast('请选择投递日期', 'error'); return; }
+  // URL 校验（选填，填了必须合法）
+  const jobLink = $('fJobLink').value.trim();
+  if(jobLink){
+    let ok = false;
+    try{ const u = new URL(jobLink); ok = /^https?:$/.test(u.protocol); }catch(e){ ok = false; }
+    if(!ok){ toast('职位链接格式不正确（需以 http:// 或 https:// 开头）', 'error'); $('fJobLink').focus(); return; }
+  }
+  if($('fFollowUpDate').value && !/^\d{4}-\d{2}-\d{2}$/.test($('fFollowUpDate').value)){ toast('跟进日期格式不正确', 'error'); return; }
+  if($('fInterviewDate').value && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test($('fInterviewDate').value)){ toast('面试时间格式不正确', 'error'); return; }
+  // 测评链接校验（选填，填了必须合法）
+  const assessmentLink = $('fAssessmentLink').value.trim();
+  if(assessmentLink){
+    let ok = false;
+    try{ const u = new URL(assessmentLink); ok = /^https?:$/.test(u.protocol); }catch(e){ ok = false; }
+    if(!ok){ toast('测评链接格式不正确（需以 http:// 或 https:// 开头）', 'error'); $('fAssessmentLink').focus(); return; }
+  }
+
+  // ---- 处理简历附件 ----
+  let resumeFileName = '', resumeFileData = '';
+  try{
+    if(pendingFile){
+      if(pendingFile.file){
+        if(pendingFile.file.size > MAX_FILE_SIZE){
+          // 超过 2MB：只保存文件名，不保存内容
+          resumeFileName = pendingFile.name;
+        }else{
+          resumeFileData = await readFileAsDataURL(pendingFile.file);
+          resumeFileName = pendingFile.name;
+        }
+      }else{
+        // 保留原有附件
+        resumeFileName = pendingFile.name || '';
+        resumeFileData = pendingFile.data || '';
+      }
+    }
+  }catch(err){ toast('文件读取失败', 'error'); return; }
+
+  const existing = editingAppId ? applications.find(a => a.id === editingAppId) : null;
+  const now = nowDateTimeStr();
+  const rec = {
+    id: editingAppId || genId(),
+    company, position,
+    location: $('fLocation').value.trim(),
+    salary: $('fSalary').value.trim(),
+    channel: $('fChannel').value,
+    applyDate, jobLink,
+    status: $('fStatus').value,
+    tags: $('fTags').value.trim(),
+    resumeVersion: $('fResumeVersion').value.trim(),
+    resumeFileName, resumeFileData,
+    notes: $('fNotes').value,
+    starred: existing ? (existing.starred || false) : false,
+    contactRecords: draftContacts,
+    nextFollowUpDate: $('fFollowUpDate').value || '',
+    interviewDate: $('fInterviewDate').value ? $('fInterviewDate').value.replace('T', ' ') : '',
+    assessmentStatus: $('fAssessmentStatus').value,
+    assessmentLink,
+    createdAt: existing ? existing.createdAt : now,
+    updatedAt: now
+  };
+
+  // ---- 存储容量预估：附件使总量超过 4MB 时提示用户 ----
+  if(resumeFileData){
+    const nextList = applications.filter(a => a.id !== rec.id).concat(rec);
+    const bytes = estimateBytesFor(nextList, resumeVersions);
+    if(bytes > WARN_BYTES){
+      const keep = await showConfirm('存储空间预警',
+        '保存附件后数据总量约 ' + (bytes/1048576).toFixed(2) + ' MB，已超过建议的 4MB（浏览器上限约 5MB）。仍要保存附件内容吗？选择“仅存文件名”将不保存文件内容。',
+        {okText:'仍要保存', cancelText:'仅存文件名'});
+      if(!keep) rec.resumeFileData = '';
+    }
+  }
+
+  // ---- 写入数据 ----
+  if(existing) Object.assign(existing, rec);
+  else applications.unshift(rec);
+  hideModal('appModal');
+  if(commitApps()) toast(editingAppId ? '记录已更新' : '记录已添加', 'success');
+}
+
+/* =========================================================
+ * 九、联系记录管理（编辑弹窗内的子区域）
+ * ========================================================= */
+// 渲染联系记录草稿列表（按时间倒序）
+function renderContactList(){
+  const el = $('contactList');
+  if(!draftContacts.length){
+    el.innerHTML = '<div class="muted-text contact-empty">暂无联系记录</div>';
+    return;
+  }
+  const sorted = draftContacts.map((c, origIdx) => ({...c, origIdx}))
+    .sort((a, b) => (a.time || '') < (b.time || '') ? 1 : -1);
+  el.innerHTML = sorted.map(c =>
+    '<div class="contact-item">'
+    + '<div class="contact-head"><span class="contact-type">' + escapeHtml(c.type || '其他') + '</span>'
+    + '<span class="muted-text">' + escapeHtml(c.time || '') + '</span>'
+    + '<button type="button" class="btn-link-danger" data-remove-contact="' + c.origIdx + '">删除</button></div>'
+    + '<div class="contact-content">' + escapeHtml(c.content || '') + '</div>'
+    + '</div>').join('');
+}
+
+// 打开“添加联系记录”小弹窗
+function openContactModal(){
+  $('cTime').value = nowDateTimeStr().replace(' ', 'T');
+  $('cType').value = '电话';
+  $('cContent').value = '';
+  showModal('contactModal');
+}
+
+// 确认添加一条联系记录到草稿
+function addContactFromForm(){
+  const content = $('cContent').value.trim();
+  if(!content){ toast('请填写沟通内容', 'error'); $('cContent').focus(); return; }
+  const time = $('cTime').value ? $('cTime').value.replace('T', ' ') : nowDateTimeStr();
+  draftContacts.push({time, type:$('cType').value, content});
+  renderContactList();
+  hideModal('contactModal');
+}
+
+/* =========================================================
+ * 十、简历版本库
+ * ========================================================= */
+// 统计某个简历版本被多少条投递使用
+function resumeUsageCount(name){
+  return applications.filter(a => a.resumeVersion === name).length;
+}
+
+function renderResumes(){
+  $('resumeCount').textContent = '共 ' + resumeVersions.length + ' 个版本';
+  if(!resumeVersions.length){
+    $('resumeList').innerHTML = '<div class="card empty-card">📄 还没有简历版本，点击上方按钮添加。</div>';
+    return;
+  }
+  $('resumeList').innerHTML = resumeVersions.map(r =>
+    '<div class="card resume-card" data-id="' + r.id + '">'
+    + '<div class="resume-head">'
+    +   '<div class="resume-name">📄 ' + escapeHtml(r.name) + '</div>'
+    +   '<div class="app-actions">'
+    +     (r.fileData ? '<button type="button" class="btn btn-secondary btn-sm" data-action="download">下载</button>' : '')
+    +     '<button type="button" class="btn btn-secondary btn-sm" data-action="edit">编辑</button>'
+    +     '<button type="button" class="btn btn-danger-ghost btn-sm" data-action="delete">删除</button>'
+    +   '</div>'
+    + '</div>'
+    + (r.desc ? '<div class="resume-desc">' + escapeHtml(r.desc) + '</div>' : '')
+    + '<div class="app-meta">'
+    +   (r.fileName ? '<span>📎 ' + escapeHtml(r.fileName) + (r.fileData ? '' : '（仅文件名）') + '</span>' : '<span class="muted-text">未上传文件</span>')
+    +   (r.createdAt ? '<span>创建：' + escapeHtml(r.createdAt) + '</span>' : '')
+    +   (r.updatedAt ? '<span>更新：' + escapeHtml(r.updatedAt) + '</span>' : '')
+    +   '<span>被 ' + resumeUsageCount(r.name) + ' 条投递使用</span>'
+    + '</div>'
+    + '</div>').join('');
+}
+
+function openResumeModal(id){
+  editingResumeId = id || null;
+  const r = id ? resumeVersions.find(x => x.id === id) : null;
+  $('resumeModalTitle').textContent = r ? '编辑简历版本' : '添加简历版本';
+  $('rName').value = r ? r.name : '';
+  $('rDesc').value = r ? (r.desc || '') : '';
+  resumePendingFile = r && r.fileName
+    ? {name:r.fileName, data:r.fileData || '', file:null, tooBig:false}
+    : null;
+  $('resumeFileInput').value = '';
+  updateResumeFileArea();
+  showModal('resumeModal');
+}
+
+function onResumeFileChange(e){
+  const f = e.target.files && e.target.files[0];
+  if(!f) return;
+  if(!isAllowedFile(f.name)){ toast('仅支持 PDF / DOC / DOCX 格式的文件', 'error'); e.target.value = ''; return; }
+  resumePendingFile = {name:f.name, file:f, data:'', tooBig:f.size > MAX_FILE_SIZE};
+  if(resumePendingFile.tooBig) toast('文件超过 2MB，将仅保存文件名', 'info');
+  updateResumeFileArea();
+}
+
+async function saveResumeFromForm(){
+  const name = $('rName').value.trim();
+  if(!name){ toast('请填写版本名称', 'error'); $('rName').focus(); return; }
+  if(resumeVersions.some(r => r.name === name && r.id !== editingResumeId)){
+    toast('已存在同名版本，请换一个名称', 'error'); return;
+  }
+  let fileName = '', fileData = '';
+  try{
+    if(resumePendingFile){
+      if(resumePendingFile.file){
+        if(resumePendingFile.file.size > MAX_FILE_SIZE) fileName = resumePendingFile.name;
+        else { fileData = await readFileAsDataURL(resumePendingFile.file); fileName = resumePendingFile.name; }
+      }else{
+        fileName = resumePendingFile.name || '';
+        fileData = resumePendingFile.data || '';
+      }
+    }
+  }catch(err){ toast('文件读取失败', 'error'); return; }
+
+  const existing = editingResumeId ? resumeVersions.find(r => r.id === editingResumeId) : null;
+  const now = nowDateTimeStr();
+  const rec = {
+    id: editingResumeId || genId(),
+    name, desc: $('rDesc').value.trim(),
+    fileName, fileData,
+    createdAt: existing ? existing.createdAt : now,
+    updatedAt: now
+  };
+  // 容量检查
+  if(fileData){
+    const nextList = resumeVersions.filter(r => r.id !== rec.id).concat(rec);
+    if(estimateBytesFor(applications, nextList) > WARN_BYTES){
+      const keep = await showConfirm('存储空间预警',
+        '保存附件后数据总量将超过建议的 4MB。仍要保存文件内容吗？',
+        {okText:'仍要保存', cancelText:'仅存文件名'});
+      if(!keep) rec.fileData = '';
+    }
+  }
+  if(existing) Object.assign(existing, rec);
+  else resumeVersions.unshift(rec);
+  hideModal('resumeModal');
+  if(commitResumes()) toast(editingResumeId ? '简历版本已更新' : '简历版本已添加', 'success');
+}
+
+// 删除简历版本（二次确认，并提示引用情况）
+async function confirmDeleteResume(id){
+  const r = resumeVersions.find(x => x.id === id);
+  if(!r) return;
+  const used = resumeUsageCount(r.name);
+  const ok = await showConfirm('删除简历版本',
+    '确定删除「' + r.name + '」吗？' + (used ? '（有 ' + used + ' 条投递记录引用了该版本名称）' : '') + '此操作不可恢复。',
+    {danger:true, okText:'删除'});
+  if(!ok) return;
+  resumeVersions = resumeVersions.filter(x => x.id !== id);
+  commitResumes();
+  toast('已删除简历版本', 'success');
+}
+
+// 下载简历文件（有 DataURL 才能下载）
+function downloadResumeVersion(id){
+  const r = resumeVersions.find(x => x.id === id);
+  if(!r || !r.fileData){ toast('该版本未保存文件内容，无法下载', 'info'); return; }
+  const a = document.createElement('a');
+  a.href = r.fileData;
+  a.download = r.fileName || 'resume';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* =========================================================
+ * 十一、跟进提醒
+ * ========================================================= */
+function renderFollowUps(){
+  const list = applications.filter(a => a.nextFollowUpDate)
+    .sort((a, b) => a.nextFollowUpDate < b.nextFollowUpDate ? -1 : (a.nextFollowUpDate > b.nextFollowUpDate ? 1 : 0));
+  $('followCount').textContent = '共 ' + list.length + ' 条待跟进';
+  $('markAllFollowedBtn').disabled = !list.length;
+  if(!list.length){
+    $('followList').innerHTML = '<div class="card empty-card">🎉 太棒了，暂时没有需要跟进的记录！</div>';
+    return;
+  }
+  $('followList').innerHTML = list.map(a => {
+    const days = daysUntil(a.nextFollowUpDate);
+    const cls = days < 0 ? 'overdue' : (days === 0 ? 'today' : 'future');
+    return '<div class="card fu-item fu-' + cls + '-item" data-id="' + a.id + '">'
+      + '<div class="fu-main">'
+      +   '<div class="fu-title"><span>' + escapeHtml(a.company) + '</span><span class="sep">·</span>'
+      +     '<span>' + escapeHtml(a.position) + '</span>' + statusBadgeHtml(a.status) + '</div>'
+      +   '<div class="app-meta"><span>⏰ 跟进日期：' + fmtDateCN(a.nextFollowUpDate) + '</span>'
+      +     '<span class="fu-days fu-days-' + cls + '">' + describeFollowUp(a.nextFollowUpDate) + '</span></div>'
+      + '</div>'
+      + '<div class="fu-actions">'
+      +   '<button type="button" class="btn btn-primary btn-sm" data-action="done">完成跟进</button>'
+      +   '<button type="button" class="btn btn-secondary btn-sm" data-action="edit">编辑</button>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+  renderAssessmentReminders();
+}
+
+// 完成跟进弹窗：可选附带一条联系记录
+function openFollowUpDone(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  fuAppId = id;
+  $('fuSubtitle').textContent = app.company + ' · ' + app.position;
+  $('fuType').value = '电话';
+  $('fuContent').value = '';
+  showModal('followUpModal');
+}
+
+function confirmFollowUpDone(){
+  const app = applications.find(a => a.id === fuAppId);
+  if(!app) return;
+  app.nextFollowUpDate = '';
+  const content = $('fuContent').value.trim();
+  if(content){
+    app.contactRecords = app.contactRecords || [];
+    app.contactRecords.push({time:nowDateTimeStr(), type:$('fuType').value, content});
+  }
+  app.updatedAt = nowDateTimeStr();
+  hideModal('followUpModal');
+  commitApps();
+  toast('已标记完成跟进', 'success');
+}
+
+// 全部标记已跟进（二次确认后清空所有跟进日期）
+async function markAllFollowed(){
+  const list = applications.filter(a => a.nextFollowUpDate);
+  if(!list.length){ toast('没有待跟进的记录', 'info'); return; }
+  const ok = await showConfirm('全部标记已跟进', '将清空 ' + list.length + ' 条记录的跟进日期，确定继续吗？');
+  if(!ok) return;
+  list.forEach(a => { a.nextFollowUpDate = ''; a.updatedAt = nowDateTimeStr(); });
+  commitApps();
+  toast('已全部标记为已跟进', 'success');
+}
+
+/* =========================================================
+ * 十一·五、桌面通知提醒
+ * ========================================================= */
+function notificationsSupported(){ return 'Notification' in window; }
+
+function updateNotifyBtn(){
+  const btn = $('notifyToggleBtn');
+  if(!btn) return;
+  if(!notificationsSupported()){ btn.textContent = '🔔 浏览器不支持'; btn.disabled = true; return; }
+  const enabled = settings.notifyEnabled && Notification.permission === 'granted';
+  btn.textContent = enabled ? '🔔 桌面提醒已开启' : '🔔 开启桌面提醒';
+}
+
+function renderNotifyBanner(){
+  const banner = $('notifyBanner');
+  if(!banner) return;
+  if(!notificationsSupported()){
+    banner.textContent = 'ℹ️ 当前浏览器不支持桌面通知，可手动查看本页的跟进列表。';
+    banner.classList.remove('hidden');
+    return;
+  }
+  if(Notification.permission === 'denied'){
+    banner.textContent = '⚠️ 桌面通知权限已被浏览器拒绝，请在站点设置中允许后重试。';
+    banner.classList.remove('hidden');
+    return;
+  }
+  if(settings.notifyEnabled && Notification.permission === 'granted'){
+    banner.textContent = '✅ 已开启桌面提醒，打开本页面时会自动检查过期 / 今日的跟进事项。';
+    banner.classList.remove('hidden');
+    return;
+  }
+  banner.classList.add('hidden');
+}
+
+async function toggleNotify(){
+  if(!notificationsSupported()){ toast('当前浏览器不支持桌面通知', 'error'); return; }
+  if(Notification.permission === 'denied'){
+    toast('通知权限已被拒绝，请在浏览器站点设置中允许后重试', 'error');
+    renderNotifyBanner();
+    return;
+  }
+  if(Notification.permission === 'granted'){
+    // 已授权：切换开关
+    settings.notifyEnabled = !settings.notifyEnabled;
+  }else{
+    // 未决定：请求权限
+    let perm;
+    try{ perm = await Notification.requestPermission(); }catch(e){ perm = 'denied'; }
+    if(perm !== 'granted'){ toast('未获得通知权限', 'info'); renderNotifyBanner(); return; }
+    settings.notifyEnabled = true;
+  }
+  saveSettings();
+  updateNotifyBtn();
+  renderNotifyBanner();
+  if(settings.notifyEnabled) checkNotifications();
+}
+
+// 检查过期 / 今日的跟进，弹出系统通知
+function checkNotifications(){
+  if(!notificationsSupported() || Notification.permission !== 'granted' || !settings.notifyEnabled) return;
+  const today = todayStr();
+  const due = applications.filter(a => a.nextFollowUpDate && a.nextFollowUpDate <= today);
+  if(!due.length) return;
+  const overdue = due.filter(a => a.nextFollowUpDate < today).length;
+  const title = '求职跟进提醒';
+  const body = due.length + ' 条跟进事项待处理' + (overdue ? '（其中 ' + overdue + ' 条已过期）' : '') + '：'
+    + due.slice(0, 3).map(a => a.company + '·' + a.position).join('、')
+    + (due.length > 3 ? ' 等' : '');
+  try{ new Notification(title, {body, tag:'job-followup'}); }catch(e){ /* 某些环境构造失败可忽略 */ }
+  // 综合测评提醒
+  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评');
+  if(pending.length){
+    const aBody = '你有 ' + pending.length + ' 条投递待完成综合测评：'
+      + pending.slice(0, 3).map(a => a.company + '·' + a.position).join('、')
+      + (pending.length > 3 ? ' 等' : '');
+    try{ new Notification('综合测评提醒', {body:aBody, tag:'job-assessment'}); }catch(e){ /* 同上 */ }
+  }
+}
+/* =========================================================
+ * 十二、面试日历（原生 JS 生成月历）
+ * ========================================================= */
+function renderCalendar(){
+  const year = calendarCursor.year, month = calendarCursor.month;
+  $('calTitle').textContent = year + '年' + (month + 1) + '月';
+  // 周一作为每周第一天：计算 1 号是周几（0=周一）
+  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const totalCells = Math.ceil((firstDow + daysInMonth) / 7) * 7;
+  // 面试按日期分组
+  const byDate = {};
+  applications.forEach(a => {
+    if(a.interviewDate){
+      const d = String(a.interviewDate).slice(0, 10);
+      (byDate[d] = byDate[d] || []).push(a);
+    }
+  });
+  const todayIso = todayStr();
+  let html = '', monthInterviewCount = 0;
+  for(let i = 0; i < totalCells; i++){
+    const date = new Date(year, month, i - firstDow + 1); // 自动归一化跨月日期
+    const iso = toISODate(date);
+    const inMonth = date.getMonth() === month;
+    const items = byDate[iso] || [];
+    if(inMonth) monthInterviewCount += items.length;
+    const chips = items.slice(0, 3).map(a =>
+      '<div class="interview-chip" data-id="' + a.id + '" title="' + escapeHtml(a.company + ' ' + a.position + ' ' + a.interviewDate) + '">'
+      + escapeHtml(a.company) + '·' + escapeHtml(a.position) + '</div>').join('');
+    html += '<div class="cal-cell' + (inMonth ? '' : ' other-month') + (iso === todayIso ? ' today' : '') + '">'
+      + '<div class="cal-date">' + date.getDate() + '</div>'
+      + chips
+      + (items.length > 3 ? '<div class="cal-more">+' + (items.length - 3) + ' 更多</div>' : '')
+      + '</div>';
+  }
+  $('calGrid').innerHTML = html;
+  $('calEmptyHint').classList.toggle('hidden', monthInterviewCount > 0);
+}
+
+function prevMonth(){ calendarCursor.month--; if(calendarCursor.month < 0){ calendarCursor.month = 11; calendarCursor.year--; } renderCalendar(); }
+function nextMonth(){ calendarCursor.month++; if(calendarCursor.month > 11){ calendarCursor.month = 0; calendarCursor.year++; } renderCalendar(); }
+function goToday(){ const n = new Date(); calendarCursor = {year:n.getFullYear(), month:n.getMonth()}; renderCalendar(); }
+
+// 面试详情弹窗
+function openInterviewDetail(id){
+  const a = applications.find(x => x.id === id);
+  if(!a) return;
+  interviewAppId = id;
+  $('ivCompany').textContent = a.company;
+  $('ivPosition').textContent = a.position;
+  $('ivTime').textContent = '🕐 ' + (a.interviewDate || '');
+  $('ivLocation').textContent = a.location ? '📍 ' + a.location : '';
+  const contacts = (a.contactRecords || []).slice().sort((x, y) => (x.time || '') < (y.time || '') ? 1 : -1);
+  $('ivContacts').innerHTML = contacts.length
+    ? contacts.map(c => '<div class="contact-item small"><div class="contact-head"><span class="contact-type">' + escapeHtml(c.type || '其他')
+        + '</span><span class="muted-text">' + escapeHtml(c.time || '') + '</span></div>'
+        + '<div class="contact-content">' + escapeHtml(c.content || '') + '</div></div>').join('')
+    : '<div class="muted-text">暂无联系记录</div>';
+  $('ivNotes').textContent = a.notes || '无';
+  showModal('interviewModal');
+}
+
+/* =========================================================
+ * 十三、统计看板
+ * ========================================================= */
+// 初始化 canvas（按设备像素比缩放，保证清晰）
+function setupCanvas(canvas, w, h){
+  const dpr = window.devicePixelRatio || 1;
+  if(!w) w = canvas.clientWidth || (canvas.parentElement && canvas.parentElement.clientWidth) || 600;
+  if(!h) h = 220;
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+  canvas.style.width = w + 'px';
+  canvas.style.height = h + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return {ctx, w, h};
+}
+
+function renderStats(){
+  const apps = applications;
+  const total = apps.length;
+  const today = todayStr();
+  // 本周（周一开始）与本月
+  const now = new Date();
+  const dow = (now.getDay() + 6) % 7;
+  const mondayIso = toISODate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow));
+  const monthPrefix = today.slice(0, 7);
+  const weekNew = apps.filter(a => a.applyDate >= mondayIso).length;
+  const monthNew = apps.filter(a => a.applyDate.startsWith(monthPrefix)).length;
+  const interviewRelated = apps.filter(a => INTERVIEW_STATUSES.includes(a.status)).length;
+  // 成功率：拿到 Offer（含已入职）的数量占比
+  const offerCount = apps.filter(a => a.status === 'Offer' || a.status === '已入职').length;
+  const pct = n => total ? ((n / total) * 100).toFixed(1) + '%' : '0%';
+
+  $('statCards').innerHTML =
+    '<div class="stat-card"><div class="stat-value">' + total + '</div><div class="stat-label">总投递数</div></div>'
+    + '<div class="stat-card"><div class="stat-value">' + weekNew + '</div><div class="stat-label">本周新增</div></div>'
+    + '<div class="stat-card"><div class="stat-value">' + monthNew + '</div><div class="stat-label">本月新增</div></div>'
+    + '<div class="stat-card"><div class="stat-value">' + pct(interviewRelated) + '</div><div class="stat-label">面试转化率</div></div>'
+    + '<div class="stat-card"><div class="stat-value">' + pct(offerCount) + '</div><div class="stat-label">投递成功率</div></div>';
+
+  // 各状态数量：纯 CSS 彩色条形图
+  const counts = STATUSES.map(s => ({s, n: apps.filter(a => a.status === s).length}));
+  const maxN = Math.max.apply(null, counts.map(c => c.n).concat([1]));
+  $('statusBars').innerHTML = counts.map(c =>
+    '<div class="bar-row"><div class="bar-label">' + c.s + '</div>'
+    + '<div class="bar-track"><div class="bar-fill" style="width:' + (c.n / maxN * 100) + '%;background:' + (STATUS_COLORS[c.s] || '#ccc') + '"></div></div>'
+    + '<div class="bar-num">' + c.n + '</div></div>').join('');
+
+  renderTagStats(apps);
+  drawTrendChart(apps);
+  drawChannelChart(apps);
+}
+
+// 标签统计 Top 10
+function renderTagStats(apps){
+  const map = {};
+  apps.forEach(a => parseTags(a.tags).forEach(t => { map[t] = (map[t] || 0) + 1; }));
+  const top = Object.entries(map).sort((x, y) => y[1] - x[1]).slice(0, 10);
+  $('tagStats').innerHTML = top.length
+    ? top.map((e, i) => '<div class="tag-row"><span class="tag-rank">' + (i + 1) + '</span><span class="tag">' + escapeHtml(e[0]) + '</span><span class="tag-count">' + e[1] + ' 次</span></div>').join('')
+    : '<div class="muted-text">暂无标签数据</div>';
+}
+
+// 读取当前主题下的图表配色（随浅色/深色切换）
+function themeCanvasColors(){
+  const cs = getComputedStyle(document.documentElement);
+  const g = n => (cs.getPropertyValue(n) || '').trim();
+  return {
+    grid: g('--canvas-grid') || '#e5e7eb',
+    text: g('--canvas-text') || '#9ca3af',
+    line: g('--canvas-line') || '#3b82f6',
+    center: g('--chart-center') || '#1f2937',
+    surface: g('--surface') || '#ffffff',
+    area: settings.theme === 'dark' ? 'rgba(96,165,250,.18)' : 'rgba(59,130,246,.12)'
+  };
+}
+
+// 最近 14 天投递趋势：Canvas 折线图
+function drawTrendChart(apps){
+  const canvas = $('trendCanvas');
+  const info = setupCanvas(canvas);
+  const ctx = info.ctx, w = info.w, h = info.h;
+  const C = themeCanvasColors();
+  ctx.clearRect(0, 0, w, h);
+  // 构造最近 14 天
+  const days = [];
+  for(let i = 13; i >= 0; i--){
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    days.push({iso:toISODate(d), label:(d.getMonth() + 1) + '/' + d.getDate(), count:0});
+  }
+  apps.forEach(a => {
+    const day = days.find(x => x.iso === a.applyDate);
+    if(day) day.count++;
+  });
+  const maxC = Math.max.apply(null, days.map(d => d.count).concat([1]));
+  const padL = 30, padR = 10, padT = 14, padB = 24;
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  // 网格线与 Y 轴刻度
+  ctx.strokeStyle = C.grid;
+  ctx.fillStyle = C.text;
+  ctx.font = '10px sans-serif';
+  ctx.textAlign = 'right';
+  ctx.lineWidth = 1;
+  for(let i = 0; i <= 4; i++){
+    const y = padT + plotH - plotH * i / 4;
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke();
+    ctx.fillText(String(Math.round(maxC * i / 4)), padL - 4, y + 3);
+  }
+  // 数据点坐标
+  const pts = days.map((d, i) => ({
+    x: padL + plotW * i / (days.length - 1),
+    y: padT + plotH - plotH * d.count / maxC,
+    label: d.label
+  }));
+  // 面积填充
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, padT + plotH);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.lineTo(pts[pts.length - 1].x, padT + plotH);
+  ctx.closePath();
+  ctx.fillStyle = C.area;
+  ctx.fill();
+  // 折线
+  ctx.beginPath();
+  pts.forEach((p, i) => i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y));
+  ctx.strokeStyle = C.line;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  // 数据点
+  pts.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = C.surface; ctx.fill();
+    ctx.strokeStyle = C.line; ctx.lineWidth = 2; ctx.stroke();
+  });
+  // X 轴标签（隔一个显示，避免拥挤）
+  ctx.fillStyle = C.text;
+  ctx.textAlign = 'center';
+  ctx.font = '10px sans-serif';
+  pts.forEach((p, i) => { if(i % 2 === 0) ctx.fillText(p.label, p.x, h - 6); });
+  if(!apps.length){
+    ctx.fillStyle = C.text;
+    ctx.font = '13px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('暂无数据', w / 2, h / 2);
+  }
+}
+
+// 渠道分布：Canvas 环形图 + 图例
+function drawChannelChart(apps){
+  const canvas = $('channelCanvas');
+  const info = setupCanvas(canvas, 200, 200);
+  const ctx = info.ctx, w = info.w, h = info.h;
+  const C = themeCanvasColors();
+  const legendEl = $('channelLegend');
+  ctx.clearRect(0, 0, w, h);
+  const counts = {};
+  apps.forEach(a => {
+    const c = (a.channel || '其他').trim() || '其他';
+    counts[c] = (counts[c] || 0) + 1;
+  });
+  const entries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const total = apps.length;
+  if(!total){
+    ctx.fillStyle = C.text;
+    ctx.font = '13px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('暂无数据', w / 2, h / 2);
+    legendEl.innerHTML = '';
+    return;
+  }
+  const palette = ['#3b82f6','#22c55e','#f97316','#8b5cf6','#06b6d4','#eab308','#ef4444','#6b7280','#14b8a6','#f43f5e'];
+  const cx = w / 2, cy = h / 2, r = Math.min(w, h) / 2 - 10;
+  let angle = -Math.PI / 2;
+  entries.forEach((e, i) => {
+    const slice = Math.PI * 2 * e[1] / total;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, angle, angle + slice);
+    ctx.closePath();
+    ctx.fillStyle = palette[i % palette.length];
+    ctx.fill();
+    angle += slice;
+  });
+  // 中心镂空形成环形
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 0.58, 0, Math.PI * 2);
+  ctx.fillStyle = C.surface;
+  ctx.fill();
+  ctx.fillStyle = C.center;
+  ctx.font = 'bold 18px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(String(total), cx, cy);
+  ctx.fillStyle = C.text;
+  ctx.font = '11px sans-serif';
+  ctx.fillText('总投递', cx, cy + 16);
+  legendEl.innerHTML = entries.map((e, i) =>
+    '<div class="legend-row"><span class="legend-dot" style="background:' + palette[i % palette.length] + '"></span>'
+    + '<span>' + escapeHtml(e[0]) + '</span>'
+    + '<span class="legend-num">' + e[1] + '（' + (e[1] / total * 100).toFixed(0) + '%）</span></div>').join('');
+}
+
+/* =========================================================
+ * 十四、数据管理：导出 / 导入 / 清空 / 存储占用
+ * ========================================================= */
+function renderData(){
+  const bytes = getStorageBytes();
+  const pctVal = Math.min(100, bytes / QUOTA_BYTES * 100);
+  const cls = pctVal > 90 ? 'danger' : (pctVal > 80 ? 'warn' : '');
+  $('storageBar').innerHTML = '<div class="storage-fill ' + cls + '" style="width:' + pctVal + '%"></div>';
+  $('storageText').textContent = '已使用 ' + formatBytes(bytes) + ' / 5 MB（' + pctVal.toFixed(1) + '%）';
+  $('storageHint').textContent = bytes > WARN_BYTES
+    ? '⚠️ 数据量已超过 4MB，接近浏览器 5MB 上限，建议导出备份后清理旧记录或移除附件内容。'
+    : '当前共有 ' + applications.length + ' 条投递记录、' + resumeVersions.length + ' 个简历版本。';
+}
+
+// 导出全部数据为 JSON 文件（文件名含日期）
+function exportData(){
+  const payload = {
+    app: 'job-application-tracker',
+    version: 1,
+    exportedAt: nowDateTimeStr(),
+    applications,
+    resumeVersions
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  downloadBlob('job_applications_' + todayStr() + '.json', blob);
+  toast('已导出备份文件', 'success');
+}
+
+// 导入记录字段的默认值兜底
+function defaultAppFields(){
+  return {id:'',company:'',position:'',location:'',salary:'',channel:'其他',applyDate:'',jobLink:'',
+    status:'已投递',tags:'',resumeVersion:'',resumeFileName:'',resumeFileData:'',notes:'',
+    contactRecords:[],nextFollowUpDate:'',interviewDate:'',starred:false,createdAt:'',updatedAt:'',
+    assessmentStatus:'未测评',assessmentLink:''};
+}
+
+// 解析导入文件内容，兼容多种结构
+function normalizeImport(parsed){
+  let apps = [], resumes = [];
+  if(Array.isArray(parsed)) apps = parsed;
+  else if(parsed && typeof parsed === 'object'){
+    apps = parsed.applications || parsed.job_applications || [];
+    resumes = parsed.resumeVersions || parsed.resume_versions || [];
+  }
+  if(!Array.isArray(apps)) apps = [];
+  if(!Array.isArray(resumes)) resumes = [];
+  // 过滤无效记录并补齐字段
+  apps = apps.filter(a => a && typeof a === 'object' && a.company && a.position && a.applyDate)
+    .map(a => {
+      const rec = {...defaultAppFields(), ...a, id:a.id || genId()};
+      if(!STATUSES.includes(rec.status)) rec.status = '已投递';
+      if(!Array.isArray(rec.contactRecords)) rec.contactRecords = [];
+      rec.starred = !!(a.starred);
+      if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
+      if(!rec.assessmentLink) rec.assessmentLink = '';
+      return rec;
+    });
+  resumes = resumes.filter(r => r && typeof r === 'object' && r.name)
+    .map(r => ({id:r.id || genId(), name:String(r.name), desc:r.desc || '', fileName:r.fileName || '',
+      fileData:r.fileData || '', createdAt:r.createdAt || '', updatedAt:r.updatedAt || ''}));
+  return {applications:apps, resumeVersions:resumes};
+}
+
+// 选择导入文件后：解析并弹出模式选择
+async function onImportFileChange(e){
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+  try{
+    const text = await file.text();
+    importPayload = normalizeImport(JSON.parse(text));
+    if(!importPayload.applications.length && !importPayload.resumeVersions.length){
+      toast('文件中没有可导入的数据', 'error');
+      importPayload = null;
+      return;
+    }
+    $('importInfo').textContent = '文件解析成功：包含 ' + importPayload.applications.length + ' 条投递记录、'
+      + importPayload.resumeVersions.length + ' 个简历版本。当前本地已有 ' + applications.length
+      + ' 条记录、' + resumeVersions.length + ' 个简历版本。';
+    document.querySelector('input[name="importMode"][value="merge"]').checked = true;
+    document.querySelector('input[name="dupStrategy"][value="skip"]').checked = true;
+    updateDupOptionsVisibility();
+    showModal('importModal');
+  }catch(err){
+    toast('文件解析失败：请确认是有效的 JSON 备份文件', 'error');
+  }
+}
+
+// 合并模式下才显示去重策略选项
+function updateDupOptionsVisibility(){
+  const mode = document.querySelector('input[name="importMode"]:checked').value;
+  $('dupOptions').classList.toggle('hidden', mode !== 'merge');
+}
+
+// 执行导入
+function runImport(){
+  if(!importPayload) return;
+  const mode = document.querySelector('input[name="importMode"]:checked').value;
+  const dupEl = document.querySelector('input[name="dupStrategy"]:checked');
+  const strategy = dupEl ? dupEl.value : 'skip';
+  let added = 0, over = 0, skip = 0;
+  if(mode === 'overwrite'){
+    // 覆盖模式：完全替换
+    applications = importPayload.applications;
+    resumeVersions = importPayload.resumeVersions;
+    added = applications.length;
+  }else{
+    // 合并模式：按 公司+职位+投递日期 去重
+    const keyOf = a => a.company + '||' + a.position + '||' + a.applyDate;
+    const idx = new Map(applications.map((a, i) => [keyOf(a), i]));
+    for(const imp of importPayload.applications){
+      const k = keyOf(imp);
+      if(idx.has(k)){
+        if(strategy === 'overwrite'){
+          const i = idx.get(k);
+          applications[i] = {...applications[i], ...imp, id:applications[i].id};
+          over++;
+        }else skip++;
+      }else{
+        applications.push(imp);
+        idx.set(k, applications.length - 1);
+        added++;
+      }
+    }
+    // 简历版本按名称合并
+    const rIdx = new Map(resumeVersions.map((r, i) => [r.name, i]));
+    for(const r of importPayload.resumeVersions){
+      if(rIdx.has(r.name)){
+        if(strategy === 'overwrite'){
+          const i = rIdx.get(r.name);
+          resumeVersions[i] = {...resumeVersions[i], ...r, id:resumeVersions[i].id};
+        }
+      }else resumeVersions.push(r);
+    }
+  }
+  importPayload = null;
+  hideModal('importModal');
+  try{
+    localStorage.setItem(KEY_APPS, JSON.stringify(applications));
+    localStorage.setItem(KEY_RESUMES, JSON.stringify(resumeVersions));
+  }catch(e){ toast('导入后保存失败：可能超出存储上限，请清理后重试', 'error'); }
+  renderCurrent();
+  updateFollowBadge();
+  renderData();
+  toast('导入完成：新增 ' + added + ' 条' + (mode === 'merge' ? '，覆盖 ' + over + ' 条，跳过 ' + skip + ' 条' : ''), 'success');
+}
+
+// 清空所有数据（二次确认）
+async function clearAllData(){
+  const ok = await showConfirm('清空所有数据',
+    '将删除全部 ' + applications.length + ' 条投递记录和 ' + resumeVersions.length + ' 个简历版本，且不可恢复！建议先导出备份。确定继续吗？',
+    {danger:true, okText:'确认清空'});
+  if(!ok) return;
+  applications = [];
+  resumeVersions = [];
+  saveApplications();
+  saveResumes();
+  renderCurrent();
+  updateFollowBadge();
+  toast('已清空所有数据', 'success');
+}
+
+/* =========================================================
+ * 十四·五、CSV / Excel 导入
+ * ========================================================= */
+// 解析 CSV 文本（支持引号包裹、字段内逗号与换行、双引号转义）
+function parseCsv(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){
+        if(text[i + 1] === '"'){ field += '"'; i++; }
+        else inQuotes = false;
+      }else field += c;
+    }else{
+      if(c === '"') inQuotes = true;
+      else if(c === ','){ row.push(field); field = ''; }
+      else if(c === '\r'){ /* 忽略，等待 \n */ }
+      else if(c === '\n'){ row.push(field); rows.push(row); row = []; field = ''; }
+      else field += c;
+    }
+  }
+  if(field.length || row.length){ row.push(field); rows.push(row); }
+  return rows.filter(r => r.some(x => (x || '').trim() !== ''));
+}
+
+// 表头别名 → 字段名映射（宽松匹配，含子串即可）
+const CSV_HEADER_MAP = [
+  ['公司名称', 'company'], ['公司', 'company'],
+  ['职位名称', 'position'], ['职位', 'position'],
+  ['职位链接', 'jobLink'], ['链接', 'jobLink'],
+  ['工作地点', 'location'], ['地点', 'location'], ['城市', 'location'],
+  ['薪资范围', 'salary'], ['薪资', 'salary'], ['工资', 'salary'],
+  ['招聘渠道', 'channel'], ['渠道', 'channel'],
+  ['投递日期', 'applyDate'], ['日期', 'applyDate'],
+  ['当前状态', 'status'], ['状态', 'status'],
+  ['下次跟进日期', 'nextFollowUpDate'], ['跟进日期', 'nextFollowUpDate'], ['跟进', 'nextFollowUpDate'],
+  ['面试时间', 'interviewDate'], ['面试', 'interviewDate'],
+  ['简历版本', 'resumeVersion'], ['版本', 'resumeVersion'],
+  ['标签', 'tags'],
+  ['备注', 'notes'],
+  ['是否星标', 'starred'], ['星标', 'starred'],
+  ['测评链接', 'assessmentLink'], ['测评', 'assessmentLink'],
+  ['测评状态', 'assessmentStatus'],
+  ['联系记录', 'contactRecords'], ['联系', 'contactRecords']
+];
+
+// 将解析后的二维数组（首行为表头）转换为投递记录
+// 必填：公司名称 + 职位名称；其余列留空也可（含投递日期）
+function rowsToApplications(rows){
+  if(!rows || !rows.length) return [];
+  const header = rows[0].map(h => String(h == null ? '' : h).trim());
+  const colMap = header.map(h => {
+    const hits = CSV_HEADER_MAP.filter(m => h.includes(m[0]));
+    if(!hits.length) return null;
+    // 同一列可能命中多个别名（如"职位链接"同时含"职位"和"链接"），优先取最长匹配
+    const hit = hits.reduce((best, cur) => cur[0].length > best[0].length ? cur : best);
+    return hit[1];
+  });
+  const companyIdx = colMap.indexOf('company');
+  const positionIdx = colMap.indexOf('position');
+  if(companyIdx < 0 || positionIdx < 0) return []; // 缺少必要列
+  const dateIdx = colMap.indexOf('applyDate');
+  const out = [];
+  for(let r = 1; r < rows.length; r++){
+    const cells = rows[r] || [];
+    const company = (cells[companyIdx] == null ? '' : String(cells[companyIdx])).trim();
+    const position = (cells[positionIdx] == null ? '' : String(cells[positionIdx])).trim();
+    if(!company || !position) continue; // 必填仅公司 + 职位，其余为空也可
+    const rec = defaultAppFields();
+    rec.company = company; rec.position = position;
+    if(dateIdx >= 0) rec.applyDate = (cells[dateIdx] == null ? '' : String(cells[dateIdx])).trim();
+    colMap.forEach((key, i) => {
+      if(!key || i >= cells.length) return;
+      const v = (cells[i] == null ? '' : String(cells[i])).trim();
+      if(!v) return;
+      if(key === 'starred') rec.starred = /^(是|true|1|yes)$/i.test(v);
+      else if(key === 'contactRecords'){ /* 不支持嵌套，忽略 */ }
+      else rec[key] = v; // 渠道等取值宽松，原样保留（含自定义渠道名）
+    });
+    if(!STATUSES.includes(rec.status)) rec.status = '已投递';
+    if(!rec.channel) rec.channel = '其他';
+    if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
+    if(!rec.assessmentLink) rec.assessmentLink = '';
+    out.push(rec);
+  }
+  return out;
+}
+
+// 将 CSV 文本转换为投递记录（供 .csv 导入与导出往返）
+function csvToApplications(text){
+  return rowsToApplications(parseCsv(text));
+}
+
+// 按需加载 SheetJS（用于直接解析 .xlsx / .xls）。联网时从 CDN 拉取，离线则失败
+let _sheetJsLoading = null;
+function loadSheetJs(){
+  if(window.XLSX) return Promise.resolve(window.XLSX);
+  if(_sheetJsLoading) return _sheetJsLoading;
+  _sheetJsLoading = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+    s.onload = () => resolve(window.XLSX);
+    s.onerror = () => reject(new Error('load-fail'));
+    document.head.appendChild(s);
+  });
+  return _sheetJsLoading;
+}
+
+// 读取 Excel 第一个工作表，返回二维数组（首行为表头）
+async function readExcelRows(file){
+  await loadSheetJs();
+  const buf = await file.arrayBuffer();
+  const wb = XLSX.read(buf, {type:'array'});
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  return XLSX.utils.sheet_to_json(ws, {header:1, defval:''});
+}
+
+async function onCsvFileChange(e){
+  const file = e.target.files && e.target.files[0];
+  e.target.value = '';
+  if(!file) return;
+  const name = (file.name || '').toLowerCase();
+  try{
+    let apps;
+    if(name.endsWith('.xlsx') || name.endsWith('.xls')){
+      const rows = await readExcelRows(file);
+      apps = rowsToApplications(rows);
+    }else{
+      const text = await file.text();
+      apps = csvToApplications(text);
+    }
+    if(!apps.length){
+      toast('未能解析出有效记录（需至少包含「公司名称」「职位名称」两列）', 'error');
+      return;
+    }
+    // 把导入中出现的新渠道记到自定义列表，方便以后筛选与复用
+    apps.forEach(a => { if(a.channel && !allChannels().includes(a.channel)) addCustomChannel(a.channel); });
+    populateChannelSelects();
+    importPayload = {applications:apps.map(a => ({...a, id:a.id || genId()})), resumeVersions:[]};
+    $('importInfo').textContent = '文件解析成功：包含 ' + importPayload.applications.length
+      + ' 条投递记录。当前本地已有 ' + applications.length + ' 条记录、' + resumeVersions.length + ' 个简历版本。';
+    document.querySelector('input[name="importMode"][value="merge"]').checked = true;
+    document.querySelector('input[name="dupStrategy"][value="skip"]').checked = true;
+    updateDupOptionsVisibility();
+    showModal('importModal');
+  }catch(err){
+    if(err && err.message === 'load-fail'){
+      toast('Excel 解析库加载失败（需联网）。可将文件「另存为 CSV」后再导入', 'error');
+    }else{
+      toast('文件解析失败，请确认文件格式是否正确', 'error');
+    }
+  }
+}
+
+// 下载导入模板（CSV，Excel 可直接打开）；表头与导入映射一致，非必填列留空也可
+function downloadTemplateCsv(){
+  const headers = ['公司名称','职位名称','工作地点','薪资范围','招聘渠道','投递日期','当前状态',
+    '下次跟进日期','面试时间','简历版本','标签','职位链接','测评链接','测评状态','备注','是否星标'];
+  const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
+  const rows = [headers.map(esc).join(',')];
+  rows.push([
+    esc('示例科技有限公司'), esc('机械设计工程师'), esc(''), esc(''), esc('BOSS直聘'),
+    esc(todayStr()), esc('已投递'), esc(''), esc(''), esc(''), esc('校招'),
+    esc(''), esc(''), esc('未测评'), esc('可留空，不填也行'), esc('')
+  ].join(','));
+  const blob = new Blob(['﻿' + rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
+  downloadBlob('投递记录导入模板.csv', blob);
+  toast('已下载模板，用 Excel 打开填写后导入即可', 'success');
+}
+
+
+/* =========================================================
+ * 十五、事件绑定
+ * ========================================================= */
+function bindEvents(){
+  // Tab 切换
+  document.querySelectorAll('.tab-btn').forEach(btn =>
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+  // ---- 列表筛选与排序 ----
+  $('searchInput').addEventListener('input', debounce(() => {
+    settings.filters.search = $('searchInput').value; saveSettings(); renderList();
+  }, 250));
+  $('filterStatus').addEventListener('change', () => {
+    settings.filters.status = $('filterStatus').value; saveSettings(); renderList();
+  });
+  $('filterChannel').addEventListener('change', () => {
+    settings.filters.channel = $('filterChannel').value; saveSettings(); renderList();
+  });
+  $('filterAssessment').addEventListener('change', () => {
+    settings.filters.assessment = $('filterAssessment').value; saveSettings(); renderList();
+  });
+  $('filterTag').addEventListener('input', debounce(() => {
+    settings.filters.tag = $('filterTag').value; saveSettings(); renderList();
+  }, 250));
+  $('filterDateFrom').addEventListener('change', () => {
+    settings.filters.dateFrom = $('filterDateFrom').value; saveSettings(); renderList();
+  });
+  $('filterDateTo').addEventListener('change', () => {
+    settings.filters.dateTo = $('filterDateTo').value; saveSettings(); renderList();
+  });
+  $('sortBy').addEventListener('change', () => {
+    settings.filters.sortBy = $('sortBy').value; saveSettings(); renderList();
+  });
+  $('sortDirBtn').addEventListener('click', () => {
+    settings.filters.sortDir = settings.filters.sortDir === 'desc' ? 'asc' : 'desc';
+    updateSortDirBtn(); saveSettings(); renderList();
+  });
+  $('resetFiltersBtn').addEventListener('click', () => {
+    settings.filters = {...DEFAULT_FILTERS};
+    syncFilterControls(); saveSettings(); renderList();
+  });
+  $('addAppBtn').addEventListener('click', () => openAppModal());
+
+  // 列表卡片事件委托：编辑 / 删除 / 切换状态 / 星标 / 复制 / 空状态添加
+  $('appList').addEventListener('click', e => {
+    const btn = e.target.closest('[data-action]');
+    if(!btn) return;
+    const action = btn.dataset.action;
+    if(action === 'add'){ openAppModal(); return; }
+    const card = e.target.closest('.app-card');
+    if(!card) return;
+    const id = card.dataset.id;
+    if(action === 'status') openStatusPicker(id);
+    else if(action === 'edit') openAppModal(id);
+    else if(action === 'delete') confirmDeleteApp(id);
+    else if(action === 'star') toggleStar(id);
+    else if(action === 'assessment') toggleAssessment(id);
+    else if(action === 'duplicate') duplicateApp(id);
+  });
+  // 列表复选框（批量模式）变更
+  $('appList').addEventListener('change', e => {
+    const cb = e.target.closest('.app-check');
+    if(!cb) return;
+    if(cb.checked) selectedAppIds.add(cb.value);
+    else selectedAppIds.delete(cb.value);
+    updateBatchCount();
+  });
+
+  // 状态选择器点击
+  $('statusOptions').addEventListener('click', e => {
+    const btn = e.target.closest('.status-opt');
+    if(!btn) return;
+    const app = applications.find(a => a.id === statusPickerAppId);
+    if(!app) return;
+    app.status = btn.dataset.status;
+    app.updatedAt = nowDateTimeStr();
+    hideModal('statusModal');
+    if(commitApps()) toast('状态已更新为「' + app.status + '」', 'success');
+  });
+
+  // 批量改状态点击
+  $('batchStatusOptions').addEventListener('click', e => {
+    const btn = e.target.closest('.status-opt');
+    if(!btn) return;
+    applyBatchStatus(btn.dataset.status);
+  });
+
+  // ---- 投递表单 ----
+  $('appModalSave').addEventListener('click', saveAppFromForm);
+  $('appModalCancel').addEventListener('click', () => hideModal('appModal'));
+  $('addChannelBtn').addEventListener('click', addCustomChannelFromInput);
+  $('appFileInput').addEventListener('change', onAppFileChange);
+  $('addContactBtn').addEventListener('click', openContactModal);
+  $('contactModalSave').addEventListener('click', addContactFromForm);
+  $('contactModalCancel').addEventListener('click', () => hideModal('contactModal'));
+  // 联系记录草稿删除（事件委托）
+  $('contactList').addEventListener('click', e => {
+    const btn = e.target.closest('[data-remove-contact]');
+    if(!btn) return;
+    draftContacts.splice(Number(btn.dataset.removeContact), 1);
+    renderContactList();
+  });
+
+  // ---- 简历版本库 ----
+  $('addResumeBtn').addEventListener('click', () => openResumeModal());
+  $('resumeList').addEventListener('click', e => {
+    const card = e.target.closest('.resume-card');
+    if(!card) return;
+    const btn = e.target.closest('[data-action]');
+    if(!btn) return;
+    const id = card.dataset.id;
+    if(btn.dataset.action === 'edit') openResumeModal(id);
+    else if(btn.dataset.action === 'download') downloadResumeVersion(id);
+    else if(btn.dataset.action === 'delete') confirmDeleteResume(id);
+  });
+  $('resumeModalSave').addEventListener('click', saveResumeFromForm);
+  $('resumeModalCancel').addEventListener('click', () => hideModal('resumeModal'));
+  $('resumeFileInput').addEventListener('change', onResumeFileChange);
+
+  // ---- 跟进提醒 ----
+  $('followList').addEventListener('click', e => {
+    const item = e.target.closest('.fu-item');
+    if(!item) return;
+    const btn = e.target.closest('[data-action]');
+    if(!btn) return;
+    const id = item.dataset.id;
+    if(btn.dataset.action === 'done') openFollowUpDone(id);
+    else if(btn.dataset.action === 'edit') openAppModal(id);
+    else if(btn.dataset.action === 'status') openStatusPicker(id);
+  });
+  $('markAllFollowedBtn').addEventListener('click', markAllFollowed);
+  $('fuOkBtn').addEventListener('click', confirmFollowUpDone);
+  $('fuCancelBtn').addEventListener('click', () => hideModal('followUpModal'));
+  // 待测评清单：点击「标记已测评」
+  $('assessmentReminderList').addEventListener('click', e => {
+    const btn = e.target.closest('[data-asm-done]');
+    if(!btn) return;
+    const id = btn.dataset.asmDone;
+    const app = applications.find(a => a.id === id);
+    if(!app) return;
+    app.assessmentStatus = '已测评';
+    app.updatedAt = nowDateTimeStr();
+    commitApps();
+    renderAssessmentReminders();
+    renderAssessmentBanner();
+    renderList();
+    toast('已标记为「已测评」', 'success');
+  });
+
+  // ---- 面试日历 ----
+  $('calPrevBtn').addEventListener('click', prevMonth);
+  $('calNextBtn').addEventListener('click', nextMonth);
+  $('calTodayBtn').addEventListener('click', goToday);
+  $('calGrid').addEventListener('click', e => {
+    const chip = e.target.closest('.interview-chip');
+    if(chip) openInterviewDetail(chip.dataset.id);
+  });
+  $('interviewModalClose').addEventListener('click', () => hideModal('interviewModal'));
+  $('ivEditBtn').addEventListener('click', () => {
+    hideModal('interviewModal');
+    openAppModal(interviewAppId);
+  });
+
+  // ---- 数据管理 ----
+  $('exportBtn').addEventListener('click', exportData);
+  $('importPickBtn').addEventListener('click', () => $('importFileInput').click());
+  $('importFileInput').addEventListener('change', onImportFileChange);
+  document.querySelectorAll('input[name="importMode"]').forEach(r =>
+    r.addEventListener('change', updateDupOptionsVisibility));
+  $('importOkBtn').addEventListener('click', runImport);
+  $('importCancelBtn').addEventListener('click', () => { importPayload = null; hideModal('importModal'); });
+  $('clearDataBtn').addEventListener('click', clearAllData);
+
+  // ---- 确认框 ----
+  $('confirmOkBtn').addEventListener('click', () => resolveConfirm(true));
+  $('confirmCancelBtn').addEventListener('click', () => resolveConfirm(false));
+
+  // ---- 主题切换 ----
+  $('themeToggleBtn').addEventListener('click', toggleTheme);
+
+  // ---- 列表工具栏：CSV 导出 / 批量管理 ----
+  $('exportCsvBtn').addEventListener('click', exportCsv);
+  $('batchModeBtn').addEventListener('click', () => setBatchMode(!$('appList').classList.contains('batch-mode')));
+  $('selectAllChk').addEventListener('change', () => {
+    const list = currentFilteredApps();
+    if($('selectAllChk').checked) list.forEach(a => selectedAppIds.add(a.id));
+    else list.forEach(a => selectedAppIds.delete(a.id));
+    renderList(); updateBatchCount();
+  });
+  $('batchStatusBtn').addEventListener('click', openBatchStatus);
+  $('batchDeleteBtn').addEventListener('click', batchDelete);
+  $('batchExitBtn').addEventListener('click', () => setBatchMode(false));
+
+  // ---- 跟进提醒：桌面通知 ----
+  $('notifyToggleBtn').addEventListener('click', toggleNotify);
+
+  // ---- 数据管理：CSV 导入 ----
+  $('importCsvPickBtn').addEventListener('click', () => $('importCsvInput').click());
+  $('importCsvInput').addEventListener('change', onCsvFileChange);
+  $('downloadTemplateBtn').addEventListener('click', downloadTemplateCsv);
+
+  // ---- 通用：弹窗右上角关闭按钮 / 点击遮罩关闭 / Esc 关闭 ----
+  document.addEventListener('click', e => {
+    const closer = e.target.closest('[data-close]');
+    if(closer) hideModal(closer.dataset.close);
+  });
+  // 点击遮罩关闭弹窗（编辑弹窗 appModal 除外：避免误触范围外导致修改丢失）
+  document.querySelectorAll('.modal-overlay').forEach(ov => {
+    if(ov.id === 'appModal') return;
+    ov.addEventListener('click', e => { if(e.target === ov) hideModal(ov.id); });
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && modalStack.length){
+      const top = modalStack[modalStack.length - 1];
+      if(top === 'appModal') return; // 编辑弹窗不响应 Esc，只能点 × / 保存 / 取消关闭
+      hideModal(top);
+    }
+  });
+
+  // 窗口尺寸变化时重绘图表与日历
+  window.addEventListener('resize', debounce(() => {
+    if(currentTab === 'stats') renderStats();
+    if(currentTab === 'calendar') renderCalendar();
+  }, 200));
+
+  // ---- 网站导航 / 内置浏览面板 ----
+  $('addMonBtn').addEventListener('click', addMonitor);
+  $('newMonUrl').addEventListener('keydown', e => { if(e.key === 'Enter') addMonitor(); });
+  $('saveProxyBtn').addEventListener('click', () => {
+    settings.proxyTemplate = $('proxyTemplate').value.trim();
+    saveSettings();
+    toast(settings.proxyTemplate ? '已保存代理设置' : '已清除代理设置', 'success');
+  });
+  $('monRefreshBtn').addEventListener('click', () => {
+    const m = currentMonitor(); if(!m) return;
+    $('monFrame').removeAttribute('data-src');   // 强制重新加载
+    loadMonitorInFrame(m);
+  });
+  $('monNewTabBtn').addEventListener('click', () => {
+    const m = currentMonitor(); if(m) window.open(m.url, '_blank', 'noopener');
+  });
+  $('monUseProxy').addEventListener('change', () => {
+    settings.monUseProxy = $('monUseProxy').checked;
+    saveSettings();
+    const m = currentMonitor(); if(m) loadMonitorInFrame(m);
+  });
+
+  $('monitorList').addEventListener('click', e => {
+    const del = e.target.closest('[data-mon-action="delete"]');
+    if(del){
+      const card = del.closest('.mon-site');
+      if(card) deleteMonitor(card.dataset.id);
+      return;
+    }
+    const card = e.target.closest('.mon-site');
+    if(card) selectMonitor(card.dataset.id);   // 点卡片即在右侧内嵌打开
+  });
+}
+
+/* =========================================================
+ * 十五·五、网站导航（内置浏览）
+ * ========================================================= */
+function addMonitor(){
+  const name = $('newMonName').value.trim();
+  let url = $('newMonUrl').value.trim();
+  if(!url){ toast('请填写网址', 'error'); return; }
+  if(!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  if(!name) name = url;
+  const id = 'm_' + Date.now().toString(36) + Math.random().toString(36).slice(2,5);
+  settings.monitors.push({id, name, url});
+  saveSettings();
+  $('newMonName').value = ''; $('newMonUrl').value = '';
+  selectedMonId = id;          // 新加的网站立即在右侧打开
+  renderMonitors();
+  toast('已添加并在右侧打开', 'success');
+}
+
+function deleteMonitor(id){
+  settings.monitors = settings.monitors.filter(m => m.id !== id);
+  if(selectedMonId === id) selectedMonId = null;
+  saveSettings();
+  renderMonitors();
+  const m = currentMonitor();
+  const f = $('monFrame');
+  if(m){
+    if(f) f.removeAttribute('data-src');
+    loadMonitorInFrame(m);
+  }else if(f){
+    f.removeAttribute('src'); f.removeAttribute('data-src');
+    $('monAddr').textContent = '未选择网站';
+    $('monEmpty').style.display = 'flex';
+  }
+}
+
+// 当前选中的网站（用于右侧内嵌浏览器）
+let selectedMonId = null;
+
+function hostOf(url){
+  try{ return new URL(url).hostname.replace(/^www\./, ''); }catch(e){ return url || ''; }
+}
+
+function currentMonitor(){
+  return (settings.monitors || []).find(m => m.id === selectedMonId) || null;
+}
+
+// 头像：彩色字母 + 站点 favicon（加载失败自动回退到字母）
+function avatarHtml(mon){
+  const name = (mon.name || mon.url || '?').trim();
+  const letter = (name[0] || '?').toUpperCase();
+  const hue = [...name].reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
+  const bg = 'hsl(' + hue + ',58%,52%)';
+  const domain = hostOf(mon.url);
+  const fav = domain ? 'https://www.google.com/s2/favicons?domain=' + encodeURIComponent(domain) + '&sz=32' : '';
+  return '<span class="mon-avatar" style="background:' + bg + '">'
+    + (fav ? '<img src="' + fav + '" alt="" onerror="this.remove()">' : '')
+    + escapeHtml(letter) + '</span>';
+}
+
+// 在右侧 iframe 中加载指定网站（直接内嵌；勾选代理时走代理）
+function loadMonitorInFrame(mon){
+  if(!mon) return;
+  if($('panel-monitor').classList.contains('hidden')) return; // 面板隐藏时不加载，节省流量
+  const useProxy = $('monUseProxy').checked;
+  let src = mon.url;
+  if(useProxy){
+    src = (settings.proxyTemplate && settings.proxyTemplate.includes('{url}'))
+      ? settings.proxyTemplate.replace('{url}', encodeURIComponent(mon.url))
+      : 'http://localhost:8787/?url=' + encodeURIComponent(mon.url);
+  }
+  const f = $('monFrame');
+  if(f.getAttribute('data-src') !== src){ f.src = src; f.setAttribute('data-src', src); }
+  $('monAddr').textContent = mon.url;
+  $('monEmpty').style.display = 'none';
+}
+
+// 选择某网站并在内嵌浏览器中打开
+function selectMonitor(id){
+  selectedMonId = id;
+  renderMonitors();
+  const m = currentMonitor();
+  if(m) loadMonitorInFrame(m);
+}
+
+function renderMonitors(){
+  const list = settings.monitors || [];
+  $('monUseProxy').checked = !!settings.monUseProxy;
+  $('proxyTemplate').value = settings.proxyTemplate || '';
+  const box = $('monitorList');
+  if(!list.length){
+    selectedMonId = null;
+    const f = $('monFrame'); if(f) f.removeAttribute('src'); if(f) f.removeAttribute('data-src');
+    $('monAddr').textContent = '未选择网站';
+    $('monEmpty').style.display = 'flex';
+    box.innerHTML = '<div class="mon-empty-list muted-text">还没有网站。<br>在上方输入<b>名称</b>与<b>网址</b>，点「＋ 添加」即可加入导航。</div>';
+    return;
+  }
+  // 无选中项时默认选中第一个
+  if(!list.find(m => m.id === selectedMonId)) selectedMonId = list[0].id;
+
+  box.innerHTML = list.map(m => {
+    const active = m.id === selectedMonId ? ' active' : '';
+    return '<div class="mon-site' + active + '" data-id="' + escapeHtml(m.id) + '" title="点击在右侧打开">'
+      + avatarHtml(m)
+      + '<div class="mon-site-body">'
+      +   '<span class="mon-site-name">' + escapeHtml(m.name || '') + '</span>'
+      +   '<div class="mon-site-domain">' + escapeHtml(hostOf(m.url)) + '</div>'
+      + '</div>'
+      + '<button type="button" class="mon-del" data-mon-action="delete" title="从导航移除">✕</button>'
+      + '</div>';
+  }).join('');
+
+  // 面板可见时，确保选中的网站已加载到 iframe
+  if(!$('panel-monitor').classList.contains('hidden')){
+    const m = currentMonitor();
+    if(m && !$('monFrame').getAttribute('data-src')) loadMonitorInFrame(m);
+  }
+}
+
+/* =========================================================
+ * 十六、应用初始化
+ * ========================================================= */
+loadAll();            // 读取 localStorage 数据
+bindEvents();         // 绑定所有事件
+populateChannelSelects(); // 用 CHANNELS 生成渠道下拉（表单 + 筛选）
+syncFilterControls(); // 恢复上次筛选条件
+applyTheme();         // 应用主题（浅色 / 深色）
+updateNotifyBtn();    // 刷新桌面提醒按钮状态
+renderNotifyBanner(); // 刷新提醒提示条
+const _now = new Date();
+calendarCursor = {year:_now.getFullYear(), month:_now.getMonth()};
+// 恢复上次所在的 Tab
+switchTab(TAB_NAMES.includes(settings.lastTab) ? settings.lastTab : 'list');
+updateFollowBadge();
+renderAssessmentBanner();   // 列表顶部「待测评」提醒条（若有）
+renderAssessmentReminders(); // 跟进提醒页的待测评清单（若有）
+// 若已开启桌面提醒，则页面加载后检查一次过期 / 今日跟进
+if(settings.notifyEnabled) setTimeout(checkNotifications, 1500);
+</script>
+</body>
+</html>
