@@ -655,6 +655,7 @@ canvas{display:block;width:100%}
   <!-- ===================== 4. 跟进提醒 ===================== -->
   <section id="panel-followup" class="tab-panel hidden">
     <div id="notifyBanner" class="notify-banner hidden"></div>
+    <p class="muted-text" style="margin:0 0 10px">点「⚡ 立即提醒」后，提醒会以 <b>页面右上角卡片</b> 弹出，不需要任何权限；打开本页面时若有待办也会自动弹一次。</p>
     <div class="list-toolbar">
       <span id="followCount"></span>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -1698,12 +1699,31 @@ async function emptyRecycle(){
 }
 
 // 跟进提醒 Tab 上的角标：今天到期或已过期的数量
-function updateFollowBadge(){
+// 待处理提醒条数（跟进到期 / 网申临近或过期 / 已收到链接的待测评），用于 Tab 角标
+function pendingReminderCount(){
   const today = todayStr();
-  const n = applications.filter(a => a.nextFollowUpDate && a.nextFollowUpDate <= today).length;
+  return applications.filter(a => !a.deleted && (
+       (a.nextFollowUpDate && a.nextFollowUpDate <= today)
+    || (a.deadline && daysUntil(a.deadline) <= 3)
+    || ((a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink)
+  )).length;
+}
+function updateFollowBadge(){
+  const n = pendingReminderCount();
   const el = $('followBadge');
   el.textContent = n;
   el.classList.toggle('hidden', n === 0);
+}
+
+// 打开页面时自动在右上角弹一次提醒卡片（每次会话只弹一次，不阻塞操作）
+function autoShowReminders(){
+  let shown = false;
+  try{ shown = sessionStorage.getItem('job_reminder_shown') === '1'; }catch(e){}
+  if(shown) return;
+  const list = collectReminders();
+  if(!list.length) return;
+  try{ sessionStorage.setItem('job_reminder_shown', '1'); }catch(e){}
+  list.forEach((r, i) => setTimeout(() => pushNotifyCard(r, 12000), 400 + i * 200));
 }
 
 // 列表顶部「待测评」提醒条：仅统计已收到链接的待测评；未收到链接的给出留意邮箱提示
@@ -2472,9 +2492,16 @@ function renderNotifyBanner(){
 }
 
 async function toggleNotify(){
-  if(!notificationsSupported()){ toast('当前浏览器不支持桌面通知', 'error'); return; }
+  // 无法授权（不支持 / 被拒 / file://）时，打开提醒中心说明原因并展示当前提醒
+  if(!notificationsSupported()){
+    toast('当前浏览器不支持桌面通知，已改用页面右上角卡片提醒', 'info');
+    showNotifyCenter(collectReminders());
+    renderNotifyBanner();
+    return;
+  }
   if(Notification.permission === 'denied'){
-    toast('通知权限已被拒绝，请在浏览器站点设置中允许后重试', 'error');
+    toast(notifyBlockReason(), 'info');
+    showNotifyCenter(collectReminders());
     renderNotifyBanner();
     return;
   }
@@ -2485,7 +2512,12 @@ async function toggleNotify(){
     // 未决定：请求权限
     let perm;
     try{ perm = await Notification.requestPermission(); }catch(e){ perm = 'denied'; }
-    if(perm !== 'granted'){ toast('未获得通知权限', 'info'); renderNotifyBanner(); return; }
+    if(perm !== 'granted'){
+      toast(notifyBlockReason(), 'info');
+      showNotifyCenter(collectReminders());
+      renderNotifyBanner();
+      return;
+    }
     settings.notifyEnabled = true;
   }
   saveSettings();
@@ -2498,7 +2530,8 @@ async function toggleNotify(){
 function collectReminders(){
   const list = [];
   const today = todayStr();
-  const due = applications.filter(a => a.nextFollowUpDate && a.nextFollowUpDate <= today);
+  const alive = applications.filter(a => !a.deleted);   // 回收站里的记录不再提醒
+  const due = alive.filter(a => a.nextFollowUpDate && a.nextFollowUpDate <= today);
   if(due.length){
     const overdue = due.filter(a => a.nextFollowUpDate < today).length;
     list.push({tag:'job-followup', title:'求职跟进提醒',
@@ -2506,7 +2539,7 @@ function collectReminders(){
         + due.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (due.length > 3 ? ' 等' : '')});
   }
   // 网申截止提醒：临近(<=3天)或已过期
-  const dlWarn = applications.filter(a => a.deadline && daysUntil(a.deadline) <= 3);
+  const dlWarn = alive.filter(a => a.deadline && daysUntil(a.deadline) <= 3);
   if(dlWarn.length){
     const overdue = dlWarn.filter(a => daysUntil(a.deadline) < 0).length;
     list.push({tag:'job-deadline', title:'网申截止提醒',
@@ -2514,8 +2547,8 @@ function collectReminders(){
         + dlWarn.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (dlWarn.length > 3 ? ' 等' : '')});
   }
   // 综合测评提醒：已收到链接的待测评；未收到链接的给出留意邮箱的提示
-  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink);
-  const waiting = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评' && !a.assessmentLink);
+  const pending = alive.filter(a => (a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink);
+  const waiting = alive.filter(a => (a.assessmentStatus || '未测评') === '未测评' && !a.assessmentLink);
   if(pending.length){
     let b = '你有 ' + pending.length + ' 条投递待完成综合测评：'
       + pending.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (pending.length > 3 ? ' 等' : '');
@@ -2583,6 +2616,13 @@ function notifyBlockReason(){
   if(Notification.permission === 'denied') return '系统通知权限已被浏览器拒绝，请在站点设置中重新允许';
   if(isFileProtocol()) return '本地文件(file://)模式下系统通知可能不可用，建议用「启动-系统通知版.bat」以 http://localhost 打开';
   return '系统通知尚未开启';
+}
+// 短版原因，用于「已弹出页面提醒，只是因为 xxx」这种正向提示
+function notifyShortReason(){
+  if(!notificationsSupported()) return '系统通知不可用';
+  if(Notification.permission === 'denied') return isFileProtocol() ? '本地文件模式无法发系统通知' : '系统通知已被浏览器拒绝';
+  if(isFileProtocol()) return '本地文件模式无法发系统通知';
+  return '系统通知未开启';
 }
 function showNotifyCenter(list){
   const body = $('notifyBody');
@@ -2658,17 +2698,13 @@ async function notifyNow(){
     list.forEach((r, i) => setTimeout(() => pushNotifyCard(r, granted ? 6000 : 10000), granted ? i * 200 : i * 160));
   }
 
-  // 3) 结果反馈
+  // 3) 结果反馈（只做轻提示，不再强制弹窗）
   if(!list.length){
     toast('当前没有需要提醒的事项 ✅', 'success');
-    showNotifyCenter(list);
-    return;
-  }
-  if(sent){
+  }else if(sent){
     toast('已发送 ' + sent + ' 条系统通知，页面右上角同步显示', 'success');
   }else{
-    toast(notifyBlockReason(), 'info');
-    showNotifyCenter(list);   // 打开提醒中心，给出开启系统通知的入口
+    toast('已弹出 ' + list.length + ' 条页面提醒（' + notifyShortReason() + '）', 'info');
   }
   updateNotifyBtn();
   renderNotifyBanner();
@@ -3804,8 +3840,11 @@ switchTab(TAB_NAMES.includes(settings.lastTab) ? settings.lastTab : 'list');
 updateFollowBadge();
 renderAssessmentBanner();   // 列表顶部「待测评」提醒条（若有）
 renderAssessmentReminders(); // 跟进提醒页的待测评清单（若有）
-// 若已开启桌面提醒，则页面加载后检查一次过期 / 今日跟进
-if(settings.notifyEnabled) setTimeout(checkNotifications, 1500);
+// 页面加载后：先在右上角弹一次页面内提醒卡片；若已开启桌面提醒，再补发一次系统通知
+setTimeout(() => {
+  autoShowReminders();
+  if(settings.notifyEnabled) checkNotifications();
+}, 1200);
 </script>
 </body>
 </html>
