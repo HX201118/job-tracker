@@ -78,14 +78,14 @@ input,select,textarea{font-family:inherit;font-size:14px;color:var(--text)}
    顶部导航
    ========================================================= */
 .app-header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.header-inner{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.header-inner{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;row-gap:10px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:800;white-space:nowrap}
 .brand-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:var(--gradient);box-shadow:0 4px 12px rgba(59,130,246,.32);font-size:15px;flex-shrink:0}
 .brand-text{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.3px}
-/* 移动端：Tab 变为可横向滚动的顶部栏 */
-.tabs{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-right:12px}
+/* 顶部导航：宽度不够时整体换行，绝不横向裁切（避免末尾 Tab 被切掉 / 挤在一起） */
+.tabs{display:flex;gap:4px;row-gap:4px;flex:1 1 auto;flex-wrap:wrap}
 .tabs::-webkit-scrollbar{display:none}
-.tab-btn{border:none;background:none;padding:8px 13px;font-size:14px;color:var(--text-light);border-radius:10px;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s}
+.tab-btn{border:none;background:none;padding:8px 11px;font-size:14px;color:var(--text-light);border-radius:10px;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s}
 .tab-btn:hover{background:var(--hover);color:var(--text)}
 .tab-btn.active{color:#fff;font-weight:600;background:var(--gradient);box-shadow:0 4px 12px rgba(59,130,246,.30)}
 .tab-badge{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;margin-left:4px;border-radius:999px;background:var(--danger);color:#fff;font-size:10px}
@@ -413,10 +413,21 @@ canvas{display:block;width:100%}
 @keyframes notifyBar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 
 /* =========================================================
+   中等宽度：导航整体换到第二行并占满整行
+   （视口不足以让品牌 + 8 个 Tab + 主题按钮同排时，避免挤压 / 裁切）
+   ========================================================= */
+@media (max-width:1080px){
+  /* 品牌与主题按钮留在第一行两侧，导航整体换到第二行占满整行 */
+  .header-actions{order:2;margin-left:auto}
+  .tabs{order:3;flex-basis:100%}
+}
+
+/* =========================================================
    移动端适配（<768px）
    ========================================================= */
 @media (max-width:768px){
   .header-inner{padding:8px 12px;gap:8px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .brand{font-size:15px}
   main{padding:12px}
   .filter-bar{flex-direction:column;align-items:stretch}
