@@ -83,7 +83,7 @@ input,select,textarea{font-family:inherit;font-size:14px;color:var(--text)}
 .brand-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:var(--gradient);box-shadow:0 4px 12px rgba(59,130,246,.32);font-size:15px;flex-shrink:0}
 .brand-text{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.3px}
 /* 移动端：Tab 变为可横向滚动的顶部栏 */
-.tabs{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-right:12px}
 .tabs::-webkit-scrollbar{display:none}
 .tab-btn{border:none;background:none;padding:8px 13px;font-size:14px;color:var(--text-light);border-radius:10px;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s}
 .tab-btn:hover{background:var(--hover);color:var(--text)}
@@ -156,9 +156,13 @@ textarea{resize:vertical;min-height:60px}
 .app-card{margin-bottom:12px;transition:box-shadow .2s,transform .2s,border-color .2s}
 .app-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);border-color:var(--primary-soft)}
 .app-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.app-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
-.app-title .company{font-weight:700}
-.sep{color:var(--text-light)}
+.app-logo{width:32px;height:32px;border-radius:9px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;box-shadow:0 2px 6px rgba(15,23,42,.18);user-select:none}
+.app-logo.lg{width:54px;height:54px;font-size:23px;border-radius:15px}
+.app-logo.sm{width:24px;height:24px;font-size:11px;border-radius:7px}
+.app-title{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:15px}
+.app-title .company{font-weight:700;color:var(--text);letter-spacing:.2px}
+.app-title .position{font-weight:500;color:var(--text-light);font-size:13.5px}
+.sep{color:var(--text-light);margin:0 1px}
 .app-actions{display:flex;gap:6px;flex-shrink:0}
 .app-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;color:var(--text-light);font-size:12.5px}
 .app-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
@@ -166,6 +170,19 @@ textarea{resize:vertical;min-height:60px}
 .app-card-bottom{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .app-link{color:var(--primary);text-decoration:none;font-size:12.5px}
 .app-link:hover{text-decoration:underline}
+/* 网申截止日期高亮：过期红 / 临近黄 / 普通蓝 */
+.dl-chip{font-size:12px;border-radius:6px;padding:2px 8px;display:inline-block;line-height:1.5}
+.dl-overdue{background:#fee2e2;color:#b91c1c;font-weight:600}
+.dl-soon{background:#fef3c7;color:#b45309;font-weight:600}
+.dl-ok{background:#eef2ff;color:#4f46e5}
+/* 快捷筛选预设 */
+.quick-filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.quick-label{color:var(--text-light);font-size:13px}
+.chip-btn{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:999px;padding:3px 12px;font-size:13px;cursor:pointer;transition:all .15s}
+.chip-btn:hover{border-color:var(--primary)}
+.chip-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+/* 薪资分布小结 */
+.salary-summary{margin-top:8px;font-size:12.5px;color:var(--text-light)}
 /* 状态徽章（颜色由内联样式注入） */
 .badge{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12px;line-height:1.5}
 .status-badge{cursor:pointer;border:1px solid transparent;font-weight:500}
@@ -195,6 +212,43 @@ textarea{resize:vertical;min-height:60px}
 .modal-body{padding:16px 18px;overflow-y:auto}
 .modal-footer{display:flex;justify-content:flex-end;gap:10px;padding:12px 18px;border-top:1px solid var(--border)}
 
+/* ===== 投递详情（优雅视图） ===== */
+.app-title{cursor:pointer}
+.app-title:hover .company{text-decoration:underline}
+.detail-modal{overflow:hidden;max-width:640px}
+.detail-hero{position:relative;padding:22px 22px 18px;color:#fff;background:linear-gradient(135deg,#3b82f6,#6366f1);overflow:hidden}
+.detail-hero::before{content:'';position:absolute;right:-50px;top:-50px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.10)}
+.detail-hero::after{content:'';position:absolute;right:40px;bottom:-60px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.07)}
+.detail-hero .modal-close{position:absolute;top:12px;right:12px;z-index:2;color:#fff;background:rgba(255,255,255,.18)}
+.detail-hero .modal-close:hover{background:rgba(255,255,255,.32);color:#fff}
+.detail-status{margin-bottom:0;position:relative;z-index:1}
+.detail-hero-head{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+.detail-logo{flex-shrink:0}
+.detail-hero-info{display:flex;flex-direction:column;gap:5px;min-width:0}
+.detail-status .badge{cursor:pointer;border:1px solid rgba(255,255,255,.5);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.detail-company{position:relative;z-index:1;font-size:22px;font-weight:800;margin:0;line-height:1.25;text-shadow:0 1px 2px rgba(0,0,0,.12)}
+.detail-position{position:relative;z-index:1;font-size:14px;opacity:.92;margin-top:5px}
+.detail-tags{position:relative;z-index:1;margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+.detail-tags .tag{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.detail-body{padding:16px 20px 22px}
+.detail-section{margin-top:18px}
+.detail-section:first-child{margin-top:0}
+.detail-section h3{font-size:13px;color:var(--text-light);margin:0 0 9px;font-weight:600;letter-spacing:.02em}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detail-field{background:var(--chip-bg);border:1px solid var(--border);border-radius:11px;padding:10px 13px;transition:border-color .15s,box-shadow .15s}
+.detail-field:hover{border-color:var(--primary-soft);box-shadow:var(--shadow)}
+.detail-field .df-label{font-size:11.5px;color:var(--text-light);display:flex;align-items:center;gap:5px}
+.detail-field .df-value{font-size:14px;margin-top:4px;font-weight:600;word-break:break-word;line-height:1.5}
+.detail-field .df-value.empty{color:var(--text-light);font-weight:400;font-style:italic}
+.detail-links{display:flex;flex-wrap:wrap;gap:8px}
+.detail-asm{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:var(--chip-bg);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
+.detail-asm .muted-text{flex:1;min-width:160px}
+.detail-note{background:var(--chip-bg);border:1px solid var(--border);border-radius:11px;padding:12px 14px;white-space:pre-wrap;word-break:break-word;font-size:13.5px;line-height:1.65}
+.detail-contact{display:flex;flex-direction:column;gap:8px}
+.detail-empty{color:var(--text-light);font-size:13px;font-style:italic}
+.detail-footer{border-top:1px solid var(--border);gap:8px}
+@media (max-width:560px){ .detail-grid{grid-template-columns:1fr} .detail-modal{max-width:100%} }
+
 /* 联系记录 */
 .contact-section{margin-top:16px;border-top:1px dashed var(--border);padding-top:12px}
 .contact-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
@@ -212,6 +266,7 @@ textarea{resize:vertical;min-height:60px}
 
 /* 状态选择器 */
 .status-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.status-modal-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .status-opt{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:13px}
 .status-opt:hover{border-color:var(--primary)}
 .status-opt.current{outline:2px solid var(--primary)}
@@ -253,11 +308,11 @@ textarea{resize:vertical;min-height:60px}
 .cal-cell.today{border-color:var(--primary);box-shadow:0 0 0 2px rgba(59,130,246,.15)}
 .cal-date{font-size:12px;color:var(--text-light)}
 .cal-cell.today .cal-date{color:var(--primary);font-weight:700}
-.interview-chip{margin-top:3px;font-size:11px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:5px;padding:1px 5px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.interview-chip{margin-top:3px;font-size:11px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;border-radius:5px;padding:1px 5px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-flex;align-items:center;gap:4px;max-width:100%}
 .interview-chip:hover{background:#ffedd5}
 .cal-more{font-size:10px;color:var(--text-light);margin-top:2px}
 .empty-hint{text-align:center;color:var(--text-light);padding:14px 0 4px}
-.iv-title{font-size:16px;font-weight:700;display:flex;gap:6px;flex-wrap:wrap}
+.iv-title{font-size:16px;font-weight:700;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .modal-body h4{margin:14px 0 6px;font-size:13.5px}
 
 /* =========================================================
@@ -312,6 +367,50 @@ canvas{display:block;width:100%}
 #toast.error{background:var(--danger)}
 #toast.success{background:var(--success)}
 .hidden-input{display:none}
+
+/* 提醒中心弹窗 */
+.notify-modal{max-width:480px}
+.notify-empty{padding:34px 12px;text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
+.notify-card{display:flex;gap:12px;align-items:flex-start;padding:14px 14px;border-radius:10px;background:#f5f7fa;margin-bottom:10px;border-left:4px solid var(--nc)}
+[data-theme="dark"] .notify-card{background:#1c2330}
+.notify-icon{font-size:20px;line-height:1.2;flex-shrink:0}
+.notify-content{flex:1;min-width:0}
+.notify-title{font-weight:600;font-size:12.5px;color:var(--nc);margin-bottom:3px;letter-spacing:.3px}
+.notify-text{font-size:13.5px;line-height:1.55;color:var(--text);word-break:break-word}
+.notify-footer{justify-content:space-between;gap:10px;flex-wrap:wrap}
+.notify-hint{font-size:12px;color:var(--muted);flex:1;min-width:160px;line-height:1.4}
+
+/* 页面内浮动提醒卡片（系统通知不可用时的可视兜底，右上角滑入） */
+#notifyStack{
+  position:fixed;top:76px;right:16px;z-index:400;
+  display:flex;flex-direction:column;gap:10px;width:340px;max-width:calc(100vw - 32px);
+  pointer-events:none;
+}
+.notify-pop{
+  pointer-events:auto;position:relative;display:flex;gap:10px;align-items:flex-start;
+  padding:13px 34px 13px 14px;border-radius:12px;
+  background:var(--card);border:1px solid var(--border);border-left:4px solid var(--nc,#6366f1);
+  box-shadow:0 14px 34px rgba(15,23,42,.20);
+  animation:notifyIn .34s cubic-bezier(.21,.9,.32,1.15) both;
+}
+[data-theme="dark"] .notify-pop{box-shadow:0 14px 34px rgba(0,0,0,.55)}
+.notify-pop.out{animation:notifyOut .24s ease forwards}
+@keyframes notifyIn{from{opacity:0;transform:translateX(26px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes notifyOut{to{opacity:0;transform:translateX(26px) scale(.97)}}
+.notify-pop .notify-icon{font-size:19px;line-height:1.25;flex-shrink:0}
+.notify-pop .notify-content{flex:1;min-width:0}
+.notify-pop .notify-title{font-weight:600;font-size:12.5px;color:var(--nc);margin-bottom:3px;letter-spacing:.3px}
+.notify-pop .notify-text{font-size:13px;line-height:1.55;color:var(--text);word-break:break-word}
+.notify-close{
+  position:absolute;top:6px;right:8px;border:none;background:transparent;cursor:pointer;
+  color:var(--muted);font-size:14px;line-height:1;padding:4px;border-radius:6px;
+}
+.notify-close:hover{background:var(--hover,#eef1f6);color:var(--text)}
+.notify-pop .notify-bar{
+  position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--nc,#6366f1);
+  opacity:.45;transform-origin:left;animation:notifyBar linear forwards;
+}
+@keyframes notifyBar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
 
 /* =========================================================
    移动端适配（<768px）
@@ -427,11 +526,13 @@ canvas{display:block;width:100%}
 .asm-chip:active{transform:scale(.97)}
 .asm-pending{background:#fff7ed;color:#ea580c;border:1px solid #fdba74}
 .asm-done{background:#ecfdf5;color:#059669;border:1px solid #6ee7b7}
+.asm-waiting{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
 /* 列表顶部待测评提醒条 */
 .asm-banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:linear-gradient(135deg,#fff7ed,#fffbeb);border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:13.5px}
 .asm-banner b{font-size:15px}
 .asm-banner .btn{margin-left:auto}
 .asm-banner .btn+.btn{margin-left:0}
+.asm-wait-hint{display:block;width:100%;margin-top:3px;font-size:12.5px;font-weight:400}
 /* 跟进提醒页的待测评列表 */
 .asm-item{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 10px;border-bottom:1px solid var(--border)}
 .asm-item:last-child{border-bottom:none}
@@ -451,6 +552,7 @@ canvas{display:block;width:100%}
       <button class="tab-btn" data-tab="followup">⏰ 跟进提醒<span id="followBadge" class="tab-badge hidden"></span></button>
       <button class="tab-btn" data-tab="calendar">🗓️ 面试日历</button>
       <button class="tab-btn" data-tab="data">💾 数据管理</button>
+      <button class="tab-btn" data-tab="recycle">🗑️ 回收站<span id="recycleBadge" class="tab-badge hidden"></span></button>
       <button class="tab-btn" data-tab="monitor">🌐 网站导航</button>
     </nav>
     <div class="header-actions">
@@ -496,6 +598,13 @@ canvas{display:block;width:100%}
           <button id="resetFiltersBtn" class="btn btn-ghost btn-sm">重置</button>
         </div>
       </div>
+      <div class="quick-filters">
+        <span class="quick-label">快捷筛选：</span>
+        <button type="button" class="chip-btn" data-quick="week">本周投递</button>
+        <button type="button" class="chip-btn" data-quick="follow">待跟进</button>
+        <button type="button" class="chip-btn" data-quick="noInterview">已投未面试</button>
+        <button type="button" class="chip-btn" data-quick="stale">超7天无进展</button>
+      </div>
     </div>
     <div class="list-toolbar">
       <span id="listCount"></span>
@@ -529,6 +638,8 @@ canvas{display:block;width:100%}
         </div>
       </div>
       <div class="card"><h3>常用标签 Top 10</h3><div id="tagStats"></div></div>
+      <div class="card"><h3>🏙️ 城市分布</h3><div id="cityBars"></div></div>
+      <div class="card"><h3>💰 薪资区间分布</h3><div id="salaryBars"></div></div>
     </div>
   </section>
 
@@ -548,6 +659,8 @@ canvas{display:block;width:100%}
       <span id="followCount"></span>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button id="notifyToggleBtn" class="btn btn-secondary">🔔 开启桌面提醒</button>
+        <button id="notifyNowBtn" class="btn btn-primary">⚡ 立即提醒</button>
+        <button id="genDemoBtn" class="btn btn-ghost">🧪 生成演示数据</button>
         <button id="markAllFollowedBtn" class="btn btn-secondary">全部标记已跟进</button>
       </div>
     </div>
@@ -613,6 +726,15 @@ canvas{display:block;width:100%}
         <button id="clearDataBtn" class="btn btn-danger">清空所有数据</button>
       </div>
     </div>
+  </section>
+
+  <!-- ===================== 7. 回收站 ===================== -->
+  <section id="panel-recycle" class="tab-panel hidden">
+    <div class="list-toolbar">
+      <span id="recycleCount"></span>
+      <button id="emptyRecycleBtn" class="btn btn-danger btn-sm">清空回收站</button>
+    </div>
+    <div id="recycleList"></div>
   </section>
 
   <section id="panel-monitor" class="tab-panel hidden">
@@ -693,6 +815,7 @@ canvas{display:block;width:100%}
           </select>
         </div>
         <div class="form-field"><label>下次跟进日期</label><input type="date" id="fFollowUpDate"></div>
+        <div class="form-field"><label>网申截止日期</label><input type="date" id="fDeadline"></div>
         <div class="form-field field-full"><label>职位链接</label><input id="fJobLink" type="text" placeholder="https://…"></div>
         <div class="form-field"><label>面试时间</label><input type="datetime-local" id="fInterviewDate"></div>
         <div class="form-field"><label>简历版本</label>
@@ -728,6 +851,52 @@ canvas{display:block;width:100%}
   </div>
 </div>
 
+<!-- 投递详情（优雅只读视图） -->
+<div class="modal-overlay hidden" id="detailModal">
+  <div class="modal detail-modal">
+    <div class="detail-hero">
+      <button class="modal-close" data-close="detailModal" title="关闭">✕</button>
+      <div class="detail-hero-head">
+        <div class="detail-logo" id="dLogo"></div>
+        <div class="detail-hero-info">
+          <div class="detail-status" id="dStatus"></div>
+          <h2 class="detail-company" id="dCompany"></h2>
+          <div class="detail-position" id="dPosition"></div>
+        </div>
+      </div>
+      <div class="detail-tags" id="dTags"></div>
+    </div>
+    <div class="modal-body detail-body">
+      <div class="detail-grid" id="dGrid"></div>
+
+      <div class="detail-section" id="dLinksSection">
+        <h3>🔗 相关链接</h3>
+        <div class="detail-links" id="dLinks"></div>
+      </div>
+
+      <div class="detail-section" id="dAsmSection">
+        <h3>📝 综合测评</h3>
+        <div class="detail-asm" id="dAsm"></div>
+      </div>
+
+      <div class="detail-section" id="dContactSection">
+        <h3>📞 联系记录</h3>
+        <div class="detail-contact" id="dContacts"></div>
+      </div>
+
+      <div class="detail-section" id="dNoteSection">
+        <h3>📝 备注</h3>
+        <div class="detail-note" id="dNote"></div>
+      </div>
+    </div>
+    <div class="modal-footer detail-footer">
+      <button class="btn btn-danger-ghost" data-detail-action="delete">删除</button>
+      <button class="btn btn-secondary" data-detail-action="duplicate">复制</button>
+      <button class="btn btn-primary" data-detail-action="edit">编辑</button>
+    </div>
+  </div>
+</div>
+
 <!-- ===================== 弹窗：添加联系记录 ===================== -->
 <div class="modal-overlay hidden" id="contactModal">
   <div class="modal modal-sm">
@@ -757,7 +926,7 @@ canvas{display:block;width:100%}
       <button class="modal-close" data-close="statusModal">✕</button>
     </div>
     <div class="modal-body">
-      <div id="statusModalSubtitle" class="muted-text"></div>
+      <div class="status-modal-head"><div id="statusModalLogo"></div><div id="statusModalSubtitle" class="muted-text"></div></div>
       <div id="statusOptions" class="status-options"></div>
     </div>
   </div>
@@ -807,7 +976,7 @@ canvas{display:block;width:100%}
       <button class="modal-close" data-close="interviewModal">✕</button>
     </div>
     <div class="modal-body">
-      <div class="iv-title"><span id="ivCompany"></span><span class="sep">·</span><span id="ivPosition"></span></div>
+      <div class="iv-title"><span id="ivLogo"></span><span id="ivCompany"></span><span class="sep">·</span><span id="ivPosition"></span></div>
       <div class="app-meta" style="margin-top:8px">
         <span id="ivTime"></span><span id="ivLocation"></span>
       </div>
@@ -881,6 +1050,22 @@ canvas{display:block;width:100%}
   </div>
 </div>
 
+<!-- ===================== 弹窗：提醒中心 ===================== -->
+<div class="modal-overlay hidden" id="notifyModal">
+  <div class="modal notify-modal">
+    <div class="modal-header">
+      <h2>🔔 提醒中心</h2>
+      <button class="modal-close" data-close="notifyModal" title="关闭">✕</button>
+    </div>
+    <div class="modal-body" id="notifyBody"></div>
+    <div class="modal-footer notify-footer">
+      <span class="notify-hint" id="notifyHint"></span>
+      <button id="notifyPermBtn" class="btn btn-secondary">开启系统通知</button>
+    </div>
+  </div>
+</div>
+
+<div id="notifyStack"></div>
 <div id="toast"></div>
 <footer class="app-footer">数据仅保存在本机浏览器 localStorage 中，建议定期在「数据管理」中导出备份</footer><script>
 'use strict';
@@ -929,7 +1114,7 @@ let resumeVersions = [];      // 简历版本数组
 let customChannels = [];      // 用户自定义招聘渠道（输过一次即记住）
 
 // 默认筛选/排序条件
-const DEFAULT_FILTERS = {status:'',search:'',dateFrom:'',dateTo:'',channel:'',tag:'',assessment:'',sortBy:'applyDate',sortDir:'desc'};
+const DEFAULT_FILTERS = {status:'',search:'',dateFrom:'',dateTo:'',channel:'',tag:'',assessment:'',quick:'',sortBy:'applyDate',sortDir:'desc'};
 let settings = {lastTab:'list', filters:{...DEFAULT_FILTERS}, theme:'light', notifyEnabled:false, proxyTemplate:'', monitors:defaultMonitors()};
 
 // 默认导航网站（首次打开时预置用户提供的站点）
@@ -944,6 +1129,7 @@ function defaultMonitors(){
 let currentTab = 'list';                 // 当前激活的 Tab
 let calendarCursor = {year:2026, month:0}; // 面试日历当前显示的月份（month 从 0 开始）
 let editingAppId = null;                 // 正在编辑的投递记录 id（null = 新建）
+let detailCurrentId = null;              // 当前详情视图展示的投递记录 id
 let draftContacts = [];                  // 编辑弹窗中的联系记录草稿
 let pendingFile = null;                  // 投递表单附件暂存 {name, file, data, tooBig}
 let editingResumeId = null;              // 正在编辑的简历版本 id
@@ -1218,6 +1404,7 @@ function renderCurrent(){
   else if(currentTab === 'followup') renderFollowUps();
   else if(currentTab === 'calendar') renderCalendar();
   else if(currentTab === 'data') renderData();
+  else if(currentTab === 'recycle') renderRecycle();
   else if(currentTab === 'monitor') renderMonitors();
 }
 
@@ -1245,12 +1432,19 @@ function statusBadgeHtml(status){
   return '<button type="button" class="badge status-badge" data-action="status" style="background:' + c + '1a;color:' + c + ';border:1px solid ' + c + '55">' + escapeHtml(status) + '</button>';
 }
 
-// 综合测评状态小标签（点击可切换 未测评 / 已测评）
+// 综合测评状态小标签
+// 已测评 → 绿色「已测评」（点击切回）；未测评且有链接 → 橙色「待测评」（点击标记已完成）；
+// 未测评且无链接 → 蓝色「待收测评」（点击补填链接，并提示留意邮箱 / 短信）
 function assessmentChipHtml(a){
-  const done = (a.assessmentStatus || '未测评') === '已测评';
-  const cls = done ? 'asm-done' : 'asm-pending';
-  const txt = done ? '✅ 已测评' : '📝 待测评';
-  return '<button type="button" class="badge asm-chip ' + cls + '" data-action="assessment" title="点击切换测评状态（用于筛选 / 提醒）">' + txt + '</button>';
+  const status = a.assessmentStatus || '未测评';
+  const hasLink = !!a.assessmentLink;
+  if(status === '已测评'){
+    return '<button type="button" class="badge asm-chip asm-done" data-action="assessment" title="点击切换回未测评">✅ 已测评</button>';
+  }
+  if(hasLink){
+    return '<button type="button" class="badge asm-chip asm-pending" data-action="assessment" title="点击标记为已测评（用于筛选 / 提醒）">📝 待测评</button>';
+  }
+  return '<button type="button" class="badge asm-chip asm-waiting" data-action="assessment-edit" title="企业尚未发送测评链接，留意邮箱 / 短信；点击补填链接">📨 待收测评</button>';
 }
 function assessmentLinkHtml(a){
   return a.assessmentLink ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '';
@@ -1266,11 +1460,32 @@ function followUpHtml(iso){
   return '<span class="fu-chip ' + cls + '">⏰ 跟进：' + fmtDateCN(iso) + '（' + describeFollowUp(iso) + '）</span>';
 }
 
+// 网申截止日期高亮：过期红、临近(<=3天)黄、正常灰
+function deadlineClass(iso){
+  const d = daysUntil(iso);
+  if(d < 0) return 'dl-overdue';
+  if(d <= 3) return 'dl-soon';
+  return 'dl-ok';
+}
+function describeDeadline(iso){
+  const d = daysUntil(iso);
+  if(d < 0) return '已过期 ' + (-d) + ' 天';
+  if(d === 0) return '今天截止';
+  if(d <= 3) return d + ' 天后截止';
+  return d + ' 天后截止';
+}
+function deadlineHtml(iso){
+  if(!iso) return '';
+  return '<span class="dl-chip ' + deadlineClass(iso) + '">⏳ 截止：' + fmtDateCN(iso) + '（' + describeDeadline(iso) + '）</span>';
+}
+
 // 按筛选条件过滤记录
 function getFilteredApps(){
   const f = settings.filters;
+  const today = todayStr();
   const kw = f.search.trim().toLowerCase();
   return applications.filter(a => {
+    if(a.deleted) return false;
     if(f.status && a.status !== f.status) return false;
     if(f.channel && (a.channel || '其他') !== f.channel) return false;
     if(f.assessment && (a.assessmentStatus || '未测评') !== f.assessment) return false;
@@ -1280,6 +1495,19 @@ function getFilteredApps(){
     if(f.tag){
       const t = f.tag.trim().toLowerCase();
       if(t && !parseTags(a.tags).some(x => x.toLowerCase().includes(t))) return false;
+    }
+    if(f.quick === 'week'){
+      const now = new Date(); const dow = (now.getDay() + 6) % 7;
+      const mondayIso = toISODate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow));
+      if(a.applyDate < mondayIso) return false;
+    }else if(f.quick === 'follow'){
+      if(!a.nextFollowUpDate) return false;
+    }else if(f.quick === 'noInterview'){
+      if(a.interviewDate) return false;
+      if(['Offer','已入职','已拒绝','终面','二面','面试中'].includes(a.status)) return false;
+    }else if(f.quick === 'stale'){
+      if(daysUntil(a.applyDate) > -8) return false;
+      if(['Offer','已入职','已拒绝','终面'].includes(a.status)) return false;
     }
     return true;
   });
@@ -1314,9 +1542,9 @@ function appCardHtml(a){
   return '<div class="card app-card' + (a.starred ? ' starred-card' : '') + '" data-id="' + a.id + '">'
     + '<div class="app-card-top">'
     +   '<label class="app-check-wrap"><input type="checkbox" class="app-check" value="' + a.id + '"' + checked + '></label>'
-    +   '<div class="app-title">' + statusBadgeHtml(a.status)
-    +     '<span class="company">' + escapeHtml(a.company) + '</span><span class="sep">·</span>'
-    +     '<span class="position">' + escapeHtml(a.position) + '</span>'
+    +   '<div class="app-title" title="点击查看详情">' + companyAvatarHtml(a) + statusBadgeHtml(a.status)
+    +     '<span class="company">' + escapeHtml(a.company) + '</span>'
+    +     (a.position ? '<span class="sep">·</span><span class="position">' + escapeHtml(a.position) + '</span>' : '')
     +   '</div>'
     +   '<div class="app-actions">'
     +     '<button type="button" class="btn btn-ghost btn-sm star-btn' + (a.starred ? ' starred' : '') + '" data-action="star" title="星标置顶">' + (a.starred ? '★' : '☆') + '</button>'
@@ -1333,6 +1561,7 @@ function appCardHtml(a){
     +   (a.resumeVersion ? '<span>📄 ' + escapeHtml(a.resumeVersion) + '</span>' : '')
     +   (a.contactRecords && a.contactRecords.length ? '<span>💬 ' + a.contactRecords.length + ' 条联系</span>' : '')
     +   (a.interviewDate ? '<span>🗓️ 面试：' + escapeHtml(a.interviewDate) + '</span>' : '')
+    +   (a.deadline ? deadlineHtml(a.deadline) : '')
     + '</div>'
     + (tags ? '<div class="app-tags">' + tags + '</div>' : '')
     + '<div class="app-card-bottom">'
@@ -1340,6 +1569,19 @@ function appCardHtml(a){
     +   link + assessmentLinkHtml(a) + assessmentChipHtml(a) + resumeFile
     + '</div>'
     + '</div>';
+}
+
+// 公司首字母头像：按公司名稳定生成色相，不同公司不同颜色，提升辨识度
+// extraCls 可选：'lg' 大号（详情页）、'sm' 小号（紧凑列表）
+function companyAvatarHtml(a, extraCls){
+  const raw = (a.company || '').trim();
+  const name = raw || '?';
+  const ch = name[0];
+  let h = 0;
+  for(let i=0;i<name.length;i++){ h = (h*31 + name.charCodeAt(i)) % 360; }
+  const bg = 'linear-gradient(135deg,hsl(' + h + ',62%,56%),hsl(' + ((h+38)%360) + ',62%,46%))';
+  const cls = 'app-logo' + (extraCls ? ' ' + extraCls : '');
+  return '<span class="' + cls + '" style="background:' + bg + '" aria-hidden="true">' + escapeHtml(ch) + '</span>';
 }
 
 // 渲染投递列表
@@ -1363,6 +1605,7 @@ function openStatusPicker(id){
   const app = applications.find(a => a.id === id);
   if(!app) return;
   statusPickerAppId = id;
+  $('statusModalLogo').innerHTML = companyAvatarHtml(app, 'sm');
   $('statusModalSubtitle').textContent = app.company + ' · ' + app.position;
   $('statusOptions').innerHTML = STATUSES.map(s => {
     const c = STATUS_COLORS[s];
@@ -1376,11 +1619,82 @@ function openStatusPicker(id){
 async function confirmDeleteApp(id){
   const app = applications.find(a => a.id === id);
   if(!app) return;
-  const ok = await showConfirm('删除确认', '确定删除「' + app.company + ' · ' + app.position + '」这条投递记录吗？此操作不可恢复。', {danger:true, okText:'删除'});
+  const ok = await showConfirm('移入回收站', '确定将「' + app.company + ' · ' + app.position + '」移入回收站吗？可在「回收站」中恢复。', {danger:true, okText:'移入回收站'});
+  if(!ok) return;
+  app.deleted = true;
+  app.deletedAt = todayStr();
+  app.updatedAt = nowDateTimeStr();
+  commitApps();
+  toast('已移入回收站', 'success');
+  if(detailCurrentId === id) hideModal('detailModal');
+  renderList();
+  updateRecycleBadge();
+}
+
+// 回收站：已删除记录列表
+function renderRecycle(){
+  const list = applications.filter(a => a.deleted);
+  $('recycleCount').textContent = list.length ? ('回收站共有 ' + list.length + ' 条记录') : '回收站为空';
+  const emptyBtn = $('emptyRecycleBtn');
+  if(emptyBtn) emptyBtn.disabled = !list.length;
+  const el = $('recycleList');
+  if(!list.length){
+    el.innerHTML = '<div class="card empty-card">🗑️ 回收站是空的。删除的记录会先到这里，可随时恢复。</div>';
+    return;
+  }
+  el.innerHTML = list.map(a => {
+    const tags = parseTags(a.tags).map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('');
+    return '<div class="card app-card' + (a.starred ? ' starred-card' : '') + '" data-id="' + a.id + '">'
+      + '<div class="app-card-top"><div class="app-title">' + companyAvatarHtml(a) + statusBadgeHtml(a.status)
+      + '<span class="company">' + escapeHtml(a.company) + '</span>'
+      + (a.position ? '<span class="sep">·</span><span class="position">' + escapeHtml(a.position) + '</span>' : '')
+      + '</div><div class="app-actions">'
+      + '<button type="button" class="btn btn-secondary btn-sm" data-recycle="restore">恢复</button>'
+      + '<button type="button" class="btn btn-danger-ghost btn-sm" data-recycle="purge">永久删除</button>'
+      + '</div></div>'
+      + '<div class="app-meta"><span>📅 投递：' + fmtDateCN(a.applyDate) + '</span>'
+      + (a.deletedAt ? '<span>🗑️ 删除于：' + fmtDateCN(a.deletedAt) + '</span>' : '')
+      + '</div>'
+      + (tags ? '<div class="app-tags">' + tags + '</div>' : '')
+      + '</div>';
+  }).join('');
+}
+
+function updateRecycleBadge(){
+  const n = applications.filter(a => a.deleted).length;
+  const el = $('recycleBadge');
+  if(el){ el.textContent = n; el.classList.toggle('hidden', n === 0); }
+}
+
+async function restoreApp(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  app.deleted = false; app.deletedAt = ''; app.updatedAt = nowDateTimeStr();
+  commitApps();
+  renderRecycle(); updateRecycleBadge(); renderList();
+  toast('已恢复记录', 'success');
+}
+
+async function purgeApp(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  const ok = await showConfirm('永久删除', '确定永久删除「' + app.company + ' · ' + app.position + '」吗？此操作不可恢复。', {danger:true, okText:'永久删除'});
   if(!ok) return;
   applications = applications.filter(a => a.id !== id);
   commitApps();
-  toast('已删除记录', 'success');
+  renderRecycle(); updateRecycleBadge(); renderList();
+  toast('已永久删除', 'success');
+}
+
+async function emptyRecycle(){
+  const n = applications.filter(a => a.deleted).length;
+  if(!n) return;
+  const ok = await showConfirm('清空回收站', '确定永久删除回收站中的 ' + n + ' 条记录吗？此操作不可恢复。', {danger:true, okText:'清空'});
+  if(!ok) return;
+  applications = applications.filter(a => !a.deleted);
+  commitApps();
+  renderRecycle(); updateRecycleBadge(); renderList();
+  toast('已清空回收站', 'success');
 }
 
 // 跟进提醒 Tab 上的角标：今天到期或已过期的数量
@@ -1392,40 +1706,57 @@ function updateFollowBadge(){
   el.classList.toggle('hidden', n === 0);
 }
 
-// 列表顶部「待测评」提醒条：有未测评记录时显示，并提供查看 / 一键标记
+// 列表顶部「待测评」提醒条：仅统计已收到链接的待测评；未收到链接的给出留意邮箱提示
 function renderAssessmentBanner(){
   const el = $('assessmentBanner');
   if(!el) return;
-  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评');
-  if(!pending.length){ el.classList.add('hidden'); el.innerHTML = ''; return; }
+  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink);
+  const waiting = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评' && !a.assessmentLink);
+  if(!pending.length && !waiting.length){ el.classList.add('hidden'); el.innerHTML = ''; return; }
+  let html = '';
+  if(pending.length){
+    html += '📝 你有 <b>' + pending.length + '</b> 条待完成综合测评（已收到测评链接），别忘啦'
+      + '<button type="button" class="btn btn-ghost btn-sm" id="asmViewBtn">查看待测评</button>'
+      + '<button type="button" class="btn btn-ghost btn-sm" id="asmAllDoneBtn">全部标记已测评</button>';
+  }
+  if(waiting.length){
+    html += '<span class="asm-wait-hint">📨 另有 <b>' + waiting.length + '</b> 条尚未收到测评链接，留意邮箱 / 短信，收到后点卡片上的「待收测评」补填</span>';
+  }
   el.classList.remove('hidden');
-  el.innerHTML = '📝 你有 <b>' + pending.length + '</b> 条投递尚未完成综合测评，别忘啦'
-    + '<button type="button" class="btn btn-ghost btn-sm" id="asmViewBtn">查看待测评</button>'
-    + '<button type="button" class="btn btn-ghost btn-sm" id="asmAllDoneBtn">全部标记已测评</button>';
-  $('asmViewBtn').addEventListener('click', () => switchTab('followup'));
-  $('asmAllDoneBtn').addEventListener('click', markAllAssessed);
+  el.innerHTML = html;
+  if(pending.length){
+    $('asmViewBtn').addEventListener('click', () => switchTab('followup'));
+    $('asmAllDoneBtn').addEventListener('click', markAllAssessed);
+  }
 }
 
-// 跟进提醒页的「待测评」清单
+// 跟进提醒页的「待测评」清单：已收到链接显示「去测评」，未收到显示「待收测评」+ 填写链接
 function renderAssessmentReminders(){
   const el = $('assessmentReminderList');
   if(!el) return;
-  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评');
-  if(!pending.length){
+  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink);
+  const waiting = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评' && !a.assessmentLink);
+  if(!pending.length && !waiting.length){
     el.innerHTML = '<div class="muted-text">🎉 没有待测评的投递，综合测评已全部完成。</div>';
     return;
   }
-  el.innerHTML = pending.map(a => {
-    const link = a.assessmentLink
-      ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">🔗 去测评</a>'
-      : '<span class="muted-text">（未填测评链接，请在编辑里补充）</span>';
+  const rowHtml = a => {
+    let link, action;
+    if(a.assessmentLink){
+      link = '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">🔗 去测评</a>';
+      action = '<button type="button" class="btn btn-secondary btn-sm" data-asm-done="' + a.id + '">标记已测评</button>';
+    }else{
+      link = '<span class="muted-text">📨 待收测评（留意邮箱 / 短信）</span>';
+      action = '<button type="button" class="btn btn-ghost btn-sm" data-asm-edit="' + a.id + '">填写链接</button>';
+    }
     return '<div class="asm-item">'
-      + '<span class="asm-company">' + escapeHtml(a.company) + ' · ' + escapeHtml(a.position) + '</span>'
+      + companyAvatarHtml(a, 'sm') + '<span class="asm-company">' + escapeHtml(a.company) + ' · ' + escapeHtml(a.position) + '</span>'
       + '<span class="muted-text">' + escapeHtml(a.status) + ' · 投递 ' + fmtDateCN(a.applyDate) + '</span>'
       + link
-      + '<button type="button" class="btn btn-secondary btn-sm" data-asm-done="' + a.id + '">标记已测评</button>'
+      + action
       + '</div>';
-  }).join('');
+  };
+  el.innerHTML = pending.map(rowHtml).join('') + waiting.map(rowHtml).join('');
 }
 
 /* =========================================================
@@ -1473,17 +1804,17 @@ function toggleAssessment(id){
   toast(app.assessmentStatus === '已测评' ? '已标记为「已测评」' : '已改回「待测评」', 'success');
 }
 
-// 一次性把全部「待测评」标记为「已测评」
+// 一次性把「已收到链接的待测评」标记为「已测评」（未收到链接的不标记，避免误标）
 function markAllAssessed(){
   let n = 0;
   applications.forEach(a => {
-    if((a.assessmentStatus || '未测评') === '未测评'){
+    if((a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink){
       a.assessmentStatus = '已测评'; a.updatedAt = nowDateTimeStr(); n++;
     }
   });
   if(n) commitApps();
   renderList(); renderAssessmentBanner(); renderAssessmentReminders();
-  toast(n ? ('已将 ' + n + ' 条标记为已测评') : '没有待测评的记录', n ? 'success' : 'info');
+  toast(n ? ('已将 ' + n + ' 条（已收到链接）标记为已测评') : '没有待测评的记录', n ? 'success' : 'info');
 }
 
 /* =========================================================
@@ -1518,14 +1849,16 @@ function updateBatchCount(){
 async function batchDelete(){
   if(!selectedAppIds.size){ toast('请先勾选要删除的记录', 'info'); return; }
   const n = selectedAppIds.size;
-  const ok = await showConfirm('批量删除', '确定删除选中的 ' + n + ' 条投递记录吗？此操作不可恢复。', {danger:true, okText:'删除'});
+  const ok = await showConfirm('批量移入回收站', '确定将选中的 ' + n + ' 条投递记录移入回收站吗？可在「回收站」中恢复。', {danger:true, okText:'移入回收站'});
   if(!ok) return;
-  applications = applications.filter(a => !selectedAppIds.has(a.id));
+  applications.forEach(a => { if(selectedAppIds.has(a.id)){ a.deleted = true; a.deletedAt = todayStr(); a.updatedAt = nowDateTimeStr(); } });
   selectedAppIds.clear();
   $('selectAllChk').checked = false;
   updateBatchCount();
   commitApps();
-  toast('已删除 ' + n + ' 条记录', 'success');
+  renderList();
+  updateRecycleBadge();
+  toast('已移入回收站 ' + n + ' 条记录', 'success');
 }
 
 function openBatchStatus(){
@@ -1556,7 +1889,7 @@ function applyBatchStatus(status){
 function exportCsv(){
   const headers = [
     ['公司名称','company'],['职位名称','position'],['工作地点','location'],['薪资范围','salary'],
-    ['招聘渠道','channel'],['投递日期','applyDate'],['当前状态','status'],['下次跟进日期','nextFollowUpDate'],
+    ['招聘渠道','channel'],['投递日期','applyDate'],['当前状态','status'],['下次跟进日期','nextFollowUpDate'],['网申截止日期','deadline'],
     ['面试时间','interviewDate'],['简历版本','resumeVersion'],['标签','tags'],['职位链接','jobLink'],
     ['测评链接','assessmentLink'],['测评状态','assessmentStatus'],
     ['备注','notes'],['星标','starred'],['联系记录数','contactRecords']
@@ -1590,6 +1923,20 @@ function syncFilterControls(){
   $('filterDateTo').value = f.dateTo;
   $('sortBy').value = f.sortBy;
   updateSortDirBtn();
+}
+
+// 快捷筛选预设：一键应用，并清空其他精确筛选条件
+function applyQuickFilter(type){
+  settings.filters = {...DEFAULT_FILTERS, quick:type};
+  syncFilterControls();
+  saveSettings();
+  renderList();
+  updateQuickHighlight();
+}
+function updateQuickHighlight(){
+  document.querySelectorAll('.quick-filters .chip-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.quick === settings.filters.quick);
+  });
 }
 
 function updateSortDirBtn(){
@@ -1641,6 +1988,7 @@ function openAppModal(id){
   $('fResumeVersion').value = app ? (app.resumeVersion || '') : '';
   $('fNotes').value = app ? (app.notes || '') : '';
   $('fFollowUpDate').value = app ? (app.nextFollowUpDate || '') : '';
+  $('fDeadline').value = app ? (app.deadline || '') : '';
   $('fAssessmentStatus').value = app ? (app.assessmentStatus || '未测评') : '未测评';
   $('fAssessmentLink').value = app ? (app.assessmentLink || '') : '';
   // datetime-local 控件需要 YYYY-MM-DDTHH:mm 格式，存储格式为空格分隔
@@ -1657,6 +2005,64 @@ function openAppModal(id){
   renderContactList();
   updateAppFileArea();
   showModal('appModal');
+}
+
+// 打开「投递详情」优雅视图（只读展示，可跳转编辑 / 复制 / 删除）
+function openDetail(id){
+  const a = applications.find(x => x.id === id);
+  if(!a) return;
+  detailCurrentId = id;
+  const c = STATUS_COLORS[a.status] || '#6b7280';
+  $('dStatus').innerHTML = '<span class="badge" data-action="status" style="background:#fff;color:' + c + ';border:1px solid ' + c + '55;font-weight:600">' + escapeHtml(a.status) + '</span>';
+  $('dLogo').innerHTML = companyAvatarHtml(a, 'lg');
+  $('dCompany').textContent = a.company;
+  const pos = [];
+  if(a.position) pos.push(a.position);
+  if(a.location) pos.push(a.location);
+  $('dPosition').textContent = pos.length ? pos.join(' · ') : '未填写职位';
+  const tagArr = (a.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+  $('dTags').innerHTML = tagArr.map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('');
+  const iv = a.interviewDate ? (fmtDateCN(a.interviewDate.split(' ')[0]) + (a.interviewDate.split(' ')[1] ? ' ' + a.interviewDate.split(' ')[1] : '')) : '';
+  const fields = [
+    {label:'📮 渠道', value:a.channel || '其他'},
+    {label:'📅 投递日期', value:fmtDateCN(a.applyDate)},
+    {label:'💰 薪资', value:a.salary},
+    {label:'🗓️ 面试时间', value:iv},
+    {label:'⏰ 下次跟进', value:a.nextFollowUpDate ? fmtDateCN(a.nextFollowUpDate) : ''},
+    {label:'📄 简历版本', value:a.resumeVersion},
+    {label:'⏳ 网申截止', value:a.deadline, deadline:true}
+  ];
+  $('dGrid').innerHTML = fields.map(f => {
+    const empty = !f.value;
+    let valHtml = empty ? '未填写' : escapeHtml(f.value);
+    if(f.deadline && !empty){
+      valHtml += ' <span class="dl-chip ' + deadlineClass(f.value) + '">' + describeDeadline(f.value) + '</span>';
+    }
+    return '<div class="detail-field"><div class="df-label">' + f.label + '</div><div class="df-value' + (empty ? ' empty' : '') + '">' + valHtml + '</div></div>';
+  }).join('');
+  const links = [];
+  if(a.jobLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>');
+  if(a.assessmentLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>');
+  $('dLinks').innerHTML = links.join('') || '<span class="detail-empty">暂无相关链接</span>';
+  $('dLinksSection').style.display = links.length ? '' : 'none';
+  const asm = a.assessmentStatus || '未测评';
+  let asmChip, asmText;
+  if(asm === '已测评'){ asmChip = '<span class="badge asm-chip asm-done">✅ 已测评</span>'; asmText = '已完成综合测评'; }
+  else if(a.assessmentLink){ asmChip = '<span class="badge asm-chip asm-pending">📝 待测评</span>'; asmText = '企业已发送测评链接，记得按时完成'; }
+  else { asmChip = '<span class="badge asm-chip asm-waiting">📨 待收测评</span>'; asmText = '企业尚未发送测评链接，留意邮箱 / 短信'; }
+  $('dAsm').innerHTML = asmChip
+    + '<span class="muted-text">' + asmText + '</span>'
+    + '<button type="button" class="btn btn-ghost btn-sm" data-detail-asm="1" title="切换测评状态">切换状态</button>';
+  const recs = a.contactRecords || [];
+  $('dContacts').innerHTML = recs.length
+    ? recs.map(r => '<div class="contact-item"><div class="contact-head"><span class="contact-type">' + escapeHtml(r.type || '联系') + '</span><span class="muted-text">' + escapeHtml(r.time || '') + '</span></div><div class="contact-content">' + escapeHtml(r.content || '') + '</div></div>').join('')
+    : '<div class="detail-empty">暂无联系记录</div>';
+  $('dContactSection').style.display = recs.length ? '' : 'none';
+  const note = (a.notes || '').trim();
+  $('dNote').textContent = note || '暂无备注';
+  $('dNote').style.fontStyle = note ? 'normal' : 'italic';
+  $('dNoteSection').style.display = note ? '' : 'none';
+  showModal('detailModal');
 }
 
 // 渲染附件区域（选择 / 更换 / 移除）
@@ -1716,6 +2122,7 @@ async function saveAppFromForm(){
     if(!ok){ toast('职位链接格式不正确（需以 http:// 或 https:// 开头）', 'error'); $('fJobLink').focus(); return; }
   }
   if($('fFollowUpDate').value && !/^\d{4}-\d{2}-\d{2}$/.test($('fFollowUpDate').value)){ toast('跟进日期格式不正确', 'error'); return; }
+  if($('fDeadline').value && !/^\d{4}-\d{2}-\d{2}$/.test($('fDeadline').value)){ toast('网申截止日期格式不正确', 'error'); return; }
   if($('fInterviewDate').value && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test($('fInterviewDate').value)){ toast('面试时间格式不正确', 'error'); return; }
   // 测评链接校验（选填，填了必须合法）
   const assessmentLink = $('fAssessmentLink').value.trim();
@@ -1763,10 +2170,12 @@ async function saveAppFromForm(){
     contactRecords: draftContacts,
     nextFollowUpDate: $('fFollowUpDate').value || '',
     interviewDate: $('fInterviewDate').value ? $('fInterviewDate').value.replace('T', ' ') : '',
+    deadline: $('fDeadline').value || '',
     assessmentStatus: $('fAssessmentStatus').value,
     assessmentLink,
     createdAt: existing ? existing.createdAt : now,
-    updatedAt: now
+    updatedAt: now,
+    deleted: existing ? (!!existing.deleted) : false
   };
 
   // ---- 存储容量预估：附件使总量超过 4MB 时提示用户 ----
@@ -1969,7 +2378,7 @@ function renderFollowUps(){
     const cls = days < 0 ? 'overdue' : (days === 0 ? 'today' : 'future');
     return '<div class="card fu-item fu-' + cls + '-item" data-id="' + a.id + '">'
       + '<div class="fu-main">'
-      +   '<div class="fu-title"><span>' + escapeHtml(a.company) + '</span><span class="sep">·</span>'
+      +   '<div class="fu-title">' + companyAvatarHtml(a) + '<span>' + escapeHtml(a.company) + '</span><span class="sep">·</span>'
       +     '<span>' + escapeHtml(a.position) + '</span>' + statusBadgeHtml(a.status) + '</div>'
       +   '<div class="app-meta"><span>⏰ 跟进日期：' + fmtDateCN(a.nextFollowUpDate) + '</span>'
       +     '<span class="fu-days fu-days-' + cls + '">' + describeFollowUp(a.nextFollowUpDate) + '</span></div>'
@@ -2041,6 +2450,14 @@ function renderNotifyBanner(){
     banner.classList.remove('hidden');
     return;
   }
+  // 本地文件方式打开：浏览器（Chrome/Edge）会直接禁用系统通知，给出手把手提示
+  if(isFileProtocol() && Notification.permission !== 'granted'){
+    banner.innerHTML = '⚠️ 你是以「本地文件」方式打开的，多数浏览器（Chrome / Edge）在 file:// 下会禁用系统通知。'
+      + '双击项目目录里的 <b>启动-系统通知版.bat</b>，用 <b>http://localhost</b> 打开本页即可弹出桌面通知。'
+      + '（在此之前，点「⚡ 立即提醒」会在页面右上角弹出提醒卡片，同样不会漏。）';
+    banner.classList.remove('hidden');
+    return;
+  }
   if(Notification.permission === 'denied'){
     banner.textContent = '⚠️ 桌面通知权限已被浏览器拒绝，请在站点设置中允许后重试。';
     banner.classList.remove('hidden');
@@ -2077,26 +2494,204 @@ async function toggleNotify(){
   if(settings.notifyEnabled) checkNotifications();
 }
 
-// 检查过期 / 今日的跟进，弹出系统通知
-function checkNotifications(){
-  if(!notificationsSupported() || Notification.permission !== 'granted' || !settings.notifyEnabled) return;
+// 汇总当前需要提醒的事项（供系统通知与页面内提示共用）
+function collectReminders(){
+  const list = [];
   const today = todayStr();
   const due = applications.filter(a => a.nextFollowUpDate && a.nextFollowUpDate <= today);
-  if(!due.length) return;
-  const overdue = due.filter(a => a.nextFollowUpDate < today).length;
-  const title = '求职跟进提醒';
-  const body = due.length + ' 条跟进事项待处理' + (overdue ? '（其中 ' + overdue + ' 条已过期）' : '') + '：'
-    + due.slice(0, 3).map(a => a.company + '·' + a.position).join('、')
-    + (due.length > 3 ? ' 等' : '');
-  try{ new Notification(title, {body, tag:'job-followup'}); }catch(e){ /* 某些环境构造失败可忽略 */ }
-  // 综合测评提醒
-  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评');
-  if(pending.length){
-    const aBody = '你有 ' + pending.length + ' 条投递待完成综合测评：'
-      + pending.slice(0, 3).map(a => a.company + '·' + a.position).join('、')
-      + (pending.length > 3 ? ' 等' : '');
-    try{ new Notification('综合测评提醒', {body:aBody, tag:'job-assessment'}); }catch(e){ /* 同上 */ }
+  if(due.length){
+    const overdue = due.filter(a => a.nextFollowUpDate < today).length;
+    list.push({tag:'job-followup', title:'求职跟进提醒',
+      body: due.length + ' 条跟进事项待处理' + (overdue ? '（其中 ' + overdue + ' 条已过期）' : '') + '：'
+        + due.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (due.length > 3 ? ' 等' : '')});
   }
+  // 网申截止提醒：临近(<=3天)或已过期
+  const dlWarn = applications.filter(a => a.deadline && daysUntil(a.deadline) <= 3);
+  if(dlWarn.length){
+    const overdue = dlWarn.filter(a => daysUntil(a.deadline) < 0).length;
+    list.push({tag:'job-deadline', title:'网申截止提醒',
+      body: dlWarn.length + ' 条投递网申即将截止' + (overdue ? '（其中 ' + overdue + ' 条已过期）' : '') + '：'
+        + dlWarn.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (dlWarn.length > 3 ? ' 等' : '')});
+  }
+  // 综合测评提醒：已收到链接的待测评；未收到链接的给出留意邮箱的提示
+  const pending = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink);
+  const waiting = applications.filter(a => (a.assessmentStatus || '未测评') === '未测评' && !a.assessmentLink);
+  if(pending.length){
+    let b = '你有 ' + pending.length + ' 条投递待完成综合测评：'
+      + pending.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (pending.length > 3 ? ' 等' : '');
+    if(waiting.length) b += '（另有 ' + waiting.length + ' 条尚未收到链接，留意邮箱）';
+    list.push({tag:'job-assessment', title:'综合测评提醒', body:b});
+  }else if(waiting.length){
+    list.push({tag:'job-assessment', title:'综合测评提醒',
+      body:'你有 ' + waiting.length + ' 条尚未收到测评链接，留意邮箱 / 短信，收到后尽快补填'});
+  }
+  return list;
+}
+
+// 检查过期 / 今日的跟进，弹出系统通知（需已授权）
+function checkNotifications(){
+  if(!notificationsSupported() || Notification.permission !== 'granted' || !settings.notifyEnabled) return;
+  collectReminders().forEach(r => {
+    try{ new Notification(r.title, {body: r.body, tag: r.tag}); }catch(e){ /* 某些环境构造失败可忽略 */ }
+  });
+}
+
+// 立即检查并提醒：优先弹系统通知，并弹出本页「提醒中心」弹窗保证可见（预览/未授权时也能看到）
+const NOTIFY_META = {
+  'job-followup':    {icon:'📌', color:'#3b82f6', label:'求职跟进'},
+  'job-deadline':    {icon:'⏰', color:'#ef4444', label:'网申截止'},
+  'job-assessment':  {icon:'📝', color:'#f59e0b', label:'综合测评'}
+};
+function notifyMeta(tag){ return NOTIFY_META[tag] || {icon:'🔔', color:'#6366f1', label:'提醒'}; }
+function isFileProtocol(){ return location.protocol === 'file:'; }
+
+// —— 页面内浮动提醒卡片（右上角滑入）：系统通知不可用时的可视兜底 ——
+let notifyPopTimers = [];
+function pushNotifyCard(r, ms){
+  const stack = $('notifyStack');
+  if(!stack) return null;
+  const m = notifyMeta(r.tag);
+  const life = ms || 9000;
+  const el = document.createElement('div');
+  el.className = 'notify-pop';
+  el.style.setProperty('--nc', m.color);
+  el.innerHTML =
+      '<div class="notify-icon">' + m.icon + '</div>'
+    + '<div class="notify-content"><div class="notify-title">' + escapeHtml(m.label) + '</div>'
+    + '<div class="notify-text">' + escapeHtml(r.body) + '</div></div>'
+    + '<button class="notify-close" title="关闭">✕</button>'
+    + '<span class="notify-bar" style="animation-duration:' + (life / 1000) + 's"></span>';
+  el.querySelector('.notify-close').addEventListener('click', () => removeNotifyCard(el));
+  stack.appendChild(el);
+  notifyPopTimers.push(setTimeout(() => removeNotifyCard(el), life));
+  return el;
+}
+function removeNotifyCard(el){
+  if(!el || !el.parentNode || el.classList.contains('out')) return;
+  el.classList.add('out');
+  setTimeout(() => { if(el.parentNode) el.remove(); }, 240);
+}
+function clearNotifyCards(){
+  notifyPopTimers.forEach(clearTimeout); notifyPopTimers = [];
+  const stack = $('notifyStack'); if(stack) stack.innerHTML = '';
+}
+// 系统通知为什么发不出去（用于给出明确原因，而不是静默失败）
+function notifyBlockReason(){
+  if(!notificationsSupported()) return '当前浏览器不支持系统通知';
+  if(isFileProtocol() && Notification.permission === 'denied')
+    return '本地文件(file://)方式被浏览器禁止发系统通知，请用「启动-系统通知版.bat」以 http://localhost 打开';
+  if(Notification.permission === 'denied') return '系统通知权限已被浏览器拒绝，请在站点设置中重新允许';
+  if(isFileProtocol()) return '本地文件(file://)模式下系统通知可能不可用，建议用「启动-系统通知版.bat」以 http://localhost 打开';
+  return '系统通知尚未开启';
+}
+function showNotifyCenter(list){
+  const body = $('notifyBody');
+  if(!list.length){
+    body.innerHTML = '<div class="notify-empty">✅ 当前没有需要提醒的事项<br>保持节奏，继续投递吧！</div>';
+  }else{
+    body.innerHTML = list.map(r => {
+      const m = NOTIFY_META[r.tag] || {icon:'🔔', color:'#6366f1', label:'提醒'};
+      return '<div class="notify-card" style="--nc:' + m.color + '">'
+        + '<div class="notify-icon">' + m.icon + '</div>'
+        + '<div class="notify-content"><div class="notify-title">' + m.label + '</div>'
+        + '<div class="notify-text">' + escapeHtml(r.body) + '</div></div></div>';
+    }).join('');
+  }
+  // 提示文案 + 系统通知授权按钮
+  const hint = $('notifyHint'), permBtn = $('notifyPermBtn');
+  if(!notificationsSupported()){
+    hint.textContent = '当前浏览器不支持系统通知，已用页面右上角卡片提醒。';
+    permBtn.style.display = 'none';
+  }else if(isFileProtocol() && Notification.permission !== 'granted'){
+    hint.textContent = '本地文件方式无法开启系统通知；请用「启动-系统通知版.bat」以 http://localhost 打开，即可弹桌面通知。';
+    permBtn.style.display = 'none';
+  }else if(Notification.permission === 'granted'){
+    hint.textContent = '已开启系统通知，关掉网页也会弹出。';
+    permBtn.style.display = 'none';
+  }else if(Notification.permission === 'denied'){
+    hint.textContent = '系统通知已被浏览器拒绝，请在站点设置里允许后重试。';
+    permBtn.style.display = 'none';
+  }else{
+    hint.textContent = '点右侧可在浏览器开启系统级通知（关掉网页也能提醒）。';
+    permBtn.style.display = '';
+  }
+  showModal('notifyModal');
+}
+// 主动开启系统通知（授权 + 开启开关）
+async function enableNotify(){
+  if(!notificationsSupported()){ toast('当前浏览器不支持桌面通知', 'error'); return; }
+  if(Notification.permission === 'default'){
+    let perm;
+    try{ perm = await Notification.requestPermission(); }catch(e){ perm = 'denied'; }
+    if(perm !== 'granted'){ toast(notifyBlockReason(), 'info'); renderNotifyBanner(); showNotifyCenter(collectReminders()); return; }
+  }
+  if(Notification.permission !== 'granted'){ toast(notifyBlockReason(), 'info'); renderNotifyBanner(); return; }
+  settings.notifyEnabled = true; saveSettings(); updateNotifyBtn(); renderNotifyBanner();
+  toast('已开启系统通知 ✅ 关闭网页也能收到提醒', 'success');
+  checkNotifications();
+}
+async function notifyNow(){
+  const list = collectReminders();
+  clearNotifyCards();
+
+  // 1) 尝试走系统通知：未决定权限时先申请（点击按钮属于用户手势，可弹授权框）
+  if(notificationsSupported() && Notification.permission === 'default'){
+    let perm;
+    try{ perm = await Notification.requestPermission(); }catch(e){ perm = 'denied'; }
+    if(perm === 'granted'){ settings.notifyEnabled = true; saveSettings(); }
+  }
+  const granted = notificationsSupported() && Notification.permission === 'granted' && !isFileProtocol();
+  let sent = 0;
+  if(granted){
+    list.forEach((r, i) => {
+      sent++;
+      setTimeout(() => {
+        try{
+          const n = new Notification(r.title, {body:r.body, tag:r.tag});
+          n.onclick = () => { window.focus(); n.close(); };
+        }catch(e){ pushNotifyCard(r); }   // 系统通知构造失败则退回页面卡片
+      }, i * 200);
+    });
+  }
+  // 2) 页面内浮动提醒：始终显示（系统通知可能被免打扰静音，这里保证看得见）
+  if(list.length){
+    list.forEach((r, i) => setTimeout(() => pushNotifyCard(r, granted ? 6000 : 10000), granted ? i * 200 : i * 160));
+  }
+
+  // 3) 结果反馈
+  if(!list.length){
+    toast('当前没有需要提醒的事项 ✅', 'success');
+    showNotifyCenter(list);
+    return;
+  }
+  if(sent){
+    toast('已发送 ' + sent + ' 条系统通知，页面右上角同步显示', 'success');
+  }else{
+    toast(notifyBlockReason(), 'info');
+    showNotifyCenter(list);   // 打开提醒中心，给出开启系统通知的入口
+  }
+  updateNotifyBtn();
+  renderNotifyBanner();
+}
+
+// 生成一组演示数据，覆盖三类提醒场景，方便测试（可经回收站删除）
+function genDemoData(){
+  const t = todayStr();
+  const soon = toISODate(new Date(Date.now() + 2 * 86400000));
+  const past = toISODate(new Date(Date.now() - 1 * 86400000));
+  const now = nowDateTimeStr();
+  const demo = [
+    {company:'演示科技', position:'前端工程师', location:'杭州', salary:'20-35K', channel:'BOSS直聘', applyDate:t, status:'已投递', tags:'演示,前端', nextFollowUpDate:t, deadline:soon, assessmentStatus:'未测评', assessmentLink:'https://example.com/assess/1', notes:'演示数据：今天需跟进 + 网申临近 + 待测评(有链接)。'},
+    {company:'样本次元', position:'后端开发', location:'上海', salary:'25-40K', channel:'智联招聘', applyDate:past, status:'简历被查看', tags:'演示,后端', deadline:past, assessmentStatus:'未测评', assessmentLink:'', notes:'演示数据：网申已过期 + 待收测评链接(留意邮箱)。'},
+    {company:'测试无限', position:'算法工程师', location:'北京', salary:'30-50K', channel:'内推', applyDate:past, status:'面试中', tags:'演示,算法', interviewDate: soon + ' 14:00', assessmentStatus:'已测评', assessmentLink:'https://example.com/assess/3', notes:'演示数据：正常记录(无触发提醒)，用于对比。'}
+  ];
+  demo.forEach(d => { const r = {...defaultAppFields(), ...d, id: genId(), createdAt: now, updatedAt: now}; applications.push(r); });
+  commitApps();
+  renderList(); renderFollowUps(); renderAssessmentReminders(); renderRecycle();
+  updateFollowBadge(); updateRecycleBadge();
+  switchTab('followup');
+  toast('已生成 3 条演示数据，正在弹出提醒…', 'success');
+  notifyNow();
 }
 /* =========================================================
  * 十二、面试日历（原生 JS 生成月历）
@@ -2126,7 +2721,7 @@ function renderCalendar(){
     if(inMonth) monthInterviewCount += items.length;
     const chips = items.slice(0, 3).map(a =>
       '<div class="interview-chip" data-id="' + a.id + '" title="' + escapeHtml(a.company + ' ' + a.position + ' ' + a.interviewDate) + '">'
-      + escapeHtml(a.company) + '·' + escapeHtml(a.position) + '</div>').join('');
+      + companyAvatarHtml(a, 'sm') + '<span>' + escapeHtml(a.company) + '·' + escapeHtml(a.position) + '</span></div>').join('');
     html += '<div class="cal-cell' + (inMonth ? '' : ' other-month') + (iso === todayIso ? ' today' : '') + '">'
       + '<div class="cal-date">' + date.getDate() + '</div>'
       + chips
@@ -2146,6 +2741,7 @@ function openInterviewDetail(id){
   const a = applications.find(x => x.id === id);
   if(!a) return;
   interviewAppId = id;
+  $('ivLogo').innerHTML = companyAvatarHtml(a, 'sm');
   $('ivCompany').textContent = a.company;
   $('ivPosition').textContent = a.position;
   $('ivTime').textContent = '🕐 ' + (a.interviewDate || '');
@@ -2178,7 +2774,7 @@ function setupCanvas(canvas, w, h){
 }
 
 function renderStats(){
-  const apps = applications;
+  const apps = applications.filter(a => !a.deleted);
   const total = apps.length;
   const today = todayStr();
   // 本周（周一开始）与本月
@@ -2211,6 +2807,8 @@ function renderStats(){
   renderTagStats(apps);
   drawTrendChart(apps);
   drawChannelChart(apps);
+  renderCityStats(apps);
+  renderSalaryStats(apps);
 }
 
 // 标签统计 Top 10
@@ -2221,6 +2819,60 @@ function renderTagStats(apps){
   $('tagStats').innerHTML = top.length
     ? top.map((e, i) => '<div class="tag-row"><span class="tag-rank">' + (i + 1) + '</span><span class="tag">' + escapeHtml(e[0]) + '</span><span class="tag-count">' + e[1] + ' 次</span></div>').join('')
     : '<div class="muted-text">暂无标签数据</div>';
+}
+
+// 从「薪资范围」文本解析出最低月薪（单位：K）。支持 20-35K、20K、20-35K·15薪、2万、20000 等写法
+function parseSalaryMin(s){
+  if(!s) return null;
+  const nums = String(s).match(/\d+(?:\.\d+)?/g);
+  if(!nums || !nums.length) return null;
+  let n = parseFloat(nums[0]);
+  if(/k|K/i.test(s)){ /* 已是千 */ }
+  else if(/万/.test(s)){ n = n * 10; }
+  else if(n > 1000){ n = n / 1000; }
+  return n;
+}
+
+// 城市（工作地点）分布：条形图
+function renderCityStats(apps){
+  const map = {};
+  apps.forEach(a => { const c = (a.location || '').trim(); if(c) map[c] = (map[c] || 0) + 1; });
+  const entries = Object.entries(map).sort((x, y) => y[1] - x[1]);
+  const el = $('cityBars');
+  if(!entries.length){ el.innerHTML = '<div class="muted-text">暂无城市数据（填写「工作地点」后显示）</div>'; return; }
+  const maxN = Math.max.apply(null, entries.map(e => e[1]).concat([1]));
+  el.innerHTML = entries.slice(0, 12).map(e =>
+    '<div class="bar-row"><div class="bar-label">' + escapeHtml(e[0]) + '</div>'
+    + '<div class="bar-track"><div class="bar-fill" style="width:' + (e[1] / maxN * 100) + '%;background:var(--primary)"></div></div>'
+    + '<div class="bar-num">' + e[1] + '</div></div>').join('');
+}
+
+// 薪资区间分布：按最低月薪落入区间计数
+function renderSalaryStats(apps){
+  const buckets = [
+    {label:'<10K', min:0, max:10},
+    {label:'10-20K', min:10, max:20},
+    {label:'20-30K', min:20, max:30},
+    {label:'30-50K', min:30, max:50},
+    {label:'50K+', min:50, max:Infinity}
+  ];
+  const counts = buckets.map(b => ({label:b.label, n:0}));
+  let withSalary = 0, sumK = 0, maxK = 0;
+  apps.forEach(a => {
+    const k = parseSalaryMin(a.salary);
+    if(k == null) return;
+    withSalary++; sumK += k; if(k > maxK) maxK = k;
+    for(let i = 0; i < buckets.length; i++){ if(k >= buckets[i].min && k < buckets[i].max){ counts[i].n++; break; } }
+  });
+  const el = $('salaryBars');
+  if(!withSalary){ el.innerHTML = '<div class="muted-text">暂无薪资数据（填写「薪资范围」后显示）</div>'; return; }
+  const maxN = Math.max.apply(null, counts.map(c => c.n).concat([1]));
+  const avg = sumK / withSalary;
+  el.innerHTML = counts.map(c =>
+    '<div class="bar-row"><div class="bar-label">' + c.label + '</div>'
+    + '<div class="bar-track"><div class="bar-fill" style="width:' + (c.n / maxN * 100) + '%;background:var(--gradient-bar)"></div></div>'
+    + '<div class="bar-num">' + c.n + '</div></div>').join('')
+    + '<div class="salary-summary">共 ' + withSalary + ' 条含薪资 · 平均约 ' + avg.toFixed(1) + 'K · 最高 ' + maxK.toFixed(0) + 'K</div>';
 }
 
 // 读取当前主题下的图表配色（随浅色/深色切换）
@@ -2394,7 +3046,7 @@ function exportData(){
 function defaultAppFields(){
   return {id:'',company:'',position:'',location:'',salary:'',channel:'其他',applyDate:'',jobLink:'',
     status:'已投递',tags:'',resumeVersion:'',resumeFileName:'',resumeFileData:'',notes:'',
-    contactRecords:[],nextFollowUpDate:'',interviewDate:'',starred:false,createdAt:'',updatedAt:'',
+    contactRecords:[],nextFollowUpDate:'',interviewDate:'',deadline:'',starred:false,deleted:false,createdAt:'',updatedAt:'',
     assessmentStatus:'未测评',assessmentLink:''};
 }
 
@@ -2417,6 +3069,8 @@ function normalizeImport(parsed){
       rec.starred = !!(a.starred);
       if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
       if(!rec.assessmentLink) rec.assessmentLink = '';
+      if(!rec.deadline) rec.deadline = '';
+      rec.deleted = !!a.deleted;
       return rec;
     });
   resumes = resumes.filter(r => r && typeof r === 'object' && r.name)
@@ -2561,6 +3215,7 @@ const CSV_HEADER_MAP = [
   ['投递日期', 'applyDate'], ['日期', 'applyDate'],
   ['当前状态', 'status'], ['状态', 'status'],
   ['下次跟进日期', 'nextFollowUpDate'], ['跟进日期', 'nextFollowUpDate'], ['跟进', 'nextFollowUpDate'],
+  ['网申截止日期', 'deadline'], ['截止日期', 'deadline'], ['deadline', 'deadline'],
   ['面试时间', 'interviewDate'], ['面试', 'interviewDate'],
   ['简历版本', 'resumeVersion'], ['版本', 'resumeVersion'],
   ['标签', 'tags'],
@@ -2706,7 +3361,8 @@ function bindEvents(){
 
   // ---- 列表筛选与排序 ----
   $('searchInput').addEventListener('input', debounce(() => {
-    settings.filters.search = $('searchInput').value; saveSettings(); renderList();
+    settings.filters.search = $('searchInput').value; settings.filters.quick = '';
+    updateQuickHighlight(); saveSettings(); renderList();
   }, 250));
   $('filterStatus').addEventListener('change', () => {
     settings.filters.status = $('filterStatus').value; saveSettings(); renderList();
@@ -2718,13 +3374,22 @@ function bindEvents(){
     settings.filters.assessment = $('filterAssessment').value; saveSettings(); renderList();
   });
   $('filterTag').addEventListener('input', debounce(() => {
-    settings.filters.tag = $('filterTag').value; saveSettings(); renderList();
+    settings.filters.tag = $('filterTag').value; settings.filters.quick = '';
+    updateQuickHighlight(); saveSettings(); renderList();
   }, 250));
   $('filterDateFrom').addEventListener('change', () => {
     settings.filters.dateFrom = $('filterDateFrom').value; saveSettings(); renderList();
   });
   $('filterDateTo').addEventListener('change', () => {
     settings.filters.dateTo = $('filterDateTo').value; saveSettings(); renderList();
+  });
+  // 手动更改筛选控件时，清除快捷预设高亮
+  document.querySelector('.filter-bar').addEventListener('change', () => {
+    if(settings.filters.quick){ settings.filters.quick = ''; updateQuickHighlight(); }
+  });
+  // 快捷筛选预设按钮
+  document.querySelectorAll('.quick-filters .chip-btn').forEach(b => {
+    b.addEventListener('click', () => applyQuickFilter(b.dataset.quick));
   });
   $('sortBy').addEventListener('change', () => {
     settings.filters.sortBy = $('sortBy').value; saveSettings(); renderList();
@@ -2736,24 +3401,49 @@ function bindEvents(){
   $('resetFiltersBtn').addEventListener('click', () => {
     settings.filters = {...DEFAULT_FILTERS};
     syncFilterControls(); saveSettings(); renderList();
+    updateQuickHighlight();
   });
   $('addAppBtn').addEventListener('click', () => openAppModal());
 
-  // 列表卡片事件委托：编辑 / 删除 / 切换状态 / 星标 / 复制 / 空状态添加
+  // 列表卡片事件委托：编辑 / 删除 / 切换状态 / 星标 / 复制 / 空状态添加 / 点击标题看详情
   $('appList').addEventListener('click', e => {
-    const btn = e.target.closest('[data-action]');
-    if(!btn) return;
-    const action = btn.dataset.action;
-    if(action === 'add'){ openAppModal(); return; }
     const card = e.target.closest('.app-card');
     if(!card) return;
     const id = card.dataset.id;
-    if(action === 'status') openStatusPicker(id);
-    else if(action === 'edit') openAppModal(id);
-    else if(action === 'delete') confirmDeleteApp(id);
-    else if(action === 'star') toggleStar(id);
-    else if(action === 'assessment') toggleAssessment(id);
-    else if(action === 'duplicate') duplicateApp(id);
+    const btn = e.target.closest('[data-action]');
+    if(btn){
+      const action = btn.dataset.action;
+      if(action === 'add'){ openAppModal(); return; }
+      if(action === 'status') openStatusPicker(id);
+      else if(action === 'edit') openAppModal(id);
+      else if(action === 'delete') confirmDeleteApp(id);
+      else if(action === 'star') toggleStar(id);
+      else if(action === 'assessment') toggleAssessment(id);
+      else if(action === 'assessment-edit') openAppModal(id);
+      else if(action === 'duplicate') duplicateApp(id);
+      return;
+    }
+    // 点击卡片标题（公司 / 职位，非按钮）打开优美详情
+    if(e.target.closest('.app-title')){ openDetail(id); }
+  });
+  // 详情弹窗：底部操作 / 状态切换 / 测评切换
+  $('detailModal').addEventListener('click', e => {
+    const actEl = e.target.closest('[data-action]');
+    if(actEl){
+      const act = actEl.dataset.action;
+      if(act === 'status'){ openStatusPicker(detailCurrentId); return; }
+      if(act === 'assessment'){ toggleAssessment(detailCurrentId); openDetail(detailCurrentId); return; }
+      if(act === 'assessment-edit'){ hideModal('detailModal'); openAppModal(detailCurrentId); return; }
+    }
+    const asmBtn = e.target.closest('[data-detail-asm]');
+    if(asmBtn){ toggleAssessment(detailCurrentId); openDetail(detailCurrentId); return; }
+    const dAct = e.target.closest('[data-detail-action]');
+    if(dAct){
+      const a = dAct.dataset.detailAction;
+      if(a === 'edit'){ hideModal('detailModal'); openAppModal(detailCurrentId); }
+      else if(a === 'duplicate'){ hideModal('detailModal'); duplicateApp(detailCurrentId); }
+      else if(a === 'delete'){ hideModal('detailModal'); confirmDeleteApp(detailCurrentId); }
+    }
   });
   // 列表复选框（批量模式）变更
   $('appList').addEventListener('change', e => {
@@ -2774,6 +3464,7 @@ function bindEvents(){
     app.updatedAt = nowDateTimeStr();
     hideModal('statusModal');
     if(commitApps()) toast('状态已更新为「' + app.status + '」', 'success');
+    if(!$('detailModal').classList.contains('hidden')) openDetail(app.id);
   });
 
   // 批量改状态点击
@@ -2815,6 +3506,19 @@ function bindEvents(){
   $('resumeModalCancel').addEventListener('click', () => hideModal('resumeModal'));
   $('resumeFileInput').addEventListener('change', onResumeFileChange);
 
+  // ---- 回收站 ----
+  $('recycleList').addEventListener('click', e => {
+    const btn = e.target.closest('[data-recycle]');
+    if(!btn) return;
+    const card = e.target.closest('.app-card');
+    if(!card) return;
+    const id = card.dataset.id;
+    if(btn.dataset.recycle === 'restore') restoreApp(id);
+    else if(btn.dataset.recycle === 'purge') purgeApp(id);
+  });
+  $('emptyRecycleBtn').addEventListener('click', emptyRecycle);
+  updateRecycleBadge();
+
   // ---- 跟进提醒 ----
   $('followList').addEventListener('click', e => {
     const item = e.target.closest('.fu-item');
@@ -2829,20 +3533,24 @@ function bindEvents(){
   $('markAllFollowedBtn').addEventListener('click', markAllFollowed);
   $('fuOkBtn').addEventListener('click', confirmFollowUpDone);
   $('fuCancelBtn').addEventListener('click', () => hideModal('followUpModal'));
-  // 待测评清单：点击「标记已测评」
+  // 待测评清单：点击「标记已测评」/「填写链接」
   $('assessmentReminderList').addEventListener('click', e => {
-    const btn = e.target.closest('[data-asm-done]');
-    if(!btn) return;
-    const id = btn.dataset.asmDone;
-    const app = applications.find(a => a.id === id);
-    if(!app) return;
-    app.assessmentStatus = '已测评';
-    app.updatedAt = nowDateTimeStr();
-    commitApps();
-    renderAssessmentReminders();
-    renderAssessmentBanner();
-    renderList();
-    toast('已标记为「已测评」', 'success');
+    const doneBtn = e.target.closest('[data-asm-done]');
+    if(doneBtn){
+      const id = doneBtn.dataset.asmDone;
+      const app = applications.find(a => a.id === id);
+      if(!app) return;
+      app.assessmentStatus = '已测评';
+      app.updatedAt = nowDateTimeStr();
+      commitApps();
+      renderAssessmentReminders();
+      renderAssessmentBanner();
+      renderList();
+      toast('已标记为「已测评」', 'success');
+      return;
+    }
+    const editBtn = e.target.closest('[data-asm-edit]');
+    if(editBtn){ openAppModal(editBtn.dataset.asmEdit); return; }
   });
 
   // ---- 面试日历 ----
@@ -2891,6 +3599,11 @@ function bindEvents(){
 
   // ---- 跟进提醒：桌面通知 ----
   $('notifyToggleBtn').addEventListener('click', toggleNotify);
+  $('notifyNowBtn').addEventListener('click', notifyNow);
+  $('genDemoBtn').addEventListener('click', genDemoData);
+  // 提醒中心弹窗内的「开启系统通知」按钮
+  const permBtn = $('notifyPermBtn');
+  if(permBtn) permBtn.addEventListener('click', enableNotify);
 
   // ---- 数据管理：CSV 导入 ----
   $('importCsvPickBtn').addEventListener('click', () => $('importCsvInput').click());
