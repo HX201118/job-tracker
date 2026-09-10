@@ -370,7 +370,7 @@ canvas{display:block;width:100%}
 #toast.success{background:var(--success)}
 .hidden-input{display:none}
 
-/* 提醒中心弹窗 */
+/* 提醒汇总弹窗 */
 .notify-modal{max-width:480px}
 .notify-empty{padding:34px 12px;text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
 .notify-card{display:flex;gap:12px;align-items:flex-start;padding:14px 14px;border-radius:10px;background:#f5f7fa;margin-bottom:10px;border-left:4px solid var(--nc)}
@@ -379,10 +379,10 @@ canvas{display:block;width:100%}
 .notify-content{flex:1;min-width:0}
 .notify-title{font-weight:600;font-size:12.5px;color:var(--nc);margin-bottom:3px;letter-spacing:.3px}
 .notify-text{font-size:13.5px;line-height:1.55;color:var(--text);word-break:break-word}
-.notify-footer{justify-content:space-between;gap:10px;flex-wrap:wrap}
+.notify-footer{gap:10px;flex-wrap:wrap}
 .notify-hint{font-size:12px;color:var(--muted);flex:1;min-width:160px;line-height:1.4}
 
-/* 页面内浮动提醒卡片（系统通知不可用时的可视兜底，右上角滑入） */
+/* 页面内浮动提醒卡片（右上角滑入） */
 #notifyStack{
   position:fixed;top:76px;right:16px;z-index:400;
   display:flex;flex-direction:column;gap:10px;width:340px;max-width:calc(100vw - 32px);
@@ -467,10 +467,6 @@ canvas{display:block;width:100%}
 /* 批量操作条 */
 .batch-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}
 .batch-count{font-size:13px;color:var(--text-light)}
-
-/* 通知提示条 */
-.notify-banner{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;background:var(--tag-bg);color:var(--tag-color);font-size:13px;margin-bottom:10px}
-.notify-banner.hidden{display:none}
 
 /* ===== 网站导航 / 内置浏览面板 ===== */
 .auto-check{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-light);cursor:pointer;user-select:none}
@@ -668,12 +664,11 @@ canvas{display:block;width:100%}
 
   <!-- ===================== 4. 跟进提醒 ===================== -->
   <section id="panel-followup" class="tab-panel hidden">
-    <div id="notifyBanner" class="notify-banner hidden"></div>
-    <p class="muted-text" style="margin:0 0 10px">点「⚡ 立即提醒」后，提醒会以 <b>页面右上角卡片</b> 弹出，不需要任何权限；打开本页面时若有待办也会自动弹一次。想一次看全三类待办，点右上角的 <b>🔔</b> 按钮。</p>
+    <p class="muted-text" style="margin:0 0 10px">点「⚡ 立即提醒」后，提醒会以 <b>页面右上角卡片</b> 弹出；打开本页面时若有待办也会自动弹一次。想一次看全三类待办，点 <b>🔔 提醒汇总</b>。</p>
     <div class="list-toolbar">
       <span id="followCount"></span>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button id="notifyToggleBtn" class="btn btn-secondary">🔔 开启桌面提醒</button>
+        <button id="notifyToggleBtn" class="btn btn-secondary">🔔 提醒汇总</button>
         <button id="notifyNowBtn" class="btn btn-primary">⚡ 立即提醒</button>
         <button id="markAllFollowedBtn" class="btn btn-secondary">全部标记已跟进</button>
       </div>
@@ -1064,17 +1059,16 @@ canvas{display:block;width:100%}
   </div>
 </div>
 
-<!-- ===================== 弹窗：提醒中心 ===================== -->
+<!-- ===================== 弹窗：提醒汇总 ===================== -->
 <div class="modal-overlay hidden" id="notifyModal">
   <div class="modal notify-modal">
     <div class="modal-header">
-      <h2 id="notifyModalTitle">🔔 提醒中心</h2>
+      <h2 id="notifyModalTitle">🔔 提醒汇总</h2>
       <button class="modal-close" data-close="notifyModal" title="关闭">✕</button>
     </div>
     <div class="modal-body" id="notifyBody"></div>
     <div class="modal-footer notify-footer">
       <span class="notify-hint" id="notifyHint"></span>
-      <button id="notifyPermBtn" class="btn btn-secondary">开启系统通知</button>
     </div>
   </div>
 </div>
@@ -1129,7 +1123,7 @@ let customChannels = [];      // 用户自定义招聘渠道（输过一次即�
 
 // 默认筛选/排序条件
 const DEFAULT_FILTERS = {status:'',search:'',dateFrom:'',dateTo:'',channel:'',tag:'',assessment:'',quick:'',sortBy:'applyDate',sortDir:'desc'};
-let settings = {lastTab:'list', filters:{...DEFAULT_FILTERS}, theme:'light', notifyEnabled:false, proxyTemplate:'', monitors:defaultMonitors()};
+let settings = {lastTab:'list', filters:{...DEFAULT_FILTERS}, theme:'light', proxyTemplate:'', monitors:defaultMonitors()};
 
 // 默认导航网站（首次打开时预置用户提供的站点）
 function defaultMonitors(){
@@ -1273,11 +1267,10 @@ function loadAll(){
       lastTab:s.lastTab || 'list',
       filters:{...DEFAULT_FILTERS, ...(s.filters||{})},
       theme:s.theme || 'light',
-      notifyEnabled:!!s.notifyEnabled,
       proxyTemplate: s.proxyTemplate || '',
       monitors: Array.isArray(s.monitors) && s.monitors.length ? s.monitors : defaultMonitors()
     };
-  }catch(e){ settings = {lastTab:'list', filters:{...DEFAULT_FILTERS}, theme:'light', notifyEnabled:false, proxyTemplate:'', monitors:defaultMonitors()}; }
+  }catch(e){ settings = {lastTab:'list', filters:{...DEFAULT_FILTERS}, theme:'light', proxyTemplate:'', monitors:defaultMonitors()}; }
   // 数据兜底：确保 contactRecords 存在
   applications.forEach(a => { if(!Array.isArray(a.contactRecords)) a.contactRecords = []; });
   try{
@@ -2471,88 +2464,16 @@ async function markAllFollowed(){
 }
 
 /* =========================================================
- * 十一·五、桌面通知提醒
+ * 十一·五、页面内提醒
+ * 说明：本应用只做「页面内提醒」——右上角浮动卡片 + 提醒汇总弹窗，
+ *      不依赖浏览器通知权限，也不需要在 http 环境下运行。
  * ========================================================= */
-function notificationsSupported(){ return 'Notification' in window; }
-
-function updateNotifyBtn(){
-  const btn = $('notifyToggleBtn');
-  if(!btn) return;
-  if(!notificationsSupported()){ btn.textContent = '🔔 浏览器不支持'; btn.disabled = true; return; }
-  // 本地文件模式：系统通知用不了，按钮改为「提醒汇总」，点开一屏看全三类待办
-  if(isFileProtocol() && Notification.permission !== 'granted'){ btn.textContent = '🔔 提醒汇总'; return; }
-  const enabled = settings.notifyEnabled && Notification.permission === 'granted';
-  btn.textContent = enabled ? '🔔 桌面提醒已开启' : '🔔 开启桌面提醒';
+// 打开提醒汇总弹窗（三类待办一屏看全）
+function openNotifyCenter(){
+  showNotifyCenter(collectReminders());
 }
 
-function renderNotifyBanner(){
-  const banner = $('notifyBanner');
-  if(!banner) return;
-  if(!notificationsSupported()){
-    banner.textContent = 'ℹ️ 当前浏览器不支持桌面通知，可手动查看本页的跟进列表。';
-    banner.classList.remove('hidden');
-    return;
-  }
-  // 本地文件方式打开：页面卡片提醒已可正常工作，不必打扰用户（想要系统通知的可在「🔔 提醒汇总」里看说明）
-  if(isFileProtocol() && Notification.permission !== 'granted'){
-    banner.classList.add('hidden');
-    return;
-  }
-  if(Notification.permission === 'denied'){
-    banner.textContent = '⚠️ 桌面通知权限已被浏览器拒绝，请在站点设置中允许后重试。';
-    banner.classList.remove('hidden');
-    return;
-  }
-  if(settings.notifyEnabled && Notification.permission === 'granted'){
-    banner.textContent = '✅ 已开启桌面提醒，打开本页面时会自动检查过期 / 今日的跟进事项。';
-    banner.classList.remove('hidden');
-    return;
-  }
-  banner.classList.add('hidden');
-}
-
-async function toggleNotify(){
-  // 无法授权（不支持 / 被拒 / file://）时，打开提醒中心说明原因并展示当前提醒
-  if(!notificationsSupported()){
-    toast('当前浏览器不支持桌面通知，已改用页面右上角卡片提醒', 'info');
-    showNotifyCenter(collectReminders());
-    renderNotifyBanner();
-    return;
-  }
-  // 本地文件模式：不弹 toast，直接打开提醒中心（里面已说明原因 + 列出当前提醒）
-  if(isFileProtocol() && Notification.permission !== 'granted'){
-    showNotifyCenter(collectReminders());
-    renderNotifyBanner();
-    return;
-  }
-  if(Notification.permission === 'denied'){
-    toast(notifyBlockReason(), 'info');
-    showNotifyCenter(collectReminders());
-    renderNotifyBanner();
-    return;
-  }
-  if(Notification.permission === 'granted'){
-    // 已授权：切换开关
-    settings.notifyEnabled = !settings.notifyEnabled;
-  }else{
-    // 未决定：请求权限
-    let perm;
-    try{ perm = await Notification.requestPermission(); }catch(e){ perm = 'denied'; }
-    if(perm !== 'granted'){
-      toast(notifyBlockReason(), 'info');
-      showNotifyCenter(collectReminders());
-      renderNotifyBanner();
-      return;
-    }
-    settings.notifyEnabled = true;
-  }
-  saveSettings();
-  updateNotifyBtn();
-  renderNotifyBanner();
-  if(settings.notifyEnabled) checkNotifications();
-}
-
-// 汇总当前需要提醒的事项（供系统通知与页面内提示共用）
+// 汇总当前需要提醒的事项（供浮动卡片与汇总弹窗共用）
 function collectReminders(){
   const list = [];
   const today = todayStr();
@@ -2587,14 +2508,6 @@ function collectReminders(){
   return list;
 }
 
-// 检查过期 / 今日的跟进，弹出系统通知（需已授权）
-function checkNotifications(){
-  if(!notificationsSupported() || Notification.permission !== 'granted' || !settings.notifyEnabled) return;
-  collectReminders().forEach(r => {
-    try{ new Notification(r.title, {body: r.body, tag: r.tag}); }catch(e){ /* 某些环境构造失败可忽略 */ }
-  });
-}
-
 // 提醒相关的元信息与页面内提示组件（浮动卡片 / 汇总弹窗）
 const NOTIFY_META = {
   'job-followup':    {icon:'📌', color:'#3b82f6', label:'求职跟进'},
@@ -2602,9 +2515,8 @@ const NOTIFY_META = {
   'job-assessment':  {icon:'📝', color:'#f59e0b', label:'综合测评'}
 };
 function notifyMeta(tag){ return NOTIFY_META[tag] || {icon:'🔔', color:'#6366f1', label:'提醒'}; }
-function isFileProtocol(){ return location.protocol === 'file:'; }
 
-// —— 页面内浮动提醒卡片（右上角滑入）：系统通知不可用时的可视兜底 ——
+// —— 页面内浮动提醒卡片（右上角滑入） ——
 let notifyPopTimers = [];
 function pushNotifyCard(r, ms){
   const stack = $('notifyStack');
@@ -2634,22 +2546,6 @@ function clearNotifyCards(){
   notifyPopTimers.forEach(clearTimeout); notifyPopTimers = [];
   const stack = $('notifyStack'); if(stack) stack.innerHTML = '';
 }
-// 系统通知为什么发不出去（用于给出明确原因，而不是静默失败）
-function notifyBlockReason(){
-  if(!notificationsSupported()) return '当前浏览器不支持系统通知';
-  if(isFileProtocol() && Notification.permission === 'denied')
-    return '本地文件(file://)方式被浏览器禁止发系统通知，请用「启动-系统通知版.bat」以 http://localhost 打开';
-  if(Notification.permission === 'denied') return '系统通知权限已被浏览器拒绝，请在站点设置中重新允许';
-  if(isFileProtocol()) return '本地文件(file://)模式下系统通知可能不可用，建议用「启动-系统通知版.bat」以 http://localhost 打开';
-  return '系统通知尚未开启';
-}
-// 短版原因，用于「已弹出页面提醒，只是因为 xxx」这种正向提示
-function notifyShortReason(){
-  if(!notificationsSupported()) return '系统通知不可用';
-  if(Notification.permission === 'denied') return isFileProtocol() ? '本地文件模式无法发系统通知' : '系统通知已被浏览器拒绝';
-  if(isFileProtocol()) return '本地文件模式无法发系统通知';
-  return '系统通知未开启';
-}
 function showNotifyCenter(list){
   const body = $('notifyBody');
   if(!list.length){
@@ -2663,81 +2559,18 @@ function showNotifyCenter(list){
         + '<div class="notify-text">' + escapeHtml(r.body) + '</div></div></div>';
     }).join('');
   }
-  // 标题随模式变化：本地文件模式实际就是「提醒汇总」，避免让人以为还有一堆设置
-  const title = $('notifyModalTitle');
-  if(title) title.textContent = (isFileProtocol() && Notification.permission !== 'granted') ? '🔔 提醒汇总' : '🔔 提醒中心';
-
-  // 提示文案 + 系统通知授权按钮
-  const hint = $('notifyHint'), permBtn = $('notifyPermBtn');
-  if(!notificationsSupported()){
-    hint.textContent = '以上是当前所有待办的一屏汇总。当前浏览器不支持系统通知，页面右上角卡片提醒照常工作。';
-    permBtn.style.display = 'none';
-  }else if(isFileProtocol() && Notification.permission !== 'granted'){
-    hint.textContent = '以上是当前所有待办的一屏汇总。页面右上角卡片提醒无需任何设置；想要系统级通知，可双击目录里的「启动-系统通知版.bat」。';
-    permBtn.style.display = 'none';
-  }else if(Notification.permission === 'granted'){
-    hint.textContent = '已开启系统通知，关掉网页也会弹出。';
-    permBtn.style.display = 'none';
-  }else if(Notification.permission === 'denied'){
-    hint.textContent = '系统通知已被浏览器拒绝，请在站点设置里允许后重试。';
-    permBtn.style.display = 'none';
-  }else{
-    hint.textContent = '点右侧可在浏览器开启系统级通知（关掉网页也能提醒）。';
-    permBtn.style.display = '';
-  }
+  // 提示文案
+  const hint = $('notifyHint');
+  if(hint) hint.textContent = '以上是当前所有待办的一屏汇总。页面右上角的卡片提醒无需任何设置，打开本页有待办时也会自动弹一次。';
   showModal('notifyModal');
 }
-// 主动开启系统通知（授权 + 开启开关）
-async function enableNotify(){
-  if(!notificationsSupported()){ toast('当前浏览器不支持桌面通知', 'error'); return; }
-  if(Notification.permission === 'default'){
-    let perm;
-    try{ perm = await Notification.requestPermission(); }catch(e){ perm = 'denied'; }
-    if(perm !== 'granted'){ toast(notifyBlockReason(), 'info'); renderNotifyBanner(); showNotifyCenter(collectReminders()); return; }
-  }
-  if(Notification.permission !== 'granted'){ toast(notifyBlockReason(), 'info'); renderNotifyBanner(); return; }
-  settings.notifyEnabled = true; saveSettings(); updateNotifyBtn(); renderNotifyBanner();
-  toast('已开启系统通知 ✅ 关闭网页也能收到提醒', 'success');
-  checkNotifications();
-}
-async function notifyNow(){
+// 立即提醒：清掉旧卡片，重新弹出当前所有待办（纯页面内提醒）
+function notifyNow(){
   const list = collectReminders();
   clearNotifyCards();
-
-  // 1) 尝试走系统通知：未决定权限时先申请（点击按钮属于用户手势，可弹授权框）
-  if(notificationsSupported() && Notification.permission === 'default'){
-    let perm;
-    try{ perm = await Notification.requestPermission(); }catch(e){ perm = 'denied'; }
-    if(perm === 'granted'){ settings.notifyEnabled = true; saveSettings(); }
-  }
-  const granted = notificationsSupported() && Notification.permission === 'granted' && !isFileProtocol();
-  let sent = 0;
-  if(granted){
-    list.forEach((r, i) => {
-      sent++;
-      setTimeout(() => {
-        try{
-          const n = new Notification(r.title, {body:r.body, tag:r.tag});
-          n.onclick = () => { window.focus(); n.close(); };
-        }catch(e){ pushNotifyCard(r); }   // 系统通知构造失败则退回页面卡片
-      }, i * 200);
-    });
-  }
-  // 2) 页面内浮动提醒：始终显示（系统通知可能被免打扰静音，这里保证看得见）
-  if(list.length){
-    list.forEach((r, i) => setTimeout(() => pushNotifyCard(r, granted ? 6000 : 10000), granted ? i * 200 : i * 160));
-  }
-
-  // 3) 结果反馈（只做轻提示，不再强制弹窗）
-  if(!list.length){
-    toast('当前没有需要提醒的事项 ✅', 'success');
-  }else if(sent){
-    toast('已发送 ' + sent + ' 条系统通知，页面右上角同步显示', 'success');
-  }else{
-    toast('已弹出 ' + list.length + ' 条页面提醒（' + notifyShortReason() + '）', 'info');
-  }
-  updateNotifyBtn();
-  renderNotifyBanner();
+  if(!list.length){ toast('当前没有需要提醒的事项 ✅', 'success'); return; }
+  list.forEach((r, i) => setTimeout(() => pushNotifyCard(r, 10000), i * 160));
+  toast('已弹出 ' + list.length + ' 条页面提醒', 'success');
 }
 
 /* =========================================================
@@ -3647,12 +3480,9 @@ function bindEvents(){
   $('batchDeleteBtn').addEventListener('click', batchDelete);
   $('batchExitBtn').addEventListener('click', () => setBatchMode(false));
 
-  // ---- 跟进提醒：桌面通知 ----
-  $('notifyToggleBtn').addEventListener('click', toggleNotify);
+  // ---- 跟进提醒：页面内提醒 ----
+  $('notifyToggleBtn').addEventListener('click', openNotifyCenter);
   $('notifyNowBtn').addEventListener('click', notifyNow);
-  // 提醒中心弹窗内的「开启系统通知」按钮
-  const permBtn = $('notifyPermBtn');
-  if(permBtn) permBtn.addEventListener('click', enableNotify);
 
   // ---- 数据管理：CSV 导入 ----
   $('importCsvPickBtn').addEventListener('click', () => $('importCsvInput').click());
@@ -3845,8 +3675,6 @@ populateChannelSelects(); // 用 CHANNELS 生成渠道下拉（表单 + 筛选�
 syncFilterControls(); // 恢复上次筛选条件
 updateQuickHighlight(); // 同步「快捷筛选」胶囊的高亮与提示（刷新后不丢状态）
 applyTheme();         // 应用主题（浅色 / 深色）
-updateNotifyBtn();    // 刷新桌面提醒按钮状态
-renderNotifyBanner(); // 刷新提醒提示条
 const _now = new Date();
 calendarCursor = {year:_now.getFullYear(), month:_now.getMonth()};
 // 恢复上次所在的 Tab
@@ -3854,11 +3682,8 @@ switchTab(TAB_NAMES.includes(settings.lastTab) ? settings.lastTab : 'list');
 updateFollowBadge();
 renderAssessmentBanner();   // 列表顶部「待测评」提醒条（若有）
 renderAssessmentReminders(); // 跟进提醒页的待测评清单（若有）
-// 页面加载后：先在右上角弹一次页面内提醒卡片；若已开启桌面提醒，再补发一次系统通知
-setTimeout(() => {
-  autoShowReminders();
-  if(settings.notifyEnabled) checkNotifications();
-}, 1200);
+// 页面加载后：在右上角弹一次页面内提醒卡片（每会话一次）
+setTimeout(autoShowReminders, 1200);
 </script>
 </body>
 </html>
