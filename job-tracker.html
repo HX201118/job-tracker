@@ -2458,6 +2458,8 @@ function updateNotifyBtn(){
   const btn = $('notifyToggleBtn');
   if(!btn) return;
   if(!notificationsSupported()){ btn.textContent = '🔔 浏览器不支持'; btn.disabled = true; return; }
+  // 本地文件模式：系统通知用不了，按钮改为「提醒设置」，点开看当前提醒
+  if(isFileProtocol() && Notification.permission !== 'granted'){ btn.textContent = '🔔 提醒设置'; return; }
   const enabled = settings.notifyEnabled && Notification.permission === 'granted';
   btn.textContent = enabled ? '🔔 桌面提醒已开启' : '🔔 开启桌面提醒';
 }
@@ -2470,12 +2472,9 @@ function renderNotifyBanner(){
     banner.classList.remove('hidden');
     return;
   }
-  // 本地文件方式打开：浏览器（Chrome/Edge）会直接禁用系统通知，给出手把手提示
+  // 本地文件方式打开：页面卡片提醒已可正常工作，不必打扰用户（想要系统通知的可在「提醒设置」里看说明）
   if(isFileProtocol() && Notification.permission !== 'granted'){
-    banner.innerHTML = '⚠️ 你是以「本地文件」方式打开的，多数浏览器（Chrome / Edge）在 file:// 下会禁用系统通知。'
-      + '双击项目目录里的 <b>启动-系统通知版.bat</b>，用 <b>http://localhost</b> 打开本页即可弹出桌面通知。'
-      + '（在此之前，点「⚡ 立即提醒」会在页面右上角弹出提醒卡片，同样不会漏。）';
-    banner.classList.remove('hidden');
+    banner.classList.add('hidden');
     return;
   }
   if(Notification.permission === 'denied'){
@@ -2495,6 +2494,12 @@ async function toggleNotify(){
   // 无法授权（不支持 / 被拒 / file://）时，打开提醒中心说明原因并展示当前提醒
   if(!notificationsSupported()){
     toast('当前浏览器不支持桌面通知，已改用页面右上角卡片提醒', 'info');
+    showNotifyCenter(collectReminders());
+    renderNotifyBanner();
+    return;
+  }
+  // 本地文件模式：不弹 toast，直接打开提醒中心（里面已说明原因 + 列出当前提醒）
+  if(isFileProtocol() && Notification.permission !== 'granted'){
     showNotifyCenter(collectReminders());
     renderNotifyBanner();
     return;
@@ -2643,7 +2648,7 @@ function showNotifyCenter(list){
     hint.textContent = '当前浏览器不支持系统通知，已用页面右上角卡片提醒。';
     permBtn.style.display = 'none';
   }else if(isFileProtocol() && Notification.permission !== 'granted'){
-    hint.textContent = '本地文件方式无法开启系统通知；请用「启动-系统通知版.bat」以 http://localhost 打开，即可弹桌面通知。';
+    hint.textContent = '页面右上角卡片提醒已正常工作，不需要任何设置。想要系统通知的话：双击目录里的「启动-系统通知版.bat」，它会自动以 http://localhost 打开本页。';
     permBtn.style.display = 'none';
   }else if(Notification.permission === 'granted'){
     hint.textContent = '已开启系统通知，关掉网页也会弹出。';
