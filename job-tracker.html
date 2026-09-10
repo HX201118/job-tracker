@@ -661,7 +661,6 @@ canvas{display:block;width:100%}
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button id="notifyToggleBtn" class="btn btn-secondary">🔔 开启桌面提醒</button>
         <button id="notifyNowBtn" class="btn btn-primary">⚡ 立即提醒</button>
-        <button id="genDemoBtn" class="btn btn-ghost">🧪 生成演示数据</button>
         <button id="markAllFollowedBtn" class="btn btn-secondary">全部标记已跟进</button>
       </div>
     </div>
@@ -2715,25 +2714,6 @@ async function notifyNow(){
   renderNotifyBanner();
 }
 
-// 生成一组演示数据，覆盖三类提醒场景，方便测试（可经回收站删除）
-function genDemoData(){
-  const t = todayStr();
-  const soon = toISODate(new Date(Date.now() + 2 * 86400000));
-  const past = toISODate(new Date(Date.now() - 1 * 86400000));
-  const now = nowDateTimeStr();
-  const demo = [
-    {company:'演示科技', position:'前端工程师', location:'杭州', salary:'20-35K', channel:'BOSS直聘', applyDate:t, status:'已投递', tags:'演示,前端', nextFollowUpDate:t, deadline:soon, assessmentStatus:'未测评', assessmentLink:'https://example.com/assess/1', notes:'演示数据：今天需跟进 + 网申临近 + 待测评(有链接)。'},
-    {company:'样本次元', position:'后端开发', location:'上海', salary:'25-40K', channel:'智联招聘', applyDate:past, status:'简历被查看', tags:'演示,后端', deadline:past, assessmentStatus:'未测评', assessmentLink:'', notes:'演示数据：网申已过期 + 待收测评链接(留意邮箱)。'},
-    {company:'测试无限', position:'算法工程师', location:'北京', salary:'30-50K', channel:'内推', applyDate:past, status:'面试中', tags:'演示,算法', interviewDate: soon + ' 14:00', assessmentStatus:'已测评', assessmentLink:'https://example.com/assess/3', notes:'演示数据：正常记录(无触发提醒)，用于对比。'}
-  ];
-  demo.forEach(d => { const r = {...defaultAppFields(), ...d, id: genId(), createdAt: now, updatedAt: now}; applications.push(r); });
-  commitApps();
-  renderList(); renderFollowUps(); renderAssessmentReminders(); renderRecycle();
-  updateFollowBadge(); updateRecycleBadge();
-  switchTab('followup');
-  toast('已生成 3 条演示数据，正在弹出提醒…', 'success');
-  notifyNow();
-}
 /* =========================================================
  * 十二、面试日历（原生 JS 生成月历）
  * ========================================================= */
@@ -3641,7 +3621,6 @@ function bindEvents(){
   // ---- 跟进提醒：桌面通知 ----
   $('notifyToggleBtn').addEventListener('click', toggleNotify);
   $('notifyNowBtn').addEventListener('click', notifyNow);
-  $('genDemoBtn').addEventListener('click', genDemoData);
   // 提醒中心弹窗内的「开启系统通知」按钮
   const permBtn = $('notifyPermBtn');
   if(permBtn) permBtn.addEventListener('click', enableNotify);
