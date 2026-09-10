@@ -655,7 +655,7 @@ canvas{display:block;width:100%}
   <!-- ===================== 4. 跟进提醒 ===================== -->
   <section id="panel-followup" class="tab-panel hidden">
     <div id="notifyBanner" class="notify-banner hidden"></div>
-    <p class="muted-text" style="margin:0 0 10px">点「⚡ 立即提醒」后，提醒会以 <b>页面右上角卡片</b> 弹出，不需要任何权限；打开本页面时若有待办也会自动弹一次。</p>
+    <p class="muted-text" style="margin:0 0 10px">点「⚡ 立即提醒」后，提醒会以 <b>页面右上角卡片</b> 弹出，不需要任何权限；打开本页面时若有待办也会自动弹一次。想一次看全三类待办，点右上角的 <b>🔔</b> 按钮。</p>
     <div class="list-toolbar">
       <span id="followCount"></span>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -1054,7 +1054,7 @@ canvas{display:block;width:100%}
 <div class="modal-overlay hidden" id="notifyModal">
   <div class="modal notify-modal">
     <div class="modal-header">
-      <h2>🔔 提醒中心</h2>
+      <h2 id="notifyModalTitle">🔔 提醒中心</h2>
       <button class="modal-close" data-close="notifyModal" title="关闭">✕</button>
     </div>
     <div class="modal-body" id="notifyBody"></div>
@@ -2457,8 +2457,8 @@ function updateNotifyBtn(){
   const btn = $('notifyToggleBtn');
   if(!btn) return;
   if(!notificationsSupported()){ btn.textContent = '🔔 浏览器不支持'; btn.disabled = true; return; }
-  // 本地文件模式：系统通知用不了，按钮改为「提醒设置」，点开看当前提醒
-  if(isFileProtocol() && Notification.permission !== 'granted'){ btn.textContent = '🔔 提醒设置'; return; }
+  // 本地文件模式：系统通知用不了，按钮改为「提醒汇总」，点开一屏看全三类待办
+  if(isFileProtocol() && Notification.permission !== 'granted'){ btn.textContent = '🔔 提醒汇总'; return; }
   const enabled = settings.notifyEnabled && Notification.permission === 'granted';
   btn.textContent = enabled ? '🔔 桌面提醒已开启' : '🔔 开启桌面提醒';
 }
@@ -2471,7 +2471,7 @@ function renderNotifyBanner(){
     banner.classList.remove('hidden');
     return;
   }
-  // 本地文件方式打开：页面卡片提醒已可正常工作，不必打扰用户（想要系统通知的可在「提醒设置」里看说明）
+  // 本地文件方式打开：页面卡片提醒已可正常工作，不必打扰用户（想要系统通知的可在「🔔 提醒汇总」里看说明）
   if(isFileProtocol() && Notification.permission !== 'granted'){
     banner.classList.add('hidden');
     return;
@@ -2573,7 +2573,7 @@ function checkNotifications(){
   });
 }
 
-// 立即检查并提醒：优先弹系统通知，并弹出本页「提醒中心」弹窗保证可见（预览/未授权时也能看到）
+// 提醒相关的元信息与页面内提示组件（浮动卡片 / 汇总弹窗）
 const NOTIFY_META = {
   'job-followup':    {icon:'📌', color:'#3b82f6', label:'求职跟进'},
   'job-deadline':    {icon:'⏰', color:'#ef4444', label:'网申截止'},
@@ -2641,13 +2641,17 @@ function showNotifyCenter(list){
         + '<div class="notify-text">' + escapeHtml(r.body) + '</div></div></div>';
     }).join('');
   }
+  // 标题随模式变化：本地文件模式实际就是「提醒汇总」，避免让人以为还有一堆设置
+  const title = $('notifyModalTitle');
+  if(title) title.textContent = (isFileProtocol() && Notification.permission !== 'granted') ? '🔔 提醒汇总' : '🔔 提醒中心';
+
   // 提示文案 + 系统通知授权按钮
   const hint = $('notifyHint'), permBtn = $('notifyPermBtn');
   if(!notificationsSupported()){
-    hint.textContent = '当前浏览器不支持系统通知，已用页面右上角卡片提醒。';
+    hint.textContent = '以上是当前所有待办的一屏汇总。当前浏览器不支持系统通知，页面右上角卡片提醒照常工作。';
     permBtn.style.display = 'none';
   }else if(isFileProtocol() && Notification.permission !== 'granted'){
-    hint.textContent = '页面右上角卡片提醒已正常工作，不需要任何设置。想要系统通知的话：双击目录里的「启动-系统通知版.bat」，它会自动以 http://localhost 打开本页。';
+    hint.textContent = '以上是当前所有待办的一屏汇总。页面右上角卡片提醒无需任何设置；想要系统级通知，可双击目录里的「启动-系统通知版.bat」。';
     permBtn.style.display = 'none';
   }else if(Notification.permission === 'granted'){
     hint.textContent = '已开启系统通知，关掉网页也会弹出。';
