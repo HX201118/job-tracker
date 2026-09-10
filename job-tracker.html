@@ -181,6 +181,8 @@ textarea{resize:vertical;min-height:60px}
 .chip-btn{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:999px;padding:3px 12px;font-size:13px;cursor:pointer;transition:all .15s}
 .chip-btn:hover{border-color:var(--primary)}
 .chip-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+/* 已选中的快捷筛选：尾巴上带个 ✕，提示「再点一下可取消」 */
+.quick-filters .chip-btn.active::after{content:'✕';margin-left:6px;font-size:11px;line-height:1;opacity:.9}
 /* 薪资分布小结 */
 .salary-summary{margin-top:8px;font-size:12.5px;color:var(--text-light)}
 /* 状态徽章（颜色由内联样式注入） */
@@ -1961,7 +1963,7 @@ function syncFilterControls(){
   updateSortDirBtn();
 }
 
-// 快捷筛选预设：一键应用，并清空其他精确筛选条件
+// 快捷筛选预设：一键应用，并清空其他精确筛选条件；传 '' 即回到「全部」（用于再点一次取消）
 function applyQuickFilter(type){
   settings.filters = {...DEFAULT_FILTERS, quick:type};
   syncFilterControls();
@@ -1971,7 +1973,10 @@ function applyQuickFilter(type){
 }
 function updateQuickHighlight(){
   document.querySelectorAll('.quick-filters .chip-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.quick === settings.filters.quick);
+    const active = b.dataset.quick === settings.filters.quick;
+    b.classList.toggle('active', active);
+    if(b.dataset.tip === undefined) b.dataset.tip = b.title || '';   // 记住各胶囊原本的提示语
+    b.title = active ? '再点一次取消这个筛选' : b.dataset.tip;
   });
 }
 
@@ -3429,9 +3434,12 @@ function bindEvents(){
   document.querySelector('.filter-bar').addEventListener('change', () => {
     if(settings.filters.quick){ settings.filters.quick = ''; updateQuickHighlight(); }
   });
-  // 快捷筛选预设按钮
+  // 快捷筛选预设按钮：点击应用；再次点击同一个则取消，回到「全部」
   document.querySelectorAll('.quick-filters .chip-btn').forEach(b => {
-    b.addEventListener('click', () => applyQuickFilter(b.dataset.quick));
+    b.addEventListener('click', () => {
+      const isOn = settings.filters.quick === b.dataset.quick;
+      applyQuickFilter(isOn ? '' : b.dataset.quick);
+    });
   });
   $('sortBy').addEventListener('change', () => {
     settings.filters.sortBy = $('sortBy').value; saveSettings(); renderList();
@@ -3835,6 +3843,7 @@ loadAll();            // 读取 localStorage 数据
 bindEvents();         // 绑定所有事件
 populateChannelSelects(); // 用 CHANNELS 生成渠道下拉（表单 + 筛选）
 syncFilterControls(); // 恢复上次筛选条件
+updateQuickHighlight(); // 同步「快捷筛选」胶囊的高亮与提示（刷新后不丢状态）
 applyTheme();         // 应用主题（浅色 / 深色）
 updateNotifyBtn();    // 刷新桌面提醒按钮状态
 renderNotifyBanner(); // 刷新提醒提示条
