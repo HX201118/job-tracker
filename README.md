@@ -377,15 +377,12 @@ A：能，去「🗑️ 回收站」恢复。
 job-tracker.html      # 主程序（单文件：HTML + CSS + JS 全内联）
 代码说明.txt           # 更底层的中文实现说明
 README.md             # 本文件
-.gitignore            # 忽略本地工具数据目录
 ```
 
 - 原生 HTML + CSS + JavaScript，**无框架、无构建步骤**；
 - `localStorage` 持久化；
 - 图表用原生 Canvas 手绘；
 - 仅在**导入 Excel** 时按需从 CDN 加载 SheetJS。
-
-> `.workbuddy/` 为本地工具（WorkBuddy）的项目数据目录，已忽略，不纳入版本库。
 
 ---
 
