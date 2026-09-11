@@ -992,6 +992,23 @@ canvas{display:block;width:100%}
   </div>
 </div>
 
+<!-- ===================== 弹窗：选择是否需要笔试 ===================== -->
+<div class="modal-overlay hidden" id="wtReqModal">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2>这家公司需要笔试吗？</h2>
+      <button class="modal-close" data-close="wtReqModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="wtReqSubtitle" class="muted-text" style="margin-bottom:10px"></div>
+      <div class="status-options">
+        <button type="button" class="status-opt" data-wt-req="yes">✍️ 需要笔试<span class="muted-text" style="margin-left:auto;font-size:12px">纳入笔试提醒</span></button>
+        <button type="button" class="status-opt" data-wt-req="no">➖ 仅测评（无需笔试）<span class="muted-text" style="margin-left:auto;font-size:12px">不再显示与提醒</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===================== 弹窗：批量改状态 ===================== -->
 <div class="modal-overlay hidden" id="batchStatusModal">
   <div class="modal modal-sm">
@@ -1547,8 +1564,8 @@ function writtenTestChipHtml(a){
   if(wr === 'yes'){
     return '<button type="button" class="badge asm-chip asm-pending" data-action="writtenTest" title="点击标记为「已笔试」">✍️ 待笔试</button>';
   }
-  // unknown（待确认）：同样显示，提醒去确认是否要笔试
-  return '<button type="button" class="badge asm-chip asm-waiting" data-action="writtenTest" title="尚未确认是否需要笔试，点击可直接标记为「已笔试」">❓ 笔试待确认</button>';
+  // unknown（待确认）：点击弹出选择器，让用户确认「需要笔试」还是「仅测评无需笔试」
+  return '<button type="button" class="badge asm-chip asm-waiting" data-action="wtRequired" title="尚未确认是否需要笔试，点击选择「需要笔试」或「仅测评（无需笔试）」">❓ 笔试待确认</button>';
 }
 
 // 跟进日期高亮提示
@@ -1944,6 +1961,34 @@ function toggleWrittenTest(id){
   toast(app.writtenTestStatus === '已笔试' ? '已标记为「已笔试」' : '已改回「待笔试」', 'success');
 }
 
+// 「笔试待确认」徽章点击：弹窗让用户选择「需要笔试」或「仅测评（无需笔试）」
+let wtReqAppId = null;
+function openWtReqPicker(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  wtReqAppId = id;
+  $('wtReqSubtitle').textContent = app.company + ' · ' + app.position;
+  showModal('wtReqModal');
+}
+function chooseWtRequired(val){
+  const app = applications.find(a => a.id === wtReqAppId);
+  if(!app) return;
+  app.writtenTestRequired = val;
+  app.updatedAt = nowDateTimeStr();
+  commitApps();
+  hideModal('wtReqModal');
+  if(val === 'no'){
+    // 明确无需笔试后不再有笔试提醒，角标同步刷新
+    toast('已标记为「仅测评（无需笔试）」，不再显示笔试状态与提醒', 'success');
+    updateFollowBadge();
+  }else{
+    toast('已标记为「需要笔试」，记得留意笔试链接', 'success');
+  }
+  // 按当前所在页刷新对应列表
+  if(currentTab === 'followup'){ renderFollowUps(); renderAssessmentReminders(); }
+  else { renderList(); renderAssessmentBanner(); }
+}
+
 // 一次性把「已收到链接的待测评」标记为「已测评」（未收到链接的不标记，避免误标）
 function markAllAssessed(){
   let n = 0;
@@ -2211,6 +2256,9 @@ function openDetail(id){
   }else if(wt === '已笔试'){
     wtChip = '<span class="badge asm-chip asm-done">✅ 已笔试</span>';
     wtNote = '（已完成笔试）';
+  }else if(wr === 'unknown' && wt !== '已笔试'){
+    wtChip = '<span class="badge asm-chip asm-waiting">❓ 笔试待确认</span>';
+    wtNote = '（尚未确认是否需要笔试，可在列表点击徽章选择）';
   }else{
     wtChip = '<span class="badge asm-chip asm-pending">✍️ 待笔试</span>';
     wtNote = a.writtenTestLink ? '（已收到笔试链接，请尽快完成）' : '（暂无笔试链接，留意邮箱）';
@@ -3505,6 +3553,7 @@ function bindEvents(){
       else if(action === 'assessment') toggleAssessment(id);
       else if(action === 'assessment-edit') openAppModal(id);
       else if(action === 'writtenTest') toggleWrittenTest(id);
+      else if(action === 'wtRequired') openWtReqPicker(id);
       else if(action === 'duplicate') duplicateApp(id);
       return;
     }
@@ -3559,6 +3608,12 @@ function bindEvents(){
     const btn = e.target.closest('.status-opt');
     if(!btn) return;
     applyBatchStatus(btn.dataset.status);
+  });
+
+  // 「是否需要笔试」选择器点击
+  $('wtReqModal').addEventListener('click', e => {
+    const btn = e.target.closest('[data-wt-req]');
+    if(btn) chooseWtRequired(btn.dataset.wtReq);
   });
 
   // ---- 投递表单 ----
@@ -3618,6 +3673,7 @@ function bindEvents(){
     else if(btn.dataset.action === 'status') openStatusPicker(id);
     else if(btn.dataset.action === 'writtenTest'){ toggleWrittenTest(id); renderFollowUps(); }
     else if(btn.dataset.action === 'assessment'){ toggleAssessment(id); renderFollowUps(); }
+    else if(btn.dataset.action === 'wtRequired') openWtReqPicker(id);
   });
   $('markAllFollowedBtn').addEventListener('click', markAllFollowed);
   $('fuOkBtn').addEventListener('click', confirmFollowUpDone);
