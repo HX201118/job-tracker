@@ -183,6 +183,10 @@ textarea{resize:vertical;min-height:60px}
 .chip-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
 /* 已选中的快捷筛选：尾巴上带个 ✕，提示「再点一下可取消」 */
 .quick-filters .chip-btn.active::after{content:'✕';margin-left:6px;font-size:11px;line-height:1;opacity:.9}
+.chip-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip-row .chip-btn{padding:3px 10px;font-size:12px}
+.fu-divider{margin:14px 0;border:none;border-top:1px dashed var(--border)}
+.asm-sep{display:inline-block;width:1px;height:16px;background:var(--border);margin:0 8px;vertical-align:middle}
 /* 薪资分布小结 */
 .salary-summary{margin-top:8px;font-size:12.5px;color:var(--text-light)}
 /* 状态徽章（颜色由内联样式注入） */
@@ -298,6 +302,7 @@ textarea{resize:vertical;min-height:60px}
 .fu-actions{display:flex;gap:8px;flex-shrink:0}
 .fu-links{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px}
 .fu-links .muted-text{font-size:12px}
+.fu-reason{display:inline-block;padding:1px 8px;border-radius:999px;background:var(--chip-bg, #eef2ff);color:var(--primary);font-size:12px;font-weight:600}
 /* 返回顶部浮动按钮（仅投递列表 / 跟进提醒两页启用） */
 #backToTop{position:fixed;right:18px;bottom:20px;z-index:350;display:none;
   align-items:center;gap:6px;padding:9px 14px;border-radius:22px;
@@ -834,6 +839,28 @@ canvas{display:block;width:100%}
           </select>
         </div>
         <div class="form-field"><label>下次跟进日期</label><input type="date" id="fFollowUpDate"></div>
+        <div class="form-field field-full"><label>跟进原因（填写下次跟进日期时建议一并填写）</label>
+          <input id="fFollowUpReason" type="text" list="followUpReasonList" placeholder="如：等待笔试结果 / 催推进度 / 自定义…">
+          <div class="chip-row" id="followUpReasonChips">
+            <button type="button" class="chip-btn" data-reason="等待笔试结果">等待笔试结果</button>
+            <button type="button" class="chip-btn" data-reason="等待面试通知">等待面试通知</button>
+            <button type="button" class="chip-btn" data-reason="等待HR回复">等待HR回复</button>
+            <button type="button" class="chip-btn" data-reason="等待Offer">等待Offer</button>
+            <button type="button" class="chip-btn" data-reason="追问投递进度">追问投递进度</button>
+            <button type="button" class="chip-btn" data-reason="确认面试安排">确认面试安排</button>
+            <button type="button" class="chip-btn" data-reason="礼貌性跟进/感谢">礼貌性跟进/感谢</button>
+            <button type="button" class="chip-btn" data-reason="补充材料">补充材料</button>
+            <button type="button" class="chip-btn" data-reason="催推进度">催推进度</button>
+            <button type="button" class="chip-btn" data-reason="电话未接通需再约">电话未接通需再约</button>
+          </div>
+          <datalist id="followUpReasonList">
+            <option value="等待笔试结果"></option><option value="等待面试通知"></option>
+            <option value="等待HR回复"></option><option value="等待Offer"></option>
+            <option value="追问投递进度"></option><option value="确认面试安排"></option>
+            <option value="礼貌性跟进/感谢"></option><option value="补充材料"></option>
+            <option value="催推进度"></option><option value="电话未接通需再约"></option>
+          </datalist>
+        </div>
         <div class="form-field"><label>网申截止日期</label><input type="date" id="fDeadline"></div>
         <div class="form-field field-full"><label>职位链接</label><input id="fJobLink" type="text" placeholder="https://…"></div>
         <div class="form-field"><label>面试时间</label><input type="datetime-local" id="fInterviewDate"></div>
@@ -847,6 +874,12 @@ canvas{display:block;width:100%}
           </select>
         </div>
         <div class="form-field field-full"><label>测评链接</label><input id="fAssessmentLink" type="text" placeholder="企业发来的综合测评 / 测评系统链接 https://…"></div>
+        <div class="form-field"><label>笔试状态</label>
+          <select id="fWrittenTestStatus">
+            <option>未笔试</option><option>已笔试</option>
+          </select>
+        </div>
+        <div class="form-field field-full"><label>笔试链接</label><input id="fWrittenTestLink" type="text" placeholder="企业发来的笔试 / 在线笔试系统链接 https://…"></div>
         <div class="form-field field-full"><label>标签（用逗号分隔）</label><input id="fTags" type="text" placeholder="如：前端, 大厂, 远程"></div>
         <div class="form-field field-full"><label>简历附件</label>
           <div id="fileArea"></div>
@@ -1022,6 +1055,11 @@ canvas{display:block;width:100%}
         <select id="fuType"><option>电话</option><option>邮件</option><option>微信</option><option>面试</option><option>其他</option></select>
       </div>
       <div class="form-field"><label>跟进内容（填写则同时添加一条联系记录）</label><textarea id="fuContent" rows="3" placeholder="本次跟进沟通了什么…"></textarea></div>
+      <hr class="fu-divider">
+      <div class="form-field"><label>安排下次跟进（可选）</label><input type="date" id="fuNextDate"></div>
+      <div class="form-field"><label>下次跟进原因（可选，也可自定义）</label>
+        <input id="fuReason" type="text" list="followUpReasonList" placeholder="如：等待笔试结果 / 催推进度…">
+      </div>
     </div>
     <div class="modal-footer">
       <button id="fuCancelBtn" class="btn btn-secondary">取消</button>
@@ -1435,6 +1473,16 @@ function updateBackToTop(){
   const eligible = (currentTab === 'list' || currentTab === 'followup');
   if(eligible && (window.scrollY || document.documentElement.scrollTop || 0) > 200) el.classList.add('show');
   else el.classList.remove('show');
+}
+
+// 跟进原因：高亮与当前输入值匹配的常用选项 chip
+function updateReasonChips(){
+  const box = document.getElementById('followUpReasonChips');
+  if(!box) return;
+  const val = ($('fFollowUpReason').value || '').trim();
+  box.querySelectorAll('.chip-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.reason === val);
+  });
 }
 
 /* =========================================================
@@ -1857,6 +1905,17 @@ function toggleAssessment(id){
   toast(app.assessmentStatus === '已测评' ? '已标记为「已测评」' : '已改回「待测评」', 'success');
 }
 
+// 切换某条记录的「笔试」状态（未笔试 <-> 已笔试），与综合测评状态平行
+function toggleWrittenTest(id){
+  const app = applications.find(a => a.id === id);
+  if(!app) return;
+  app.writtenTestStatus = (app.writtenTestStatus === '已笔试') ? '未笔试' : '已笔试';
+  app.updatedAt = nowDateTimeStr();
+  commitApps();
+  renderList();
+  toast(app.writtenTestStatus === '已笔试' ? '已标记为「已笔试」' : '已改回「待笔试」', 'success');
+}
+
 // 一次性把「已收到链接的待测评」标记为「已测评」（未收到链接的不标记，避免误标）
 function markAllAssessed(){
   let n = 0;
@@ -1945,6 +2004,8 @@ function exportCsv(){
     ['招聘渠道','channel'],['投递日期','applyDate'],['当前状态','status'],['下次跟进日期','nextFollowUpDate'],['网申截止日期','deadline'],
     ['面试时间','interviewDate'],['简历版本','resumeVersion'],['标签','tags'],['职位链接','jobLink'],
     ['测评链接','assessmentLink'],['测评状态','assessmentStatus'],
+    ['笔试链接','writtenTestLink'],['笔试状态','writtenTestStatus'],
+    ['跟进原因','followUpReason'],
     ['备注','notes'],['星标','starred'],['联系记录数','contactRecords']
   ];
   const esc = v => {
@@ -2047,6 +2108,10 @@ function openAppModal(id){
   $('fDeadline').value = app ? (app.deadline || '') : '';
   $('fAssessmentStatus').value = app ? (app.assessmentStatus || '未测评') : '未测评';
   $('fAssessmentLink').value = app ? (app.assessmentLink || '') : '';
+  $('fFollowUpReason').value = app ? (app.followUpReason || '') : '';
+  $('fWrittenTestStatus').value = app ? (app.writtenTestStatus || '未笔试') : '未笔试';
+  $('fWrittenTestLink').value = app ? (app.writtenTestLink || '') : '';
+  updateReasonChips();
   // datetime-local 控件需要 YYYY-MM-DDTHH:mm 格式，存储格式为空格分隔
   $('fInterviewDate').value = app && app.interviewDate ? app.interviewDate.replace(' ', 'T') : '';
   // 简历版本下拉候选来自简历版本库（datalist 同时支持手动输入新名称）
@@ -2085,6 +2150,7 @@ function openDetail(id){
     {label:'💰 薪资', value:a.salary},
     {label:'🗓️ 面试时间', value:iv},
     {label:'⏰ 下次跟进', value:a.nextFollowUpDate ? fmtDateCN(a.nextFollowUpDate) : ''},
+    {label:'📌 跟进原因', value:a.followUpReason},
     {label:'📄 简历版本', value:a.resumeVersion},
     {label:'⏳ 网申截止', value:a.deadline, deadline:true}
   ];
@@ -2099,6 +2165,7 @@ function openDetail(id){
   const links = [];
   if(a.jobLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>');
   if(a.assessmentLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>');
+  if(a.writtenTestLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.writtenTestLink) + '" target="_blank" rel="noopener">✍️ 笔试链接</a>');
   $('dLinks').innerHTML = links.join('') || '<span class="detail-empty">暂无相关链接</span>';
   $('dLinksSection').style.display = links.length ? '' : 'none';
   const asm = a.assessmentStatus || '未测评';
@@ -2106,9 +2173,18 @@ function openDetail(id){
   if(asm === '已测评'){ asmChip = '<span class="badge asm-chip asm-done">✅ 已测评</span>'; asmText = '已完成综合测评'; }
   else if(a.assessmentLink){ asmChip = '<span class="badge asm-chip asm-pending">📝 待测评</span>'; asmText = '企业已发送测评链接，记得按时完成'; }
   else { asmChip = '<span class="badge asm-chip asm-waiting">📨 待收测评</span>'; asmText = '企业尚未发送测评链接，留意邮箱 / 短信'; }
+  const wt = a.writtenTestStatus || '未笔试';
+  const wtChip = wt === '已笔试'
+    ? '<span class="badge asm-chip asm-done">✅ 已笔试</span>'
+    : '<span class="badge asm-chip asm-pending">✍️ 待笔试</span>';
+  const wtLink = a.writtenTestLink ? '（已收到笔试链接）' : '（暂无笔试链接）';
   $('dAsm').innerHTML = asmChip
     + '<span class="muted-text">' + asmText + '</span>'
-    + '<button type="button" class="btn btn-ghost btn-sm" data-detail-asm="1" title="切换测评状态">切换状态</button>';
+    + '<button type="button" class="btn btn-ghost btn-sm" data-detail-asm="1" title="切换测评状态">切换测评</button>'
+    + '<span class="asm-sep"></span>'
+    + wtChip
+    + '<span class="muted-text">' + wtLink + '</span>'
+    + '<button type="button" class="btn btn-ghost btn-sm" data-detail-wt="1" title="切换笔试状态">切换笔试</button>';
   const recs = a.contactRecords || [];
   $('dContacts').innerHTML = recs.length
     ? recs.map(r => '<div class="contact-item"><div class="contact-head"><span class="contact-type">' + escapeHtml(r.type || '联系') + '</span><span class="muted-text">' + escapeHtml(r.time || '') + '</span></div><div class="contact-content">' + escapeHtml(r.content || '') + '</div></div>').join('')
@@ -2187,6 +2263,13 @@ async function saveAppFromForm(){
     try{ const u = new URL(assessmentLink); ok = /^https?:$/.test(u.protocol); }catch(e){ ok = false; }
     if(!ok){ toast('测评链接格式不正确（需以 http:// 或 https:// 开头）', 'error'); $('fAssessmentLink').focus(); return; }
   }
+  // 笔试链接校验（选填，填了必须合法）
+  const writtenTestLink = $('fWrittenTestLink').value.trim();
+  if(writtenTestLink){
+    let ok = false;
+    try{ const u = new URL(writtenTestLink); ok = /^https?:$/.test(u.protocol); }catch(e){ ok = false; }
+    if(!ok){ toast('笔试链接格式不正确（需以 http:// 或 https:// 开头）', 'error'); $('fWrittenTestLink').focus(); return; }
+  }
 
   // ---- 处理简历附件 ----
   let resumeFileName = '', resumeFileData = '';
@@ -2225,10 +2308,13 @@ async function saveAppFromForm(){
     starred: existing ? (existing.starred || false) : false,
     contactRecords: draftContacts,
     nextFollowUpDate: $('fFollowUpDate').value || '',
+    followUpReason: $('fFollowUpReason').value.trim(),
     interviewDate: $('fInterviewDate').value ? $('fInterviewDate').value.replace('T', ' ') : '',
     deadline: $('fDeadline').value || '',
     assessmentStatus: $('fAssessmentStatus').value,
     assessmentLink,
+    writtenTestStatus: $('fWrittenTestStatus').value,
+    writtenTestLink,
     createdAt: existing ? existing.createdAt : now,
     updatedAt: now,
     deleted: existing ? (!!existing.deleted) : false
@@ -2437,10 +2523,12 @@ function renderFollowUps(){
       +   '<div class="fu-title">' + companyAvatarHtml(a) + '<span>' + escapeHtml(a.company) + '</span><span class="sep">·</span>'
       +     '<span>' + escapeHtml(a.position) + '</span>' + statusBadgeHtml(a.status) + '</div>'
       +   '<div class="app-meta"><span>⏰ 跟进日期：' + fmtDateCN(a.nextFollowUpDate) + '</span>'
-      +     '<span class="fu-days fu-days-' + cls + '">' + describeFollowUp(a.nextFollowUpDate) + '</span></div>'
+      +     '<span class="fu-days fu-days-' + cls + '">' + describeFollowUp(a.nextFollowUpDate) + '</span>'
+      +     (a.followUpReason ? '<span class="fu-reason">📌 ' + escapeHtml(a.followUpReason) + '</span>' : '') + '</div>'
       +   '<div class="fu-links">'
       +     (a.jobLink ? '<a class="app-link" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>' : '<span class="muted-text">暂无职位链接</span>')
       +     (a.assessmentLink ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '<span class="muted-text">暂无测评链接</span>')
+      +     (a.writtenTestLink ? '<a class="app-link" href="' + escapeHtml(a.writtenTestLink) + '" target="_blank" rel="noopener">✍️ 笔试链接</a>' : '<span class="muted-text">暂无笔试链接</span>')
       +   '</div>'
       + '</div>'
       + '<div class="fu-actions">'
@@ -2460,13 +2548,17 @@ function openFollowUpDone(id){
   $('fuSubtitle').textContent = app.company + ' · ' + app.position;
   $('fuType').value = '电话';
   $('fuContent').value = '';
+  $('fuNextDate').value = '';
+  $('fuReason').value = '';
   showModal('followUpModal');
 }
 
 function confirmFollowUpDone(){
   const app = applications.find(a => a.id === fuAppId);
   if(!app) return;
-  app.nextFollowUpDate = '';
+  // 完成本次跟进：清空原跟进日期；若填写了「安排下次跟进」则顺延到新日期
+  app.nextFollowUpDate = $('fuNextDate').value || '';
+  app.followUpReason = $('fuReason').value.trim();
   const content = $('fuContent').value.trim();
   if(content){
     app.contactRecords = app.contactRecords || [];
@@ -2952,8 +3044,9 @@ function exportData(){
 function defaultAppFields(){
   return {id:'',company:'',position:'',location:'',salary:'',channel:'其他',applyDate:'',jobLink:'',
     status:'已投递',tags:'',resumeVersion:'',resumeFileName:'',resumeFileData:'',notes:'',
-    contactRecords:[],nextFollowUpDate:'',interviewDate:'',deadline:'',starred:false,deleted:false,createdAt:'',updatedAt:'',
-    assessmentStatus:'未测评',assessmentLink:''};
+    contactRecords:[],nextFollowUpDate:'',followUpReason:'',interviewDate:'',deadline:'',starred:false,deleted:false,createdAt:'',updatedAt:'',
+    assessmentStatus:'未测评',assessmentLink:'',
+    writtenTestStatus:'未笔试',writtenTestLink:''};
 }
 
 // 解析导入文件内容，兼容多种结构
@@ -2975,6 +3068,9 @@ function normalizeImport(parsed){
       rec.starred = !!(a.starred);
       if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
       if(!rec.assessmentLink) rec.assessmentLink = '';
+      if(!rec.writtenTestStatus) rec.writtenTestStatus = '未笔试';
+      if(!rec.writtenTestLink) rec.writtenTestLink = '';
+      if(!rec.followUpReason) rec.followUpReason = '';
       if(!rec.deadline) rec.deadline = '';
       rec.deleted = !!a.deleted;
       return rec;
@@ -3129,6 +3225,9 @@ const CSV_HEADER_MAP = [
   ['是否星标', 'starred'], ['星标', 'starred'],
   ['测评链接', 'assessmentLink'], ['测评', 'assessmentLink'],
   ['测评状态', 'assessmentStatus'],
+  ['笔试链接', 'writtenTestLink'], ['笔试', 'writtenTestLink'],
+  ['笔试状态', 'writtenTestStatus'],
+  ['跟进原因', 'followUpReason'], ['原因', 'followUpReason'],
   ['联系记录', 'contactRecords'], ['联系', 'contactRecords']
 ];
 
@@ -3169,6 +3268,9 @@ function rowsToApplications(rows){
     if(!rec.channel) rec.channel = '其他';
     if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
     if(!rec.assessmentLink) rec.assessmentLink = '';
+    if(!rec.writtenTestStatus) rec.writtenTestStatus = '未笔试';
+    if(!rec.writtenTestLink) rec.writtenTestLink = '';
+    if(!rec.followUpReason) rec.followUpReason = '';
     out.push(rec);
   }
   return out;
@@ -3243,13 +3345,13 @@ async function onCsvFileChange(e){
 // 下载导入模板（CSV，Excel 可直接打开）；表头与导入映射一致，非必填列留空也可
 function downloadTemplateCsv(){
   const headers = ['公司名称','职位名称','工作地点','薪资范围','招聘渠道','投递日期','当前状态',
-    '下次跟进日期','面试时间','简历版本','标签','职位链接','测评链接','测评状态','备注','是否星标'];
+    '下次跟进日期','跟进原因','面试时间','简历版本','标签','职位链接','测评链接','测评状态','笔试链接','笔试状态','备注','是否星标'];
   const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
   const rows = [headers.map(esc).join(',')];
   rows.push([
     esc('示例科技有限公司'), esc('机械设计工程师'), esc(''), esc(''), esc('BOSS直聘'),
-    esc(todayStr()), esc('已投递'), esc(''), esc(''), esc(''), esc('校招'),
-    esc(''), esc(''), esc('未测评'), esc('可留空，不填也行'), esc('')
+    esc(todayStr()), esc('已投递'), esc(''), esc(''), esc(''), esc(''), esc('校招'),
+    esc(''), esc(''), esc('未测评'), esc(''), esc('未笔试'), esc('可留空，不填也行'), esc('')
   ].join(','));
   const blob = new Blob(['﻿' + rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
   downloadBlob('投递记录导入模板.csv', blob);
@@ -3264,6 +3366,17 @@ function bindEvents(){
   // Tab 切换
   document.querySelectorAll('.tab-btn').forEach(btn =>
     btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+  // 跟进原因：点击常用选项 chips 填入输入框（也可手动输入自定义）
+  document.querySelectorAll('#followUpReasonChips .chip-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inp = $('fFollowUpReason');
+      if(!inp) return;
+      inp.value = btn.dataset.reason || '';
+      updateReasonChips();
+      inp.focus();
+    });
+  });
 
   // ---- 列表筛选与排序 ----
   $('searchInput').addEventListener('input', debounce(() => {
@@ -3346,6 +3459,8 @@ function bindEvents(){
     }
     const asmBtn = e.target.closest('[data-detail-asm]');
     if(asmBtn){ toggleAssessment(detailCurrentId); openDetail(detailCurrentId); return; }
+    const wtBtn = e.target.closest('[data-detail-wt]');
+    if(wtBtn){ toggleWrittenTest(detailCurrentId); openDetail(detailCurrentId); return; }
     const dAct = e.target.closest('[data-detail-action]');
     if(dAct){
       const a = dAct.dataset.detailAction;
