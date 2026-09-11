@@ -296,6 +296,16 @@ textarea{resize:vertical;min-height:60px}
 .fu-days-today{color:var(--warning)}
 .fu-days-future{color:var(--success)}
 .fu-actions{display:flex;gap:8px;flex-shrink:0}
+.fu-links{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px}
+.fu-links .muted-text{font-size:12px}
+/* 返回顶部浮动按钮（仅投递列表 / 跟进提醒两页启用） */
+#backToTop{position:fixed;right:18px;bottom:20px;z-index:350;display:none;
+  align-items:center;gap:6px;padding:9px 14px;border-radius:22px;
+  border:1px solid var(--border);background:var(--card);color:var(--primary);
+  box-shadow:var(--shadow);cursor:pointer;font-size:13px;font-weight:600;
+  transition:opacity .2s,transform .2s}
+#backToTop:hover{transform:translateY(-2px)}
+#backToTop.show{display:flex}
 
 /* =========================================================
    面试日历
@@ -1075,7 +1085,9 @@ canvas{display:block;width:100%}
 
 <div id="notifyStack"></div>
 <div id="toast"></div>
-<footer class="app-footer">数据仅保存在本机浏览器 localStorage 中，建议定期在「数据管理」中导出备份</footer><script>
+<footer class="app-footer">数据仅保存在本机浏览器 localStorage 中，建议定期在「数据管理」中导出备份</footer>
+  <button id="backToTop" type="button" title="返回顶部">↑ 返回顶部</button>
+<script>
 'use strict';
 /* =========================================================
  * 一、常量定义
@@ -1401,6 +1413,7 @@ function switchTab(name){
   saveSettings();
   renderCurrent();
   window.scrollTo({top:0});
+  updateBackToTop();
 }
 
 // 根据当前 Tab 渲染对应模块
@@ -1413,6 +1426,15 @@ function renderCurrent(){
   else if(currentTab === 'data') renderData();
   else if(currentTab === 'recycle') renderRecycle();
   else if(currentTab === 'monitor') renderMonitors();
+}
+
+// 返回顶部按钮：仅「投递列表 / 跟进提醒」两页滚动后出现
+function updateBackToTop(){
+  const el = $('backToTop');
+  if(!el) return;
+  const eligible = (currentTab === 'list' || currentTab === 'followup');
+  if(eligible && (window.scrollY || document.documentElement.scrollTop || 0) > 200) el.classList.add('show');
+  else el.classList.remove('show');
 }
 
 /* =========================================================
@@ -2416,6 +2438,10 @@ function renderFollowUps(){
       +     '<span>' + escapeHtml(a.position) + '</span>' + statusBadgeHtml(a.status) + '</div>'
       +   '<div class="app-meta"><span>⏰ 跟进日期：' + fmtDateCN(a.nextFollowUpDate) + '</span>'
       +     '<span class="fu-days fu-days-' + cls + '">' + describeFollowUp(a.nextFollowUpDate) + '</span></div>'
+      +   '<div class="fu-links">'
+      +     (a.jobLink ? '<a class="app-link" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>' : '<span class="muted-text">暂无职位链接</span>')
+      +     (a.assessmentLink ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '<span class="muted-text">暂无测评链接</span>')
+      +   '</div>'
       + '</div>'
       + '<div class="fu-actions">'
       +   '<button type="button" class="btn btn-primary btn-sm" data-action="done">完成跟进</button>'
@@ -3512,6 +3538,19 @@ function bindEvents(){
     if(currentTab === 'stats') renderStats();
     if(currentTab === 'calendar') renderCalendar();
   }, 200));
+
+  // 返回顶部：滚动时按需显示按钮
+  let _btRaf = 0;
+  window.addEventListener('scroll', () => {
+    if(_btRaf) return;
+    _btRaf = requestAnimationFrame(() => { _btRaf = 0; updateBackToTop(); });
+  }, {passive:true});
+  $('backToTop').addEventListener('click', () => {
+    // 用最通用、所有环境都生效的位置写法瞬时回顶（对象写法 {behavior:'smooth'} 在部分内核下会「点了不动」）
+    window.scrollTo(0, 0);
+    try { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; } catch(e){}
+    updateBackToTop(); // 立即隐藏按钮
+  });
 
   // ---- 网站导航 / 内置浏览面板 ----
   $('addMonBtn').addEventListener('click', addMonitor);
