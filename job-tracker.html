@@ -624,6 +624,7 @@ canvas{display:block;width:100%}
       </div>
       <div class="quick-filters">
         <span class="quick-label">快捷筛选：</span>
+        <button type="button" class="chip-btn" data-quick="today" title="今天新添加（录入）的记录">今日添加</button>
         <button type="button" class="chip-btn" data-quick="week">本周投递</button>
         <button type="button" class="chip-btn" data-quick="follow">待跟进</button>
         <button type="button" class="chip-btn" data-quick="noInterview">已投未面试</button>
@@ -1614,7 +1615,12 @@ function getFilteredApps(){
       const t = f.tag.trim().toLowerCase();
       if(t && !parseTags(a.tags).some(x => x.toLowerCase().includes(t))) return false;
     }
-    if(f.quick === 'week'){
+    if(f.quick === 'today'){
+      // 今日添加：以「录入时间」createdAt 为准，没有该字段的老数据退回收录当天 = 投递日
+      const t = todayStr();
+      const src = a.createdAt || a.applyDate || '';
+      if(src.slice(0, 10) !== t) return false;
+    }else if(f.quick === 'week'){
       const now = new Date(); const dow = (now.getDay() + 6) % 7;
       const mondayIso = toISODate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow));
       if(a.applyDate < mondayIso) return false;
