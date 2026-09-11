@@ -629,6 +629,7 @@ canvas{display:block;width:100%}
         <button type="button" class="chip-btn" data-quick="noInterview">已投未面试</button>
         <button type="button" class="chip-btn" data-quick="stale">超7天无进展</button>
         <button type="button" class="chip-btn" data-quick="assess" title="已收到测评链接、尚未完成">待测评</button>
+        <button type="button" class="chip-btn" data-quick="written" title="需要笔试、尚未完成（含待收链接）">待笔试</button>
       </div>
     </div>
     <div class="list-toolbar">
@@ -874,6 +875,13 @@ canvas{display:block;width:100%}
           </select>
         </div>
         <div class="form-field field-full"><label>测评链接</label><input id="fAssessmentLink" type="text" placeholder="企业发来的综合测评 / 测评系统链接 https://…"></div>
+        <div class="form-field"><label>是否需要笔试</label>
+          <select id="fWrittenTestRequired">
+            <option value="unknown">待确认</option>
+            <option value="yes">需要笔试</option>
+            <option value="no">仅测评（无需笔试）</option>
+          </select>
+        </div>
         <div class="form-field"><label>笔试状态</label>
           <select id="fWrittenTestStatus">
             <option>未笔试</option><option>已笔试</option>
@@ -1589,6 +1597,10 @@ function getFilteredApps(){
       // 待测评：尚未完成且已收到测评链接（可在列表里直接去测评 / 标记完成）
       if((a.assessmentStatus || '未测评') !== '未测评') return false;
       if(!a.assessmentLink) return false;
+    }else if(f.quick === 'written'){
+      // 待笔试：需要笔试且尚未完成（含已收到链接待完成、以及待收链接两类）
+      if((a.writtenTestStatus || '未笔试') !== '未笔试') return false;
+      if(!needsWrittenTest(a)) return false;
     }
     return true;
   });
@@ -2004,7 +2016,7 @@ function exportCsv(){
     ['招聘渠道','channel'],['投递日期','applyDate'],['当前状态','status'],['下次跟进日期','nextFollowUpDate'],['网申截止日期','deadline'],
     ['面试时间','interviewDate'],['简历版本','resumeVersion'],['标签','tags'],['职位链接','jobLink'],
     ['测评链接','assessmentLink'],['测评状态','assessmentStatus'],
-    ['笔试链接','writtenTestLink'],['笔试状态','writtenTestStatus'],
+    ['笔试链接','writtenTestLink'],['笔试状态','writtenTestStatus'],['是否需要笔试','writtenTestRequired'],
     ['跟进原因','followUpReason'],
     ['备注','notes'],['星标','starred'],['联系记录数','contactRecords']
   ];
@@ -2111,6 +2123,7 @@ function openAppModal(id){
   $('fFollowUpReason').value = app ? (app.followUpReason || '') : '';
   $('fWrittenTestStatus').value = app ? (app.writtenTestStatus || '未笔试') : '未笔试';
   $('fWrittenTestLink').value = app ? (app.writtenTestLink || '') : '';
+  $('fWrittenTestRequired').value = app ? (app.writtenTestRequired || 'unknown') : 'unknown';
   updateReasonChips();
   // datetime-local 控件需要 YYYY-MM-DDTHH:mm 格式，存储格式为空格分隔
   $('fInterviewDate').value = app && app.interviewDate ? app.interviewDate.replace(' ', 'T') : '';
@@ -2173,17 +2186,25 @@ function openDetail(id){
   if(asm === '已测评'){ asmChip = '<span class="badge asm-chip asm-done">✅ 已测评</span>'; asmText = '已完成综合测评'; }
   else if(a.assessmentLink){ asmChip = '<span class="badge asm-chip asm-pending">📝 待测评</span>'; asmText = '企业已发送测评链接，记得按时完成'; }
   else { asmChip = '<span class="badge asm-chip asm-waiting">📨 待收测评</span>'; asmText = '企业尚未发送测评链接，留意邮箱 / 短信'; }
+  const wr = a.writtenTestRequired;
   const wt = a.writtenTestStatus || '未笔试';
-  const wtChip = wt === '已笔试'
-    ? '<span class="badge asm-chip asm-done">✅ 已笔试</span>'
-    : '<span class="badge asm-chip asm-pending">✍️ 待笔试</span>';
-  const wtLink = a.writtenTestLink ? '（已收到笔试链接）' : '（暂无笔试链接）';
+  let wtChip, wtNote;
+  if(wr === 'no'){
+    wtChip = '<span class="badge asm-chip asm-waiting">➖ 无需笔试</span>';
+    wtNote = '（仅综合测评，无需笔试）';
+  }else if(wt === '已笔试'){
+    wtChip = '<span class="badge asm-chip asm-done">✅ 已笔试</span>';
+    wtNote = '（已完成笔试）';
+  }else{
+    wtChip = '<span class="badge asm-chip asm-pending">✍️ 待笔试</span>';
+    wtNote = a.writtenTestLink ? '（已收到笔试链接，请尽快完成）' : '（暂无笔试链接，留意邮箱）';
+  }
   $('dAsm').innerHTML = asmChip
     + '<span class="muted-text">' + asmText + '</span>'
     + '<button type="button" class="btn btn-ghost btn-sm" data-detail-asm="1" title="切换测评状态">切换测评</button>'
     + '<span class="asm-sep"></span>'
     + wtChip
-    + '<span class="muted-text">' + wtLink + '</span>'
+    + '<span class="muted-text">' + wtNote + '</span>'
     + '<button type="button" class="btn btn-ghost btn-sm" data-detail-wt="1" title="切换笔试状态">切换笔试</button>';
   const recs = a.contactRecords || [];
   $('dContacts').innerHTML = recs.length
@@ -2315,6 +2336,7 @@ async function saveAppFromForm(){
     assessmentLink,
     writtenTestStatus: $('fWrittenTestStatus').value,
     writtenTestLink,
+    writtenTestRequired: $('fWrittenTestRequired').value || 'unknown',
     createdAt: existing ? existing.createdAt : now,
     updatedAt: now,
     deleted: existing ? (!!existing.deleted) : false
@@ -2592,6 +2614,15 @@ function openNotifyCenter(){
 }
 
 // 汇总当前需要提醒的事项（供浮动卡片与汇总弹窗共用）
+// 是否真正需要笔试：仅「需要笔试」或「待确认但企业已发笔试链接/已笔试」才纳入提醒；
+// 明确「仅测评（无需笔试）」或纯「待确认」且无链接的公司，不打扰（可能根本不需要笔试）
+function needsWrittenTest(a){
+  const r = a.writtenTestRequired;
+  if(r === 'no') return false;
+  if(r === 'yes') return true;
+  return !!(a.writtenTestLink || (a.writtenTestStatus || '未笔试') === '已笔试');
+}
+
 function collectReminders(){
   const list = [];
   const today = todayStr();
@@ -2623,6 +2654,18 @@ function collectReminders(){
     list.push({tag:'job-assessment', title:'综合测评提醒',
       body:'你有 ' + waiting.length + ' 条尚未收到测评链接，留意邮箱 / 短信，收到后尽快补填'});
   }
+  // 笔试提醒：仅对「需要笔试」的公司；待确认且无链接则不打扰（可能仅测评）
+  const wtPending = alive.filter(a => needsWrittenTest(a) && (a.writtenTestStatus || '未笔试') === '未笔试' && a.writtenTestLink);
+  const wtWaiting = alive.filter(a => needsWrittenTest(a) && (a.writtenTestStatus || '未笔试') === '未笔试' && !a.writtenTestLink);
+  if(wtPending.length){
+    let b = '你有 ' + wtPending.length + ' 条投递待完成笔试：'
+      + wtPending.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (wtPending.length > 3 ? ' 等' : '');
+    if(wtWaiting.length) b += '（另有 ' + wtWaiting.length + ' 条已需笔试但暂未收到链接，留意邮箱）';
+    list.push({tag:'job-writtenTest', title:'笔试提醒', body:b});
+  }else if(wtWaiting.length){
+    list.push({tag:'job-writtenTest', title:'笔试提醒',
+      body:'你有 ' + wtWaiting.length + ' 条投递已确认需笔试、但暂未收到笔试链接，留意邮箱 / 短信，收到后尽快补填'});
+  }
   return list;
 }
 
@@ -2630,7 +2673,8 @@ function collectReminders(){
 const NOTIFY_META = {
   'job-followup':    {icon:'📌', color:'#3b82f6', label:'求职跟进'},
   'job-deadline':    {icon:'⏰', color:'#ef4444', label:'网申截止'},
-  'job-assessment':  {icon:'📝', color:'#f59e0b', label:'综合测评'}
+  'job-assessment':  {icon:'📝', color:'#f59e0b', label:'综合测评'},
+  'job-writtenTest': {icon:'✍️', color:'#8b5cf6', label:'笔试提醒'}
 };
 function notifyMeta(tag){ return NOTIFY_META[tag] || {icon:'🔔', color:'#6366f1', label:'提醒'}; }
 
@@ -3046,7 +3090,7 @@ function defaultAppFields(){
     status:'已投递',tags:'',resumeVersion:'',resumeFileName:'',resumeFileData:'',notes:'',
     contactRecords:[],nextFollowUpDate:'',followUpReason:'',interviewDate:'',deadline:'',starred:false,deleted:false,createdAt:'',updatedAt:'',
     assessmentStatus:'未测评',assessmentLink:'',
-    writtenTestStatus:'未笔试',writtenTestLink:''};
+    writtenTestStatus:'未笔试',writtenTestLink:'',writtenTestRequired:'unknown'};
 }
 
 // 解析导入文件内容，兼容多种结构
@@ -3070,6 +3114,7 @@ function normalizeImport(parsed){
       if(!rec.assessmentLink) rec.assessmentLink = '';
       if(!rec.writtenTestStatus) rec.writtenTestStatus = '未笔试';
       if(!rec.writtenTestLink) rec.writtenTestLink = '';
+      if(!rec.writtenTestRequired) rec.writtenTestRequired = 'unknown';
       if(!rec.followUpReason) rec.followUpReason = '';
       if(!rec.deadline) rec.deadline = '';
       rec.deleted = !!a.deleted;
@@ -3227,6 +3272,7 @@ const CSV_HEADER_MAP = [
   ['测评状态', 'assessmentStatus'],
   ['笔试链接', 'writtenTestLink'], ['笔试', 'writtenTestLink'],
   ['笔试状态', 'writtenTestStatus'],
+  ['是否需要笔试', 'writtenTestRequired'], ['笔试要求', 'writtenTestRequired'],
   ['跟进原因', 'followUpReason'], ['原因', 'followUpReason'],
   ['联系记录', 'contactRecords'], ['联系', 'contactRecords']
 ];
@@ -3345,13 +3391,13 @@ async function onCsvFileChange(e){
 // 下载导入模板（CSV，Excel 可直接打开）；表头与导入映射一致，非必填列留空也可
 function downloadTemplateCsv(){
   const headers = ['公司名称','职位名称','工作地点','薪资范围','招聘渠道','投递日期','当前状态',
-    '下次跟进日期','跟进原因','面试时间','简历版本','标签','职位链接','测评链接','测评状态','笔试链接','笔试状态','备注','是否星标'];
+    '下次跟进日期','跟进原因','面试时间','简历版本','标签','职位链接','测评链接','测评状态','笔试链接','笔试状态','是否需要笔试','备注','是否星标'];
   const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
   const rows = [headers.map(esc).join(',')];
   rows.push([
     esc('示例科技有限公司'), esc('机械设计工程师'), esc(''), esc(''), esc('BOSS直聘'),
     esc(todayStr()), esc('已投递'), esc(''), esc(''), esc(''), esc(''), esc('校招'),
-    esc(''), esc(''), esc('未测评'), esc(''), esc('未笔试'), esc('可留空，不填也行'), esc('')
+    esc(''), esc(''), esc('未测评'), esc(''), esc('未笔试'), esc(''), esc('可留空，不填也行'), esc('')
   ].join(','));
   const blob = new Blob(['﻿' + rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
   downloadBlob('投递记录导入模板.csv', blob);
