@@ -1534,6 +1534,22 @@ function assessmentChipHtml(a){
 function assessmentLinkHtml(a){
   return a.assessmentLink ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '';
 }
+// 笔试状态徽章（记录卡片通用）：「仅测评（无需笔试）」不显示，其余四种一律显示
+//   未笔试 + 需要笔试 → ✍️ 待笔试（橙）｜未笔试 + 待确认 → ❓ 笔试待确认（蓝）｜已笔试 → ✅ 已笔试（绿）
+// 点击可直接切换笔试状态（列表 / 跟进列表均已绑定 data-action="writtenTest"）
+function writtenTestChipHtml(a){
+  const wr = a.writtenTestRequired;
+  if(wr === 'no') return '';            // 仅测评（无需笔试）：完全不显示笔试状态
+  const wt = a.writtenTestStatus || '未笔试';
+  if(wt === '已笔试'){
+    return '<button type="button" class="badge asm-chip asm-done" data-action="writtenTest" title="点击切换回「待笔试」">✅ 已笔试</button>';
+  }
+  if(wr === 'yes'){
+    return '<button type="button" class="badge asm-chip asm-pending" data-action="writtenTest" title="点击标记为「已笔试」">✍️ 待笔试</button>';
+  }
+  // unknown（待确认）：同样显示，提醒去确认是否要笔试
+  return '<button type="button" class="badge asm-chip asm-waiting" data-action="writtenTest" title="尚未确认是否需要笔试，点击可直接标记为「已笔试」">❓ 笔试待确认</button>';
+}
 
 // 跟进日期高亮提示
 function followUpHtml(iso){
@@ -1635,7 +1651,7 @@ function appCardHtml(a){
   return '<div class="card app-card' + (a.starred ? ' starred-card' : '') + '" data-id="' + a.id + '">'
     + '<div class="app-card-top">'
     +   '<label class="app-check-wrap"><input type="checkbox" class="app-check" value="' + a.id + '"' + checked + '></label>'
-    +   '<div class="app-title" title="点击查看详情">' + companyAvatarHtml(a) + statusBadgeHtml(a.status)
+    +   '<div class="app-title" title="点击查看详情">' + companyAvatarHtml(a) + statusBadgeHtml(a.status) + writtenTestChipHtml(a)
     +     '<span class="company">' + escapeHtml(a.company) + '</span>'
     +     (a.position ? '<span class="sep">·</span><span class="position">' + escapeHtml(a.position) + '</span>' : '')
     +   '</div>'
@@ -2543,7 +2559,7 @@ function renderFollowUps(){
     return '<div class="card fu-item fu-' + cls + '-item" data-id="' + a.id + '">'
       + '<div class="fu-main">'
       +   '<div class="fu-title">' + companyAvatarHtml(a) + '<span>' + escapeHtml(a.company) + '</span><span class="sep">·</span>'
-      +     '<span>' + escapeHtml(a.position) + '</span>' + statusBadgeHtml(a.status) + '</div>'
+      +     '<span>' + escapeHtml(a.position) + '</span>' + statusBadgeHtml(a.status) + writtenTestChipHtml(a) + '</div>'
       +   '<div class="app-meta"><span>⏰ 跟进日期：' + fmtDateCN(a.nextFollowUpDate) + '</span>'
       +     '<span class="fu-days fu-days-' + cls + '">' + describeFollowUp(a.nextFollowUpDate) + '</span>'
       +     (a.followUpReason ? '<span class="fu-reason">📌 ' + escapeHtml(a.followUpReason) + '</span>' : '') + '</div>'
@@ -3488,6 +3504,7 @@ function bindEvents(){
       else if(action === 'star') toggleStar(id);
       else if(action === 'assessment') toggleAssessment(id);
       else if(action === 'assessment-edit') openAppModal(id);
+      else if(action === 'writtenTest') toggleWrittenTest(id);
       else if(action === 'duplicate') duplicateApp(id);
       return;
     }
@@ -3599,6 +3616,8 @@ function bindEvents(){
     if(btn.dataset.action === 'done') openFollowUpDone(id);
     else if(btn.dataset.action === 'edit') openAppModal(id);
     else if(btn.dataset.action === 'status') openStatusPicker(id);
+    else if(btn.dataset.action === 'writtenTest'){ toggleWrittenTest(id); renderFollowUps(); }
+    else if(btn.dataset.action === 'assessment'){ toggleAssessment(id); renderFollowUps(); }
   });
   $('markAllFollowedBtn').addEventListener('click', markAllFollowed);
   $('fuOkBtn').addEventListener('click', confirmFollowUpDone);
