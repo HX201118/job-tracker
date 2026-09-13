@@ -249,13 +249,17 @@ textarea{resize:vertical;min-height:60px}
 @media (max-width:820px){#appList,#recycleList{grid-template-columns:1fr}}
 .app-card{transition:box-shadow .2s,transform .2s,border-color .2s}
 .app-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);border-color:var(--primary-soft)}
-.app-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.app-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:nowrap;min-width:0}
 .app-logo{width:32px;height:32px;border-radius:9px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;box-shadow:0 2px 6px rgba(15,23,42,.18);user-select:none}
 .app-logo.lg{width:54px;height:54px;font-size:23px;border-radius:15px}
 .app-logo.sm{width:24px;height:24px;font-size:11px;border-radius:7px}
-.app-title{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:15px}
-.app-title .company{font-weight:700;color:var(--text);letter-spacing:.2px}
+/* 标题行只放头像+公司名：不换行、超长省略号，保证三列网格下每行等高对齐 */
+.app-title{display:flex;align-items:center;gap:9px;flex-wrap:nowrap;min-width:0;flex:1 1 auto;font-size:15px}
+.app-title .company{font-weight:700;color:var(--text);letter-spacing:.2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .app-title .position{font-weight:500;color:var(--text-light);font-size:13.5px}
+/* 徽章行：状态徽章 + 笔试徽章 + 职位，固定在标题行下方 */
+.app-badges{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;min-height:24px}
+.app-badges .position{font-weight:500;color:var(--text-light);font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sep{color:var(--text-light);margin:0 1px}
 .app-actions{display:flex;gap:6px;flex-shrink:0;margin-left:auto}
 .app-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;color:var(--text-light);font-size:12.5px}
@@ -1834,9 +1838,8 @@ function appCardHtml(a){
   return '<div class="card app-card' + (a.starred ? ' starred-card' : '') + '" data-id="' + a.id + '">'
     + '<div class="app-card-top">'
     +   '<label class="app-check-wrap"><input type="checkbox" class="app-check" value="' + a.id + '"' + checked + '></label>'
-    +   '<div class="app-title" title="点击查看详情">' + companyAvatarHtml(a) + statusBadgeHtml(a.status) + writtenTestChipHtml(a)
+    +   '<div class="app-title" title="' + escapeHtml(a.company + (a.position ? ' · ' + a.position : '')) + '（点击查看详情）">' + companyAvatarHtml(a)
     +     '<span class="company">' + escapeHtml(a.company) + '</span>'
-    +     (a.position ? '<span class="sep">·</span><span class="position">' + escapeHtml(a.position) + '</span>' : '')
     +   '</div>'
     +   '<div class="app-actions">'
     +     '<button type="button" class="btn btn-ghost btn-sm star-btn' + (a.starred ? ' starred' : '') + '" data-action="star" title="星标置顶">' + (a.starred ? '★' : '☆') + '</button>'
@@ -1844,6 +1847,9 @@ function appCardHtml(a){
     +     '<button type="button" class="btn btn-secondary btn-sm" data-action="edit">编辑</button>'
     +     '<button type="button" class="btn btn-danger-ghost btn-sm" data-action="delete">删除</button>'
     +   '</div>'
+    + '</div>'
+    + '<div class="app-badges">' + statusBadgeHtml(a.status) + writtenTestChipHtml(a)
+    +   (a.position ? '<span class="sep">·</span><span class="position">' + escapeHtml(a.position) + '</span>' : '')
     + '</div>'
     + '<div class="app-meta">'
     +   '<span>📅 投递：' + fmtDateCN(a.applyDate) + '</span>'
@@ -1939,13 +1945,15 @@ function renderRecycle(){
   el.innerHTML = list.map(a => {
     const tags = parseTags(a.tags).map(t => '<span class="tag">' + escapeHtml(t) + '</span>').join('');
     return '<div class="card app-card' + (a.starred ? ' starred-card' : '') + '" data-id="' + a.id + '">'
-      + '<div class="app-card-top"><div class="app-title">' + companyAvatarHtml(a) + statusBadgeHtml(a.status)
-      + '<span class="company">' + escapeHtml(a.company) + '</span>'
-      + (a.position ? '<span class="sep">·</span><span class="position">' + escapeHtml(a.position) + '</span>' : '')
-      + '</div><div class="app-actions">'
+      + '<div class="app-card-top"><div class="app-title" title="' + escapeHtml(a.company + (a.position ? ' · ' + a.position : '')) + '">'
+      + companyAvatarHtml(a) + '<span class="company">' + escapeHtml(a.company) + '</span></div>'
+      + '<div class="app-actions">'
       + '<button type="button" class="btn btn-secondary btn-sm" data-recycle="restore">恢复</button>'
       + '<button type="button" class="btn btn-danger-ghost btn-sm" data-recycle="purge">永久删除</button>'
       + '</div></div>'
+      + '<div class="app-badges">' + statusBadgeHtml(a.status)
+      + (a.position ? '<span class="sep">·</span><span class="position">' + escapeHtml(a.position) + '</span>' : '')
+      + '</div>'
       + '<div class="app-meta"><span>📅 投递：' + fmtDateCN(a.applyDate) + '</span>'
       + (a.deletedAt ? '<span>🗑️ 删除于：' + fmtDateCN(a.deletedAt) + '</span>' : '')
       + '</div>'
