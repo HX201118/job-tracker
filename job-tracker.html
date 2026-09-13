@@ -458,6 +458,14 @@ canvas{display:block;width:100%}
 .tag-row{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:13px}
 .tag-rank{width:18px;height:18px;border-radius:50%;background:#eff6ff;color:var(--primary);font-size:11px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
 .tag-count{margin-left:auto;color:var(--text-light);font-size:12px}
+/* 统计看板联动：可点击项（点击带条件跳转到投递列表筛选） */
+.clickable{cursor:pointer}
+.clickable:hover{filter:brightness(.98)}
+.bar-row.clickable:hover{background:var(--track-bg);border-radius:6px}
+.legend-row.clickable:hover{background:var(--track-bg);border-radius:6px;padding:2px 4px;margin-left:-4px}
+.tag-row.clickable:hover{background:var(--track-bg);border-radius:6px;padding:2px 4px}
+.stat-card.clickable:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.clickable:active{transform:scale(.985)}
 
 /* =========================================================
    数据管理
@@ -1508,10 +1516,11 @@ function loadAll(){
 // 内置渠道 + 自定义渠道（去重、保序），用于下拉与导入匹配
 function allChannels(){
   const seen = new Set(); const out = [];
-  CHANNELS.concat(customChannels).forEach(c => {
-    const v = String(c).trim();
-    if(v && !seen.has(v)){ seen.add(v); out.push(v); }
-  });
+  const push = c => { const v = String(c || '').trim(); if(v && !seen.has(v)){ seen.add(v); out.push(v); } };
+  CHANNELS.forEach(push);
+  customChannels.forEach(push);
+  // 把数据中实际出现过的渠道也纳入，保证筛选下拉与选项完整（如早期自由输入的值），避免联动筛选时选项缺失
+  (typeof applications !== 'undefined' ? applications : []).forEach(a => { if(a && !a.deleted) push(a.channel); });
   return out;
 }
 
@@ -2305,6 +2314,28 @@ function applyQuickFilter(type){
   renderList();
   updateQuickHighlight();
 }
+// 统计看板联动：点击某一项直接带条件跳到投递列表并应用对应筛选
+function drillDownFromStats(kind, value, label){
+  settings.filters = {...DEFAULT_FILTERS};
+  if(kind === 'status') settings.filters.status = value;
+  else if(kind === 'channel') settings.filters.channel = value;
+  else if(kind === 'tag') settings.filters.tag = value;
+  else if(kind === 'week'){
+    const now = new Date(); const dow = (now.getDay() + 6) % 7;
+    settings.filters.dateFrom = toISODate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow));
+    settings.filters.dateTo = todayStr();
+  } else if(kind === 'month'){
+    settings.filters.dateFrom = todayStr().slice(0, 7) + '-01';
+    settings.filters.dateTo = todayStr();
+  }
+  // kind === 'all' 时保持默认（即全部），仅作跳转
+  syncFilterControls();
+  updateQuickHighlight();
+  saveSettings();
+  switchTab('list');
+  toast('已按「' + (label || value || '全部') + '」筛选，共 ' + getFilteredApps().length + ' 条', 'info');
+}
+
 function updateQuickHighlight(){
   document.querySelectorAll('.quick-filters .chip-btn').forEach(b => {
     const active = b.dataset.quick === settings.filters.quick;
@@ -2818,6 +2849,7 @@ function downloadResumeVersion(id){
 /* =========================================================
  * 十一、跟进提醒
  * ========================================================= */
+
 function renderFollowUps(){
   const list = applications.filter(a => a.nextFollowUpDate)
     .sort((a, b) => a.nextFollowUpDate < b.nextFollowUpDate ? -1 : (a.nextFollowUpDate > b.nextFollowUpDate ? 1 : 0));
@@ -3110,9 +3142,9 @@ function renderStats(){
   const pct = n => total ? ((n / total) * 100).toFixed(1) + '%' : '0%';
 
   $('statCards').innerHTML =
-    '<div class="stat-card"><div class="stat-value">' + total + '</div><div class="stat-label">总投递数</div></div>'
-    + '<div class="stat-card"><div class="stat-value">' + weekNew + '</div><div class="stat-label">本周新增</div></div>'
-    + '<div class="stat-card"><div class="stat-value">' + monthNew + '</div><div class="stat-label">本月新增</div></div>'
+    '<div class="stat-card clickable" data-drill="all" data-label="全部投递" title="点击查看全部投递"><div class="stat-value">' + total + '</div><div class="stat-label">总投递数</div></div>'
+    + '<div class="stat-card clickable" data-drill="week" data-label="本周新增" title="点击查看本周新增"><div class="stat-value">' + weekNew + '</div><div class="stat-label">本周新增</div></div>'
+    + '<div class="stat-card clickable" data-drill="month" data-label="本月新增" title="点击查看本月新增"><div class="stat-value">' + monthNew + '</div><div class="stat-label">本月新增</div></div>'
     + '<div class="stat-card"><div class="stat-value">' + pct(interviewRelated) + '</div><div class="stat-label">面试转化率</div></div>'
     + '<div class="stat-card"><div class="stat-value">' + pct(offerCount) + '</div><div class="stat-label">投递成功率</div></div>';
 
@@ -3120,7 +3152,7 @@ function renderStats(){
   const counts = STATUSES.map(s => ({s, n: apps.filter(a => a.status === s).length}));
   const maxN = Math.max.apply(null, counts.map(c => c.n).concat([1]));
   $('statusBars').innerHTML = counts.map(c =>
-    '<div class="bar-row"><div class="bar-label">' + c.s + '</div>'
+    '<div class="bar-row clickable" data-status="' + escapeHtml(c.s) + '" title="点击只看「' + escapeHtml(c.s) + '」"><div class="bar-label">' + c.s + '</div>'
     + '<div class="bar-track"><div class="bar-fill" style="width:' + (c.n / maxN * 100) + '%;background:' + (STATUS_COLORS[c.s] || '#ccc') + '"></div></div>'
     + '<div class="bar-num">' + c.n + '</div></div>').join('');
 
@@ -3137,7 +3169,7 @@ function renderTagStats(apps){
   apps.forEach(a => parseTags(a.tags).forEach(t => { map[t] = (map[t] || 0) + 1; }));
   const top = Object.entries(map).sort((x, y) => y[1] - x[1]).slice(0, 10);
   $('tagStats').innerHTML = top.length
-    ? top.map((e, i) => '<div class="tag-row"><span class="tag-rank">' + (i + 1) + '</span><span class="tag">' + escapeHtml(e[0]) + '</span><span class="tag-count">' + e[1] + ' 次</span></div>').join('')
+    ? top.map((e, i) => '<div class="tag-row clickable" data-tag="' + escapeHtml(e[0]) + '" title="点击按「' + escapeHtml(e[0]) + '」标签筛选"><span class="tag-rank">' + (i + 1) + '</span><span class="tag">' + escapeHtml(e[0]) + '</span><span class="tag-count">' + e[1] + ' 次</span></div>').join('')
     : '<div class="muted-text">暂无标签数据</div>';
 }
 
@@ -3329,7 +3361,7 @@ function drawChannelChart(apps){
   ctx.font = '11px sans-serif';
   ctx.fillText('总投递', cx, cy + 16);
   legendEl.innerHTML = entries.map((e, i) =>
-    '<div class="legend-row"><span class="legend-dot" style="background:' + palette[i % palette.length] + '"></span>'
+    '<div class="legend-row clickable" data-channel="' + escapeHtml(e[0]) + '" title="点击只看「' + escapeHtml(e[0]) + '」渠道"><span class="legend-dot" style="background:' + palette[i % palette.length] + '"></span>'
     + '<span>' + escapeHtml(e[0]) + '</span>'
     + '<span class="legend-num">' + e[1] + '（' + (e[1] / total * 100).toFixed(0) + '%）</span></div>').join('');
 }
@@ -3761,6 +3793,25 @@ function bindEvents(){
     syncFilterControls(); saveSettings(); renderList();
     updateQuickHighlight();
   });
+  // 统计看板联动：点击区块直接带条件跳转到投递列表
+  $('statCards').addEventListener('click', e => {
+    const node = e.target.closest('[data-drill]');
+    if(!node) return;
+    drillDownFromStats(node.getAttribute('data-drill'), '', node.getAttribute('title'));
+  });
+  const drill = (containerId, attr, kind) => {
+    const el = $(containerId);
+    if(!el) return;
+    el.addEventListener('click', e => {
+      const node = e.target.closest('[' + attr + ']');
+      if(!node) return;
+      drillDownFromStats(kind, node.getAttribute(attr), node.getAttribute('title'));
+    });
+  };
+  drill('statusBars', 'data-status', 'status');
+  drill('channelLegend', 'data-channel', 'channel');
+  drill('tagStats', 'data-tag', 'tag');
+
   $('addAppBtn').addEventListener('click', () => openAppModal());
 
   // 列表卡片事件委托：编辑 / 删除 / 切换状态 / 星标 / 复制 / 空状态添加 / 点击标题看详情
