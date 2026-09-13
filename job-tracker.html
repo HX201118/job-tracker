@@ -75,25 +75,38 @@ input,select,textarea{font-family:inherit;font-size:14px;color:var(--text)}
 .ok-text{color:var(--success);font-size:12.5px}
 
 /* =========================================================
-   顶部导航
+   侧边导航（左右两栏布局：左侧固定窄导航栏 + 右侧主内容区）
    ========================================================= */
-.app-header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.header-inner{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:14px;row-gap:10px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:800;white-space:nowrap}
+.app-header{position:fixed;left:0;top:0;bottom:0;z-index:50;width:190px;background:var(--surface);border-right:1px solid var(--border);box-shadow:1px 0 4px rgba(0,0,0,.04)}
+.header-inner{flex:1;min-height:0;display:flex;flex-direction:column;gap:12px;padding:14px 10px}
+.brand{display:flex;align-items:center;gap:9px;font-size:15.5px;font-weight:800;white-space:nowrap;padding:2px 4px}
 .brand-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:var(--gradient);box-shadow:0 4px 12px rgba(59,130,246,.32);font-size:15px;flex-shrink:0}
 .brand-text{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.3px}
-/* 顶部导航：宽度不够时整体换行，绝不横向裁切（避免末尾 Tab 被切掉 / 挤在一起） */
-.tabs{display:flex;gap:4px;row-gap:4px;flex:1 1 auto;flex-wrap:wrap}
-.tabs::-webkit-scrollbar{display:none}
-.tab-btn{border:none;background:none;padding:8px 11px;font-size:14px;color:var(--text-light);border-radius:10px;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s}
+/* 侧边导航项：纵向排列，占满整行，角标靠右 */
+.tabs{display:flex;flex-direction:column;gap:4px;flex:1 1 auto;min-height:0;overflow-y:auto}
+.tabs::-webkit-scrollbar{width:6px}
+.tabs::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.tab-btn{border:none;background:none;padding:10px 12px;font-size:13.5px;color:var(--text-light);border-radius:10px;white-space:nowrap;text-align:left;display:flex;align-items:center;transition:background .15s,color .15s,box-shadow .15s}
 .tab-btn:hover{background:var(--hover);color:var(--text)}
 .tab-btn.active{color:#fff;font-weight:600;background:var(--gradient);box-shadow:0 4px 12px rgba(59,130,246,.30)}
-.tab-badge{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;margin-left:4px;border-radius:999px;background:var(--danger);color:#fff;font-size:10px}
+.tab-badge{display:inline-flex;align-items:center;justify-content:center;min-width:16px;height:16px;padding:0 4px;margin-left:auto;border-radius:999px;background:var(--danger);color:#fff;font-size:10px}
+.header-actions{flex:0 0 auto;padding:2px}
 
-main{max-width:1100px;margin:0 auto;padding:16px}
+/* 主内容区：给左侧导航让位，宽度占满剩余全屏 */
+main{margin-left:190px;padding:18px 22px 26px}
 .tab-panel{animation:fadeIn .2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.app-footer{max-width:1100px;margin:18px auto 30px;padding:0 16px;text-align:center;color:#9ca3af;font-size:12px}
+.app-footer{margin-left:190px;padding:0 22px 30px;margin-top:18px;text-align:center;color:#9ca3af;font-size:12px}
+/* 窄屏回退：侧边栏恢复为顶部横向导航 */
+@media (max-width:880px){
+  .app-header{position:sticky;bottom:auto;width:auto;border-right:none;border-bottom:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+  .header-inner{flex-direction:row;align-items:center;gap:10px;row-gap:8px;flex-wrap:wrap;padding:8px 12px}
+  .brand{padding:0}
+  .tabs{flex-direction:row;flex-wrap:wrap;overflow:visible}
+  .tab-btn{padding:8px 11px;font-size:14px}
+  .tab-badge{margin-left:4px}
+  main,.app-footer{margin-left:0;padding-left:14px;padding-right:14px}
+}
 
 /* =========================================================
    卡片与按钮
@@ -132,8 +145,82 @@ main{max-width:1100px;margin:0 auto;padding:16px}
 textarea{resize:vertical;min-height:60px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 .field-full{grid-column:1/-1}
+.schedule-input{display:flex;align-items:center;width:100%;border:1px solid var(--border);border-radius:10px;background:var(--card);transition:border-color .15s,box-shadow .15s;overflow:hidden}
+.schedule-input:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.schedule-prefix{flex:0 0 auto;padding-left:10px;color:var(--text);font-size:14px;font-weight:600;white-space:nowrap}
+.form-field .schedule-input input{flex:1;min-width:0;width:auto;border:0;border-radius:0;background:transparent;padding-left:6px;box-shadow:none}
+.form-field .schedule-input input:focus{border:0;box-shadow:none}
 .radio-line{display:flex;align-items:center;gap:6px;font-size:13.5px;padding:4px 0;cursor:pointer}
 .radio-line input{width:auto}
+
+/* 投递编辑器：按信息流程收紧为三个区块，样式仅限定于此弹窗 */
+#appModal .modal-lg{max-width:1080px}
+#appModal .modal-body{padding:18px 24px 24px;scrollbar-gutter:stable}
+.app-form-flow{position:relative;display:grid;gap:13px}
+.app-form-flow::before{content:'';position:absolute;left:15px;top:27px;bottom:27px;width:2px;background:#dbe5f7}
+[data-theme="dark"] .app-form-flow::before{background:#2d4362}
+.app-form-section{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr);gap:13px}
+.app-section-rail{position:relative;z-index:1;padding-top:2px}
+.app-section-dot{width:32px;height:32px;display:grid;place-items:center;border:1px solid #cfdcf2;border-radius:10px;background:#f6f9ff;color:var(--primary)}
+[data-theme="dark"] .app-section-dot{border-color:#385071;background:#20324b}
+.app-section-dot svg{width:16px;height:16px}
+.app-section-panel{min-width:0;padding:13px 14px 14px;border:1px solid var(--border);border-radius:13px;background:var(--surface)}
+.app-compact-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px 11px;align-items:start}
+.app-form-field{min-width:0;margin:0}
+.app-c2{grid-column:span 2}.app-c3{grid-column:span 3}.app-c4{grid-column:span 4}
+.app-c5{grid-column:span 5}.app-c6{grid-column:span 6}.app-c7{grid-column:span 7}
+.app-c8{grid-column:span 8}.app-c12{grid-column:1/-1}
+#appModal .app-form-field label{display:flex;align-items:center;gap:4px;margin:0 0 4px;color:var(--text-light);font-size:11.5px;font-weight:650;white-space:nowrap}
+#appModal .app-form-field input,#appModal .app-form-field select,#appModal .app-form-field textarea{min-width:0;height:38px;padding:0 10px;border-color:var(--border);border-radius:9px;background:var(--chip-bg)}
+#appModal .app-form-field input:hover,#appModal .app-form-field select:hover,#appModal .app-form-field textarea:hover{border-color:#aebcd0;background:var(--surface)}
+#appModal .app-form-field input:focus,#appModal .app-form-field select:focus,#appModal .app-form-field textarea:focus{background:var(--surface)}
+#appModal .app-form-field textarea{height:64px;padding-top:8px;line-height:1.45}
+#appModal .app-form-field .app-notes-control{height:108px;min-height:108px}
+.app-notes-companion{padding-top:20px}
+.app-input-group{display:flex;min-width:0}
+#appModal .app-input-group select{border-radius:9px 0 0 9px}
+#appModal .app-inline-action{flex:0 0 auto;height:38px;padding:0 10px;border:1px solid var(--border);border-left:0;border-radius:0 9px 9px 0;background:var(--hover);color:var(--text-light);font-size:12px;font-weight:700}
+#appModal .app-inline-action:hover{background:var(--tab-active-bg);color:var(--primary)}
+.app-status-wrap{position:relative}
+.app-status-wrap::before{content:'';position:absolute;z-index:1;left:10px;top:50%;width:7px;height:7px;border-radius:50%;background:#168b86;transform:translateY(-50%);box-shadow:0 0 0 3px rgba(22,139,134,.12);pointer-events:none}
+#appModal .app-status-wrap select{padding-left:27px;font-weight:700}
+#appModal .app-form-field .schedule-input{height:38px;border-radius:9px;background:var(--chip-bg)}
+#appModal .app-form-field .schedule-input input{height:36px;background:transparent}
+#appModal .app-form-field .schedule-prefix{font-size:11.5px;font-weight:800}
+#appModal .app-form-field .chip-row{flex-wrap:nowrap;overflow-x:auto;margin-top:7px;padding-bottom:1px;scrollbar-width:none}
+#appModal .app-form-field .chip-row::-webkit-scrollbar{display:none}
+#appModal .app-form-field .chip-btn{flex:0 0 auto;padding:5px 9px;font-size:11px}
+.app-link-control{position:relative}
+.app-link-control svg{position:absolute;z-index:1;left:10px;top:50%;width:14px;height:14px;color:var(--text-light);transform:translateY(-50%);pointer-events:none}
+#appModal .app-link-control input{padding-left:31px}
+#appModal #fileArea{min-height:38px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:5px 8px 5px 10px;border:1px dashed #b7c5d7;border-radius:9px;background:var(--chip-bg);font-size:11px}
+#appModal #fileArea .muted-text{margin:0!important;font-size:11px}
+#appModal #fileArea .file-info{margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#appModal #fileArea .file-actions{flex:0 0 auto}
+#appModal #fileArea .btn{padding:4px 8px;font-size:11px}
+#appModal .app-contact-section{margin:0;padding:0;border:0}
+#appModal .app-contact-section .contact-header{min-height:42px;margin:0;padding:8px 10px;border:1px solid var(--border);border-radius:9px;background:var(--chip-bg)}
+#appModal .app-contact-section .contact-header h3{font-size:11.5px}
+#appModal .app-contact-section #contactList:not(:empty){margin-top:6px}
+#appModal .app-contact-section .contact-empty{padding:0 10px;font-size:10.5px}
+
+@media (max-width:900px){
+  #appModal .modal-body{padding:15px 17px 20px}
+  .app-compact-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .app-c2,.app-c3{grid-column:span 3}
+  .app-c4,.app-c5,.app-c6,.app-c7,.app-c8{grid-column:span 6}
+  .app-c12{grid-column:1/-1}
+  .app-notes-companion{padding-top:0}
+}
+@media (max-width:620px){
+  #appModal .modal-body{padding:12px}
+  .app-form-flow{gap:10px}
+  .app-form-flow::before,.app-section-rail{display:none}
+  .app-form-section{display:block}
+  .app-section-panel{padding:12px}
+  .app-compact-grid{grid-template-columns:1fr}
+  .app-form-field,.app-c2,.app-c3,.app-c4,.app-c5,.app-c6,.app-c7,.app-c8,.app-c12{grid-column:1}
+}
 
 /* =========================================================
    筛选区与列表工具栏
@@ -153,7 +240,14 @@ textarea{resize:vertical;min-height:60px}
 /* =========================================================
    投递记录卡片
    ========================================================= */
-.app-card{margin-bottom:12px;transition:box-shadow .2s,transform .2s,border-color .2s}
+/* 列表网格：一行三列铺满全屏（宽屏 3 列 → 中屏 2 列 → 窄屏 1 列） */
+#appList,#recycleList{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
+#appList .app-card,#recycleList .app-card{margin-bottom:0;display:flex;flex-direction:column;height:100%}
+#appList .app-card .app-card-bottom,#recycleList .app-card .app-card-bottom{margin-top:auto;padding-top:10px}
+#appList .empty-card,#recycleList .empty-card,#appList .asm-banner{grid-column:1/-1}
+@media (max-width:1500px){#appList,#recycleList{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:820px){#appList,#recycleList{grid-template-columns:1fr}}
+.app-card{transition:box-shadow .2s,transform .2s,border-color .2s}
 .app-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);border-color:var(--primary-soft)}
 .app-card-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .app-logo{width:32px;height:32px;border-radius:9px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;box-shadow:0 2px 6px rgba(15,23,42,.18);user-select:none}
@@ -163,14 +257,14 @@ textarea{resize:vertical;min-height:60px}
 .app-title .company{font-weight:700;color:var(--text);letter-spacing:.2px}
 .app-title .position{font-weight:500;color:var(--text-light);font-size:13.5px}
 .sep{color:var(--text-light);margin:0 1px}
-.app-actions{display:flex;gap:6px;flex-shrink:0}
+.app-actions{display:flex;gap:6px;flex-shrink:0;margin-left:auto}
 .app-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;color:var(--text-light);font-size:12.5px}
 .app-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
 .tag{background:var(--tag-bg);color:var(--tag-color);border-radius:999px;padding:1px 9px;font-size:12px}
 .app-card-bottom{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .app-link{color:var(--primary);text-decoration:none;font-size:12.5px}
 .app-link:hover{text-decoration:underline}
-/* 网申截止日期高亮：过期红 / 临近黄 / 普通蓝 */
+/* 任务截止时间高亮：过期红 / 临近黄 / 普通蓝 */
 .dl-chip{font-size:12px;border-radius:6px;padding:2px 8px;display:inline-block;line-height:1.5}
 .dl-overdue{background:#fee2e2;color:#b91c1c;font-weight:600}
 .dl-soon{background:#fef3c7;color:#b45309;font-weight:600}
@@ -341,7 +435,7 @@ textarea{resize:vertical;min-height:60px}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-bar)}
 .stat-value{font-size:27px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
 .stat-label{font-size:12.5px;color:var(--text-light);margin-top:4px}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:14px}
 .stats-grid .card h3{font-size:14px;margin-bottom:12px}
 /* 纯 CSS 彩色条形图 */
 .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
@@ -363,7 +457,7 @@ canvas{display:block;width:100%}
 /* =========================================================
    数据管理
    ========================================================= */
-.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.data-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px}
 .data-grid .card h3{font-size:14px;margin-bottom:8px}
 .data-grid .card p{margin-bottom:12px}
 .storage-bar{height:10px;background:var(--track-bg);border-radius:6px;overflow:hidden;margin:8px 0}
@@ -593,9 +687,8 @@ canvas{display:block;width:100%}
         <input id="searchInput" type="text" class="fld" placeholder="🔍 搜索公司或职位…">
         <select id="filterStatus" class="fld">
           <option value="">全部状态</option>
-          <option>已投递</option><option>简历被查看</option><option>初筛通过</option>
-          <option>面试中</option><option>二面</option><option>终面</option>
-          <option>Offer</option><option>已拒绝</option><option>已入职</option>
+          <option>已投递</option><option>初筛通过</option><option>AI面试</option>
+          <option>一轮面试</option><option>二轮面试</option><option>Offer</option><option>已拒绝</option>
         </select>
         <select id="filterChannel" class="fld">
           <option value="">全部渠道</option>
@@ -733,7 +826,7 @@ canvas{display:block;width:100%}
       </div>
       <div class="card">
         <h3>📥 导入 Excel / CSV</h3>
-        <p class="muted-text">直接选择你电脑里的 <b>.xlsx / .xls / .csv</b> 文件即可导入（Excel 无需先转 CSV）；表头支持「公司名称 / 职位名称 / 工作地点 / 薪资范围 / 招聘渠道 / 投递日期 / 当前状态 / 下次跟进日期 / 面试时间 / 简历版本 / 标签 / 职位链接 / 测评链接 / 测评状态 / 备注」等中文列。必填仅「公司名称 + 职位名称」，其余为空也行（测评状态缺省按「未测评」处理）。支持合并（按公司+职位去重）或覆盖两种模式，导入后渠道、状态会与系统选项自动匹配。</p>
+        <p class="muted-text">直接选择你电脑里的 <b>.xlsx / .xls / .csv</b> 文件即可导入（Excel 无需先转 CSV）；表头支持「公司名称 / 职位名称 / 工作地点 / 薪资范围 / 招聘渠道 / 投递日期 / 当前状态 / 下次跟进日期 / 面试时间 / 简历版本 / 标签 / 职位链接 / 测评链接 / 测评状态 / 测评截止时间 / 笔试链接 / 笔试状态 / 笔试截止时间 / 备注 / 备注补充」等中文列。必填仅「公司名称 + 职位名称」，其余为空也行。支持合并（按公司+职位去重）或覆盖两种模式，导入后渠道、状态会与系统选项自动匹配。</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button id="importCsvPickBtn" class="btn btn-secondary">选择 Excel / CSV 文件</button>
           <button id="downloadTemplateBtn" class="btn btn-ghost">⬇ 下载导入模板</button>
@@ -821,88 +914,116 @@ canvas{display:block;width:100%}
       <button class="modal-close" data-close="appModal">✕</button>
     </div>
     <div class="modal-body">
-      <div class="form-grid">
-        <div class="form-field"><label>公司名称 <span class="req">*</span></label><input id="fCompany" type="text" placeholder="如：字节跳动"></div>
-        <div class="form-field"><label>职位名称 <span class="req">*</span></label><input id="fPosition" type="text" placeholder="如：前端开发工程师"></div>
-        <div class="form-field"><label>工作地点</label><input id="fLocation" type="text" placeholder="如：北京"></div>
-        <div class="form-field"><label>薪资范围</label><input id="fSalary" type="text" placeholder="如：20-35K·15薪"></div>
-        <div class="form-field"><label>招聘渠道</label>
-          <div style="display:flex;gap:8px;align-items:center">
-            <select id="fChannel" style="flex:1"></select>
-            <button type="button" id="addChannelBtn" class="btn btn-ghost btn-sm" title="新增自定义渠道（输过即记住）">＋ 自定义</button>
+      <div class="app-form-flow">
+        <section class="app-form-section" aria-label="岗位、投递与进展">
+          <div class="app-section-rail"><div class="app-section-dot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V7l8-4 8 4v13M8 20v-4h8v4M8 9h.01M12 9h.01M16 9h.01M8 12h.01M12 12h.01M16 12h.01"/></svg>
+          </div></div>
+          <div class="app-section-panel">
+            <div class="app-compact-grid">
+              <div class="form-field app-form-field app-c4"><label for="fCompany">公司名称 <span class="req">*</span></label><input id="fCompany" type="text" placeholder="如：字节跳动"></div>
+              <div class="form-field app-form-field app-c4"><label for="fPosition">职位名称 <span class="req">*</span></label><input id="fPosition" type="text" placeholder="如：前端开发工程师"></div>
+              <div class="form-field app-form-field app-c2"><label for="fLocation">工作地点</label><input id="fLocation" type="text" placeholder="如：北京"></div>
+              <div class="form-field app-form-field app-c2"><label for="fSalary">薪资范围</label><input id="fSalary" type="text" placeholder="如：20-35K·15薪"></div>
+
+              <div class="form-field app-form-field app-c6"><label for="fChannel">招聘渠道</label>
+                <div class="app-input-group">
+                  <select id="fChannel"></select>
+                  <button type="button" id="addChannelBtn" class="app-inline-action" title="新增自定义渠道（输过即记住）">＋ 自定义</button>
+                </div>
+              </div>
+              <div class="form-field app-form-field app-c6"><label for="fApplyDate">投递日期 <span class="req">*</span></label><input type="date" id="fApplyDate"></div>
+
+              <div class="form-field app-form-field app-c6"><label for="fStatus">当前状态</label>
+                <div class="app-status-wrap"><select id="fStatus">
+                  <option>已投递</option><option>初筛通过</option><option>AI面试</option>
+                  <option>一轮面试</option><option>二轮面试</option><option>Offer</option><option>已拒绝</option>
+                </select></div>
+              </div>
+              <div class="form-field app-form-field app-c6" id="scheduleField">
+                <label for="fFollowUpDate" id="scheduleFieldLabel">下次跟进日期</label>
+                <input type="date" id="fFollowUpDate">
+                <div class="schedule-input hidden" id="interviewScheduleControl">
+                  <span class="schedule-prefix" id="interviewSchedulePrefix"></span>
+                  <input type="datetime-local" id="fInterviewDate" aria-label="面试日期和时间" disabled>
+                </div>
+              </div>
+
+              <div class="form-field app-form-field app-c12"><label for="fFollowUpReason">跟进原因</label>
+                <input id="fFollowUpReason" type="text" list="followUpReasonList" placeholder="等待笔试结果 / 催推进度 / 自定义…">
+                <div class="chip-row" id="followUpReasonChips">
+                  <button type="button" class="chip-btn" data-reason="等待笔试结果">等待笔试结果</button>
+                  <button type="button" class="chip-btn" data-reason="等待面试通知">等待面试通知</button>
+                  <button type="button" class="chip-btn" data-reason="等待HR回复">等待HR回复</button>
+                  <button type="button" class="chip-btn" data-reason="等待Offer">等待Offer</button>
+                  <button type="button" class="chip-btn" data-reason="追问投递进度">追问投递进度</button>
+                  <button type="button" class="chip-btn" data-reason="确认面试安排">确认面试安排</button>
+                  <button type="button" class="chip-btn" data-reason="礼貌性跟进/感谢">礼貌性跟进/感谢</button>
+                  <button type="button" class="chip-btn" data-reason="补充材料">补充材料</button>
+                  <button type="button" class="chip-btn" data-reason="催推进度">催推进度</button>
+                  <button type="button" class="chip-btn" data-reason="电话未接通需再约">电话未接通需再约</button>
+                </div>
+                <datalist id="followUpReasonList">
+                  <option value="等待笔试结果"></option><option value="等待面试通知"></option>
+                  <option value="等待HR回复"></option><option value="等待Offer"></option>
+                  <option value="追问投递进度"></option><option value="确认面试安排"></option>
+                  <option value="礼貌性跟进/感谢"></option><option value="补充材料"></option>
+                  <option value="催推进度"></option><option value="电话未接通需再约"></option>
+                </datalist>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-field"><label>投递日期 <span class="req">*</span></label><input type="date" id="fApplyDate"></div>
-        <div class="form-field"><label>当前状态</label>
-          <select id="fStatus">
-            <option>已投递</option><option>简历被查看</option><option>初筛通过</option>
-            <option>面试中</option><option>二面</option><option>终面</option>
-            <option>Offer</option><option>已拒绝</option><option>已入职</option>
-          </select>
-        </div>
-        <div class="form-field"><label>下次跟进日期</label><input type="date" id="fFollowUpDate"></div>
-        <div class="form-field field-full"><label>跟进原因（填写下次跟进日期时建议一并填写）</label>
-          <input id="fFollowUpReason" type="text" list="followUpReasonList" placeholder="如：等待笔试结果 / 催推进度 / 自定义…">
-          <div class="chip-row" id="followUpReasonChips">
-            <button type="button" class="chip-btn" data-reason="等待笔试结果">等待笔试结果</button>
-            <button type="button" class="chip-btn" data-reason="等待面试通知">等待面试通知</button>
-            <button type="button" class="chip-btn" data-reason="等待HR回复">等待HR回复</button>
-            <button type="button" class="chip-btn" data-reason="等待Offer">等待Offer</button>
-            <button type="button" class="chip-btn" data-reason="追问投递进度">追问投递进度</button>
-            <button type="button" class="chip-btn" data-reason="确认面试安排">确认面试安排</button>
-            <button type="button" class="chip-btn" data-reason="礼貌性跟进/感谢">礼貌性跟进/感谢</button>
-            <button type="button" class="chip-btn" data-reason="补充材料">补充材料</button>
-            <button type="button" class="chip-btn" data-reason="催推进度">催推进度</button>
-            <button type="button" class="chip-btn" data-reason="电话未接通需再约">电话未接通需再约</button>
+        </section>
+
+        <section class="app-form-section" aria-label="测评与笔试">
+          <div class="app-section-rail"><div class="app-section-dot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg>
+          </div></div>
+          <div class="app-section-panel">
+            <div class="app-compact-grid">
+              <div class="form-field app-form-field app-c8"><label for="fJobLink">职位链接</label><div class="app-link-control">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg>
+                <input id="fJobLink" type="text" placeholder="https://职位页面"></div></div>
+              <div class="form-field app-form-field app-c4"><label for="fResumeVersion">简历版本</label>
+                <input id="fResumeVersion" type="text" list="resumeVersionList" placeholder="选择或输入新版本名"><datalist id="resumeVersionList"></datalist>
+              </div>
+
+              <div class="form-field app-form-field app-c6"><label for="fAssessmentLink">测评链接</label><div class="app-link-control">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg>
+                <input id="fAssessmentLink" type="text" placeholder="https://企业测评入口"></div></div>
+              <div class="form-field app-form-field app-c3"><label for="fAssessmentStatus">综合测评状态</label><select id="fAssessmentStatus"><option>未测评</option><option>已测评</option></select></div>
+              <div class="form-field app-form-field app-c3"><label for="fAssessmentDeadline">截止时间</label><input type="datetime-local" id="fAssessmentDeadline"></div>
+
+              <div class="form-field app-form-field app-c6"><label for="fWrittenTestLink">笔试链接</label><div class="app-link-control">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg>
+                <input id="fWrittenTestLink" type="text" placeholder="https://在线笔试系统"></div></div>
+              <div class="form-field app-form-field app-c3"><label for="fWrittenTestStatus">笔试状态</label><select id="fWrittenTestStatus">
+                <option value="待确认">笔试待确认</option><option>无笔试</option><option>未笔试</option><option>已笔试</option>
+              </select></div>
+              <div class="form-field app-form-field app-c3"><label for="fWrittenTestDeadline">截止时间</label><input type="datetime-local" id="fWrittenTestDeadline"></div>
+            </div>
           </div>
-          <datalist id="followUpReasonList">
-            <option value="等待笔试结果"></option><option value="等待面试通知"></option>
-            <option value="等待HR回复"></option><option value="等待Offer"></option>
-            <option value="追问投递进度"></option><option value="确认面试安排"></option>
-            <option value="礼貌性跟进/感谢"></option><option value="补充材料"></option>
-            <option value="催推进度"></option><option value="电话未接通需再约"></option>
-          </datalist>
-        </div>
-        <div class="form-field"><label>网申截止日期</label><input type="date" id="fDeadline"></div>
-        <div class="form-field field-full"><label>职位链接</label><input id="fJobLink" type="text" placeholder="https://…"></div>
-        <div class="form-field"><label>面试时间</label><input type="datetime-local" id="fInterviewDate"></div>
-        <div class="form-field"><label>简历版本</label>
-          <input id="fResumeVersion" type="text" list="resumeVersionList" placeholder="选择或输入新版本名">
-          <datalist id="resumeVersionList"></datalist>
-        </div>
-        <div class="form-field"><label>综合测评状态</label>
-          <select id="fAssessmentStatus">
-            <option>未测评</option><option>已测评</option>
-          </select>
-        </div>
-        <div class="form-field field-full"><label>测评链接</label><input id="fAssessmentLink" type="text" placeholder="企业发来的综合测评 / 测评系统链接 https://…"></div>
-        <div class="form-field"><label>是否需要笔试</label>
-          <select id="fWrittenTestRequired">
-            <option value="unknown">待确认</option>
-            <option value="yes">需要笔试</option>
-            <option value="no">仅测评（无需笔试）</option>
-          </select>
-        </div>
-        <div class="form-field"><label>笔试状态</label>
-          <select id="fWrittenTestStatus">
-            <option>未笔试</option><option>已笔试</option>
-          </select>
-        </div>
-        <div class="form-field field-full"><label>笔试链接</label><input id="fWrittenTestLink" type="text" placeholder="企业发来的笔试 / 在线笔试系统链接 https://…"></div>
-        <div class="form-field field-full"><label>标签（用逗号分隔）</label><input id="fTags" type="text" placeholder="如：前端, 大厂, 远程"></div>
-        <div class="form-field field-full"><label>简历附件</label>
-          <div id="fileArea"></div>
-          <input type="file" id="appFileInput" accept=".pdf,.doc,.docx" class="hidden-input">
-        </div>
-        <div class="form-field field-full"><label>备注</label><textarea id="fNotes" rows="3" placeholder="岗位 JD 要点、内推人、注意事项等"></textarea></div>
-      </div>
-      <!-- 联系记录子区域 -->
-      <div class="contact-section">
-        <div class="contact-header">
-          <h3>📞 联系记录</h3>
-          <button type="button" class="btn btn-secondary btn-sm" id="addContactBtn">＋ 添加联系记录</button>
-        </div>
-        <div id="contactList"></div>
+        </section>
+
+        <section class="app-form-section" aria-label="资料与备注">
+          <div class="app-section-rail"><div class="app-section-dot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H10l2 2h5.5A2.5 2.5 0 0 1 20 9.5v7A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/></svg>
+          </div></div>
+          <div class="app-section-panel">
+            <div class="app-compact-grid">
+              <div class="form-field app-form-field app-c7"><label for="fTags">标签</label><input id="fTags" type="text" placeholder="如：前端, 大厂, 远程（用逗号分隔）"></div>
+              <div class="form-field app-form-field app-c5"><label>简历附件</label><div id="fileArea"></div><input type="file" id="appFileInput" accept=".pdf,.doc,.docx" class="hidden-input"></div>
+              <div class="form-field app-form-field app-c6"><label for="fNotes">备注</label><textarea class="app-notes-control" id="fNotes" rows="5" placeholder="岗位 JD 要点、内推人、注意事项等"></textarea></div>
+              <div class="form-field app-form-field app-c6 app-notes-companion"><textarea class="app-notes-control" id="fNotesExtra" rows="5" aria-label="备注补充" placeholder="继续填写备注…"></textarea></div>
+              <div class="app-form-field app-c12">
+                <div class="contact-section app-contact-section">
+                  <div class="contact-header"><h3>📞 联系记录</h3><button type="button" class="btn btn-secondary btn-sm" id="addContactBtn">＋ 添加联系记录</button></div>
+                  <div id="contactList"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
     <div class="modal-footer">
@@ -993,18 +1114,20 @@ canvas{display:block;width:100%}
   </div>
 </div>
 
-<!-- ===================== 弹窗：选择是否需要笔试 ===================== -->
+<!-- ===================== 弹窗：更新笔试状态 ===================== -->
 <div class="modal-overlay hidden" id="wtReqModal">
   <div class="modal modal-sm">
     <div class="modal-header">
-      <h2>这家公司需要笔试吗？</h2>
+      <h2>更新笔试状态</h2>
       <button class="modal-close" data-close="wtReqModal">✕</button>
     </div>
     <div class="modal-body">
       <div id="wtReqSubtitle" class="muted-text" style="margin-bottom:10px"></div>
       <div class="status-options">
-        <button type="button" class="status-opt" data-wt-req="yes">✍️ 需要笔试<span class="muted-text" style="margin-left:auto;font-size:12px">纳入笔试提醒</span></button>
-        <button type="button" class="status-opt" data-wt-req="no">➖ 仅测评（无需笔试）<span class="muted-text" style="margin-left:auto;font-size:12px">不再显示与提醒</span></button>
+        <button type="button" class="status-opt" data-wt-state="待确认">❓ 待确认</button>
+        <button type="button" class="status-opt" data-wt-state="无笔试">➖ 无笔试</button>
+        <button type="button" class="status-opt" data-wt-state="未笔试">✍️ 未笔试</button>
+        <button type="button" class="status-opt" data-wt-state="已笔试">✅ 已笔试</button>
       </div>
     </div>
   </div>
@@ -1163,16 +1286,17 @@ const KEY_SETTINGS = 'settings';          // 应用设置（上次 Tab、筛选�
 const KEY_CUSTOM_CHANNELS = 'custom_channels'; // 用户自定义的招聘渠道（输过即记住）
 
 // 状态列表（固定顺序，同时也是“按状态排序”时的自定义顺序，可自行调整）
-const STATUSES = ['已投递','简历被查看','初筛通过','面试中','二面','终面','Offer','已拒绝','已入职'];
+const STATUSES = ['已投递','初筛通过','AI面试','一轮面试','二轮面试','Offer','已拒绝'];
 
 // 综合测评状态（默认“未测评”，投递后由使用者自行改为“已测评”以便筛选 / 提醒）
 const ASSESSMENT_STATUSES = ['未测评','已测评'];
 const ASSESSMENT_COLORS = {'未测评':'#f97316','已测评':'#22c55e'};
+const WRITTEN_TEST_STATUSES = ['待确认','无笔试','未笔试','已笔试'];
 // 各状态对应的显示颜色
 const STATUS_COLORS = {
-  '已投递':'#6b7280', '简历被查看':'#3b82f6', '初筛通过':'#06b6d4',
-  '面试中':'#f97316', '二面':'#ea580c', '终面':'#8b5cf6',
-  'Offer':'#22c55e', '已拒绝':'#ef4444', '已入职':'#eab308'
+  '已投递':'#6b7280', '初筛通过':'#06b6d4', 'AI面试':'#3b82f6',
+  '一轮面试':'#f97316', '二轮面试':'#8b5cf6',
+  'Offer':'#22c55e', '已拒绝':'#ef4444'
 };
 // 招聘渠道：尽量覆盖市面上常见平台；导入时渠道取值宽松，不在列表中的也会原样保留
 const CHANNELS = [
@@ -1182,7 +1306,7 @@ const CHANNELS = [
 ];
 const CONTACT_TYPES = ['电话','邮件','微信','面试','其他'];               // 联系类型
 // 统计“面试转化率”时视为已进入面试流程的状态
-const INTERVIEW_STATUSES = ['面试中','二面','终面','Offer','已入职'];
+const INTERVIEW_STATUSES = ['AI面试','一轮面试','二轮面试','Offer'];
 
 // 附件与存储限制
 const ALLOWED_FILE_EXT = ['pdf','doc','docx'];
@@ -1255,16 +1379,24 @@ function nowDateTimeStr(){
 // 显示格式：2025年1月1日
 function fmtDateCN(iso){
   if(!iso) return '';
-  const parts = String(iso).split('-').map(Number);
+  const parts = String(iso).slice(0, 10).split('-').map(Number);
   if(parts.length !== 3 || !parts[0]) return iso;
   return parts[0] + '年' + parts[1] + '月' + parts[2] + '日';
+}
+
+// 日期时间显示：兼容 datetime-local 的 T 和本应用存储的空格分隔
+function fmtDateTimeCN(iso){
+  if(!iso) return '';
+  const s = String(iso);
+  const time = s.length >= 16 ? s.slice(11, 16) : '';
+  return fmtDateCN(s) + (time ? ' ' + time : '');
 }
 
 // 计算目标日期距今天的天数（负数 = 已过期）
 function daysUntil(iso){
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const p = String(iso).split('-').map(Number);
+  const p = String(iso).slice(0, 10).split('-').map(Number);
   const target = new Date(p[0], p[1]-1, p[2]);
   return Math.round((target - today) / 86400000);
 }
@@ -1347,8 +1479,14 @@ function loadAll(){
       monitors: Array.isArray(s.monitors) && s.monitors.length ? s.monitors : defaultMonitors()
     };
   }catch(e){ settings = {lastTab:'list', filters:{...DEFAULT_FILTERS}, theme:'light', proxyTemplate:'', monitors:defaultMonitors()}; }
-  // 数据兜底：确保 contactRecords 存在
-  applications.forEach(a => { if(!Array.isArray(a.contactRecords)) a.contactRecords = []; });
+  // 数据兜底：补齐新字段，并将旧版分开的笔试字段映射到统一状态
+  applications.forEach(a => {
+    if(!Array.isArray(a.contactRecords)) a.contactRecords = [];
+    a.notesExtra = a.notesExtra || '';
+    a.assessmentDeadline = a.assessmentDeadline || '';
+    a.writtenTestDeadline = a.writtenTestDeadline || '';
+    setWrittenTestStateFields(a, writtenTestStateOf(a));
+  });
   try{
     customChannels = JSON.parse(localStorage.getItem(KEY_CUSTOM_CHANNELS) || '[]');
     if(!Array.isArray(customChannels)) customChannels = [];
@@ -1552,21 +1690,43 @@ function assessmentChipHtml(a){
 function assessmentLinkHtml(a){
   return a.assessmentLink ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '';
 }
-// 笔试状态徽章（记录卡片通用）：「仅测评（无需笔试）」不显示，其余四种一律显示
-//   未笔试 + 需要笔试 → ✍️ 待笔试（橙）｜未笔试 + 待确认 → ❓ 笔试待确认（蓝）｜已笔试 → ✅ 已笔试（绿）
-// 点击可直接切换笔试状态（列表 / 跟进列表均已绑定 data-action="writtenTest"）
+
+// 统一笔试状态，同时兼容旧数据中分开存储的 writtenTestRequired + writtenTestStatus
+function writtenTestStateOf(a){
+  const status = a && a.writtenTestStatus;
+  if(status === '已笔试' || status === '无笔试') return status;
+  if(status === '待确认'){
+    if(a.writtenTestRequired === 'no') return '无笔试';
+    if(a.writtenTestRequired === 'yes') return '未笔试';
+    return '待确认';
+  }
+  if(status === '未笔试'){
+    if(a.writtenTestRequired === 'no') return '无笔试';
+    if(!a.writtenTestRequired || a.writtenTestRequired === 'unknown') return '待确认';
+    return '未笔试';
+  }
+  if(a && a.writtenTestRequired === 'no') return '无笔试';
+  if(a && a.writtenTestRequired === 'yes') return '未笔试';
+  return '待确认';
+}
+function writtenTestRequiredForState(state){
+  if(state === '无笔试') return 'no';
+  if(state === '未笔试' || state === '已笔试') return 'yes';
+  return 'unknown';
+}
+function setWrittenTestStateFields(app, state){
+  const next = WRITTEN_TEST_STATUSES.includes(state) ? state : '待确认';
+  app.writtenTestStatus = next;
+  app.writtenTestRequired = writtenTestRequiredForState(next); // 保留旧字段，便于兼容旧备份
+}
+
+// 笔试状态徽章：表单的四种选项与主列表一一对应
 function writtenTestChipHtml(a){
-  const wr = a.writtenTestRequired;
-  if(wr === 'no') return '';            // 仅测评（无需笔试）：完全不显示笔试状态
-  const wt = a.writtenTestStatus || '未笔试';
-  if(wt === '已笔试'){
-    return '<button type="button" class="badge asm-chip asm-done" data-action="writtenTest" title="点击切换回「待笔试」">✅ 已笔试</button>';
-  }
-  if(wr === 'yes'){
-    return '<button type="button" class="badge asm-chip asm-pending" data-action="writtenTest" title="点击标记为「已笔试」">✍️ 待笔试</button>';
-  }
-  // unknown（待确认）：点击弹出选择器，让用户确认「需要笔试」还是「仅测评无需笔试」
-  return '<button type="button" class="badge asm-chip asm-waiting" data-action="wtRequired" title="尚未确认是否需要笔试，点击选择「需要笔试」或「仅测评（无需笔试）」">❓ 笔试待确认</button>';
+  const state = writtenTestStateOf(a);
+  if(state === '已笔试') return '<button type="button" class="badge asm-chip asm-done" data-action="wtRequired" title="点击修改笔试状态">✅ 已笔试</button>';
+  if(state === '未笔试') return '<button type="button" class="badge asm-chip asm-pending" data-action="wtRequired" title="点击修改笔试状态">✍️ 未笔试</button>';
+  if(state === '无笔试') return '<button type="button" class="badge asm-chip asm-waiting" data-action="wtRequired" title="点击修改笔试状态">➖ 无笔试</button>';
+  return '<button type="button" class="badge asm-chip asm-waiting" data-action="wtRequired" title="点击修改笔试状态">❓ 待确认</button>';
 }
 
 // 跟进日期高亮提示
@@ -1579,7 +1739,7 @@ function followUpHtml(iso){
   return '<span class="fu-chip ' + cls + '">⏰ 跟进：' + fmtDateCN(iso) + '（' + describeFollowUp(iso) + '）</span>';
 }
 
-// 网申截止日期高亮：过期红、临近(<=3天)黄、正常灰
+// 任务截止时间高亮：过期红、临近(<=3天)黄、正常灰
 function deadlineClass(iso){
   const d = daysUntil(iso);
   if(d < 0) return 'dl-overdue';
@@ -1593,9 +1753,9 @@ function describeDeadline(iso){
   if(d <= 3) return d + ' 天后截止';
   return d + ' 天后截止';
 }
-function deadlineHtml(iso){
+function deadlineHtml(iso, label){
   if(!iso) return '';
-  return '<span class="dl-chip ' + deadlineClass(iso) + '">⏳ 截止：' + fmtDateCN(iso) + '（' + describeDeadline(iso) + '）</span>';
+  return '<span class="dl-chip ' + deadlineClass(iso) + '">⏳ ' + escapeHtml(label || '截止') + '：' + fmtDateTimeCN(iso) + '（' + describeDeadline(iso) + '）</span>';
 }
 
 // 按筛选条件过滤记录
@@ -1628,17 +1788,17 @@ function getFilteredApps(){
       if(!a.nextFollowUpDate) return false;
     }else if(f.quick === 'noInterview'){
       if(a.interviewDate) return false;
-      if(['Offer','已入职','已拒绝','终面','二面','面试中'].includes(a.status)) return false;
+      if(['Offer','已拒绝','二轮面试','一轮面试','AI面试'].includes(a.status)) return false;
     }else if(f.quick === 'stale'){
       if(daysUntil(a.applyDate) > -8) return false;
-      if(['Offer','已入职','已拒绝','终面'].includes(a.status)) return false;
+      if(['Offer','已拒绝','二轮面试'].includes(a.status)) return false;
     }else if(f.quick === 'assess'){
       // 待测评：尚未完成且已收到测评链接（可在列表里直接去测评 / 标记完成）
       if((a.assessmentStatus || '未测评') !== '未测评') return false;
       if(!a.assessmentLink) return false;
     }else if(f.quick === 'written'){
-      // 待笔试：需要笔试且尚未完成（含已收到链接待完成、以及待收链接两类）
-      if((a.writtenTestStatus || '未笔试') !== '未笔试') return false;
+      // 待笔试：统一状态明确为「未笔试」
+      if(writtenTestStateOf(a) !== '未笔试') return false;
       if(!needsWrittenTest(a)) return false;
     }
     return true;
@@ -1693,12 +1853,14 @@ function appCardHtml(a){
     +   (a.resumeVersion ? '<span>📄 ' + escapeHtml(a.resumeVersion) + '</span>' : '')
     +   (a.contactRecords && a.contactRecords.length ? '<span>💬 ' + a.contactRecords.length + ' 条联系</span>' : '')
     +   (a.interviewDate ? '<span>🗓️ 面试：' + escapeHtml(a.interviewDate) + '</span>' : '')
-    +   (a.deadline ? deadlineHtml(a.deadline) : '')
     + '</div>'
     + (tags ? '<div class="app-tags">' + tags + '</div>' : '')
     + '<div class="app-card-bottom">'
     +   (a.nextFollowUpDate ? followUpHtml(a.nextFollowUpDate) : '')
-    +   link + assessmentLinkHtml(a) + assessmentChipHtml(a) + resumeFile
+    +   link + assessmentLinkHtml(a) + assessmentChipHtml(a)
+    +   (a.assessmentDeadline ? deadlineHtml(a.assessmentDeadline, '测评截止') : '')
+    +   (a.writtenTestDeadline && writtenTestStateOf(a) !== '无笔试' ? deadlineHtml(a.writtenTestDeadline, '笔试截止') : '')
+    +   resumeFile
     + '</div>'
     + '</div>';
 }
@@ -1830,12 +1992,13 @@ async function emptyRecycle(){
 }
 
 // 跟进提醒 Tab 上的角标：今天到期或已过期的数量
-// 待处理提醒条数（跟进到期 / 网申临近或过期 / 已收到链接的待测评），用于 Tab 角标
+// 待处理提醒条数（跟进到期 / 测评或笔试临近 / 已收到链接的待测评）
 function pendingReminderCount(){
   const today = todayStr();
   return applications.filter(a => !a.deleted && (
        (a.nextFollowUpDate && a.nextFollowUpDate <= today)
-    || (a.deadline && daysUntil(a.deadline) <= 3)
+    || ((a.assessmentStatus || '未测评') === '未测评' && a.assessmentDeadline && daysUntil(a.assessmentDeadline) <= 3)
+    || (writtenTestStateOf(a) === '未笔试' && a.writtenTestDeadline && daysUntil(a.writtenTestDeadline) <= 3)
     || ((a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink)
   )).length;
 }
@@ -1956,43 +2119,43 @@ function toggleAssessment(id){
   toast(app.assessmentStatus === '已测评' ? '已标记为「已测评」' : '已改回「待测评」', 'success');
 }
 
-// 切换某条记录的「笔试」状态（未笔试 <-> 已笔试），与综合测评状态平行
+// 快捷切换「未笔试 / 已笔试」（保留给旧交互调用）
 function toggleWrittenTest(id){
   const app = applications.find(a => a.id === id);
   if(!app) return;
-  app.writtenTestStatus = (app.writtenTestStatus === '已笔试') ? '未笔试' : '已笔试';
+  const next = writtenTestStateOf(app) === '已笔试' ? '未笔试' : '已笔试';
+  setWrittenTestStateFields(app, next);
   app.updatedAt = nowDateTimeStr();
   commitApps();
   renderList();
-  toast(app.writtenTestStatus === '已笔试' ? '已标记为「已笔试」' : '已改回「待笔试」', 'success');
+  toast(next === '已笔试' ? '已标记为「已笔试」' : '已改回「未笔试」', 'success');
 }
 
-// 「笔试待确认」徽章点击：弹窗让用户选择「需要笔试」或「仅测评（无需笔试）」
+// 列表徽章点击：打开四种统一笔试状态选择器
 let wtReqAppId = null;
 function openWtReqPicker(id){
   const app = applications.find(a => a.id === id);
   if(!app) return;
   wtReqAppId = id;
   $('wtReqSubtitle').textContent = app.company + ' · ' + app.position;
+  document.querySelectorAll('#wtReqModal [data-wt-state]').forEach(btn => {
+    btn.classList.toggle('current', btn.dataset.wtState === writtenTestStateOf(app));
+  });
   showModal('wtReqModal');
 }
-function chooseWtRequired(val){
+function chooseWtRequired(state){
   const app = applications.find(a => a.id === wtReqAppId);
   if(!app) return;
-  app.writtenTestRequired = val;
+  setWrittenTestStateFields(app, state);
   app.updatedAt = nowDateTimeStr();
   commitApps();
   hideModal('wtReqModal');
-  if(val === 'no'){
-    // 明确无需笔试后不再有笔试提醒，角标同步刷新
-    toast('已标记为「仅测评（无需笔试）」，不再显示笔试状态与提醒', 'success');
-    updateFollowBadge();
-  }else{
-    toast('已标记为「需要笔试」，记得留意笔试链接', 'success');
-  }
+  toast('笔试状态已更新为「' + writtenTestStateOf(app) + '」', 'success');
+  updateFollowBadge();
   // 按当前所在页刷新对应列表
   if(currentTab === 'followup'){ renderFollowUps(); renderAssessmentReminders(); }
   else { renderList(); renderAssessmentBanner(); }
+  if(!$('detailModal').classList.contains('hidden')) openDetail(app.id);
 }
 
 // 一次性把「已收到链接的待测评」标记为「已测评」（未收到链接的不标记，避免误标）
@@ -2080,12 +2243,12 @@ function applyBatchStatus(status){
 function exportCsv(){
   const headers = [
     ['公司名称','company'],['职位名称','position'],['工作地点','location'],['薪资范围','salary'],
-    ['招聘渠道','channel'],['投递日期','applyDate'],['当前状态','status'],['下次跟进日期','nextFollowUpDate'],['网申截止日期','deadline'],
+    ['招聘渠道','channel'],['投递日期','applyDate'],['当前状态','status'],['下次跟进日期','nextFollowUpDate'],
     ['面试时间','interviewDate'],['简历版本','resumeVersion'],['标签','tags'],['职位链接','jobLink'],
-    ['测评链接','assessmentLink'],['测评状态','assessmentStatus'],
-    ['笔试链接','writtenTestLink'],['笔试状态','writtenTestStatus'],['是否需要笔试','writtenTestRequired'],
+    ['测评链接','assessmentLink'],['测评状态','assessmentStatus'],['测评截止时间','assessmentDeadline'],
+    ['笔试链接','writtenTestLink'],['笔试状态','writtenTestStatus'],['笔试截止时间','writtenTestDeadline'],
     ['跟进原因','followUpReason'],
-    ['备注','notes'],['星标','starred'],['联系记录数','contactRecords']
+    ['备注','notes'],['备注补充','notesExtra'],['星标','starred'],['联系记录数','contactRecords']
   ];
   const esc = v => {
     const s = v == null ? '' : String(v);
@@ -2167,6 +2330,29 @@ function addCustomChannelFromInput(){
 /* =========================================================
  * 八、添加/编辑投递记录（模态框）
  * ========================================================= */
+// 当前状态决定右侧日期框的用途；面试状态使用日期时间，其他状态使用普通跟进日期
+function scheduleFieldConfig(status){
+  const prefixes = {
+    'AI面试':'截止日期：',
+    '一轮面试':'日期：',
+    '二轮面试':'日期：'
+  };
+  return {
+    isInterview: Object.prototype.hasOwnProperty.call(prefixes, status),
+    prefix: prefixes[status] || ''
+  };
+}
+
+function updateScheduleField(){
+  const config = scheduleFieldConfig($('fStatus').value);
+  $('scheduleFieldLabel').textContent = config.isInterview ? '面试安排' : '下次跟进日期';
+  $('fFollowUpDate').classList.toggle('hidden', config.isInterview);
+  $('fFollowUpDate').disabled = config.isInterview;
+  $('interviewScheduleControl').classList.toggle('hidden', !config.isInterview);
+  $('interviewSchedulePrefix').textContent = config.prefix;
+  $('fInterviewDate').disabled = !config.isInterview;
+}
+
 // 打开弹窗：传入 id 为编辑，否则为新建
 function openAppModal(id){
   editingAppId = id || null;
@@ -2176,24 +2362,26 @@ function openAppModal(id){
   $('fPosition').value = app ? app.position : '';
   $('fLocation').value = app ? (app.location || '') : '';
   $('fSalary').value = app ? (app.salary || '') : '';
-  $('fChannel').value = app ? (app.channel || 'BOSS直聘') : 'BOSS直聘';
+  $('fChannel').value = app ? (app.channel || '校招/双选会') : '校招/双选会';
   $('fApplyDate').value = app ? app.applyDate : todayStr();
   $('fJobLink').value = app ? (app.jobLink || '') : '';
   $('fStatus').value = app ? app.status : '已投递';
   $('fTags').value = app ? (app.tags || '') : '';
   $('fResumeVersion').value = app ? (app.resumeVersion || '') : '';
   $('fNotes').value = app ? (app.notes || '') : '';
+  $('fNotesExtra').value = app ? (app.notesExtra || '') : '';
   $('fFollowUpDate').value = app ? (app.nextFollowUpDate || '') : '';
-  $('fDeadline').value = app ? (app.deadline || '') : '';
   $('fAssessmentStatus').value = app ? (app.assessmentStatus || '未测评') : '未测评';
   $('fAssessmentLink').value = app ? (app.assessmentLink || '') : '';
+  $('fAssessmentDeadline').value = app && app.assessmentDeadline ? app.assessmentDeadline.replace(' ', 'T') : '';
   $('fFollowUpReason').value = app ? (app.followUpReason || '') : '';
-  $('fWrittenTestStatus').value = app ? (app.writtenTestStatus || '未笔试') : '未笔试';
+  $('fWrittenTestStatus').value = app ? writtenTestStateOf(app) : '待确认';
   $('fWrittenTestLink').value = app ? (app.writtenTestLink || '') : '';
-  $('fWrittenTestRequired').value = app ? (app.writtenTestRequired || 'unknown') : 'unknown';
+  $('fWrittenTestDeadline').value = app && app.writtenTestDeadline ? app.writtenTestDeadline.replace(' ', 'T') : '';
   updateReasonChips();
   // datetime-local 控件需要 YYYY-MM-DDTHH:mm 格式，存储格式为空格分隔
   $('fInterviewDate').value = app && app.interviewDate ? app.interviewDate.replace(' ', 'T') : '';
+  updateScheduleField();
   // 简历版本下拉候选来自简历版本库（datalist 同时支持手动输入新名称）
   $('resumeVersionList').innerHTML = resumeVersions.map(r => '<option value="' + escapeHtml(r.name) + '">').join('');
   // 联系记录草稿（保存前不直接改动原数据，取消可放弃修改）
@@ -2232,13 +2420,14 @@ function openDetail(id){
     {label:'⏰ 下次跟进', value:a.nextFollowUpDate ? fmtDateCN(a.nextFollowUpDate) : ''},
     {label:'📌 跟进原因', value:a.followUpReason},
     {label:'📄 简历版本', value:a.resumeVersion},
-    {label:'⏳ 网申截止', value:a.deadline, deadline:true}
+    {label:'⏳ 测评截止', value:a.assessmentDeadline ? fmtDateTimeCN(a.assessmentDeadline) : '', deadlineValue:a.assessmentDeadline},
+    {label:'⏳ 笔试截止', value:a.writtenTestDeadline ? fmtDateTimeCN(a.writtenTestDeadline) : '', deadlineValue:a.writtenTestDeadline}
   ];
   $('dGrid').innerHTML = fields.map(f => {
     const empty = !f.value;
     let valHtml = empty ? '未填写' : escapeHtml(f.value);
-    if(f.deadline && !empty){
-      valHtml += ' <span class="dl-chip ' + deadlineClass(f.value) + '">' + describeDeadline(f.value) + '</span>';
+    if(f.deadlineValue && !empty){
+      valHtml += ' <span class="dl-chip ' + deadlineClass(f.deadlineValue) + '">' + describeDeadline(f.deadlineValue) + '</span>';
     }
     return '<div class="detail-field"><div class="df-label">' + f.label + '</div><div class="df-value' + (empty ? ' empty' : '') + '">' + valHtml + '</div></div>';
   }).join('');
@@ -2253,20 +2442,19 @@ function openDetail(id){
   if(asm === '已测评'){ asmChip = '<span class="badge asm-chip asm-done">✅ 已测评</span>'; asmText = '已完成综合测评'; }
   else if(a.assessmentLink){ asmChip = '<span class="badge asm-chip asm-pending">📝 待测评</span>'; asmText = '企业已发送测评链接，记得按时完成'; }
   else { asmChip = '<span class="badge asm-chip asm-waiting">📨 待收测评</span>'; asmText = '企业尚未发送测评链接，留意邮箱 / 短信'; }
-  const wr = a.writtenTestRequired;
-  const wt = a.writtenTestStatus || '未笔试';
+  const wt = writtenTestStateOf(a);
   let wtChip, wtNote;
-  if(wr === 'no'){
-    wtChip = '<span class="badge asm-chip asm-waiting">➖ 无需笔试</span>';
-    wtNote = '（仅综合测评，无需笔试）';
+  if(wt === '无笔试'){
+    wtChip = '<span class="badge asm-chip asm-waiting">➖ 无笔试</span>';
+    wtNote = '（该岗位无笔试安排）';
   }else if(wt === '已笔试'){
     wtChip = '<span class="badge asm-chip asm-done">✅ 已笔试</span>';
     wtNote = '（已完成笔试）';
-  }else if(wr === 'unknown' && wt !== '已笔试'){
-    wtChip = '<span class="badge asm-chip asm-waiting">❓ 笔试待确认</span>';
-    wtNote = '（尚未确认是否需要笔试，可在列表点击徽章选择）';
+  }else if(wt === '待确认'){
+    wtChip = '<span class="badge asm-chip asm-waiting">❓ 待确认</span>';
+    wtNote = '（尚未确认笔试安排）';
   }else{
-    wtChip = '<span class="badge asm-chip asm-pending">✍️ 待笔试</span>';
+    wtChip = '<span class="badge asm-chip asm-pending">✍️ 未笔试</span>';
     wtNote = a.writtenTestLink ? '（已收到笔试链接，请尽快完成）' : '（暂无笔试链接，留意邮箱）';
   }
   $('dAsm').innerHTML = asmChip
@@ -2281,7 +2469,7 @@ function openDetail(id){
     ? recs.map(r => '<div class="contact-item"><div class="contact-head"><span class="contact-type">' + escapeHtml(r.type || '联系') + '</span><span class="muted-text">' + escapeHtml(r.time || '') + '</span></div><div class="contact-content">' + escapeHtml(r.content || '') + '</div></div>').join('')
     : '<div class="detail-empty">暂无联系记录</div>';
   $('dContactSection').style.display = recs.length ? '' : 'none';
-  const note = (a.notes || '').trim();
+  const note = [a.notes, a.notesExtra].map(v => (v || '').trim()).filter(Boolean).join('\n\n');
   $('dNote').textContent = note || '暂无备注';
   $('dNote').style.fontStyle = note ? 'normal' : 'italic';
   $('dNoteSection').style.display = note ? '' : 'none';
@@ -2332,6 +2520,12 @@ function onAppFileChange(e){
 async function saveAppFromForm(){
   const company = $('fCompany').value.trim();
   const position = $('fPosition').value.trim();
+  const status = $('fStatus').value;
+  const scheduleConfig = scheduleFieldConfig(status);
+  const interviewDateInput = $('fInterviewDate').value;
+  const assessmentDeadlineInput = $('fAssessmentDeadline').value;
+  const writtenTestDeadlineInput = $('fWrittenTestDeadline').value;
+  const writtenTestState = $('fWrittenTestStatus').value;
   // 必填项校验
   if(!company){ toast('请填写公司名称', 'error'); $('fCompany').focus(); return; }
   if(!position){ toast('请填写职位名称', 'error'); $('fPosition').focus(); return; }
@@ -2345,8 +2539,10 @@ async function saveAppFromForm(){
     if(!ok){ toast('职位链接格式不正确（需以 http:// 或 https:// 开头）', 'error'); $('fJobLink').focus(); return; }
   }
   if($('fFollowUpDate').value && !/^\d{4}-\d{2}-\d{2}$/.test($('fFollowUpDate').value)){ toast('跟进日期格式不正确', 'error'); return; }
-  if($('fDeadline').value && !/^\d{4}-\d{2}-\d{2}$/.test($('fDeadline').value)){ toast('网申截止日期格式不正确', 'error'); return; }
-  if($('fInterviewDate').value && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test($('fInterviewDate').value)){ toast('面试时间格式不正确', 'error'); return; }
+  if(interviewDateInput && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(interviewDateInput)){ toast('面试时间格式不正确', 'error'); return; }
+  if(assessmentDeadlineInput && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(assessmentDeadlineInput)){ toast('测评截止时间格式不正确', 'error'); return; }
+  if(writtenTestDeadlineInput && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(writtenTestDeadlineInput)){ toast('笔试截止时间格式不正确', 'error'); return; }
+  if(!WRITTEN_TEST_STATUSES.includes(writtenTestState)){ toast('请选择正确的笔试状态', 'error'); return; }
   // 测评链接校验（选填，填了必须合法）
   const assessmentLink = $('fAssessmentLink').value.trim();
   if(assessmentLink){
@@ -2383,6 +2579,11 @@ async function saveAppFromForm(){
   }catch(err){ toast('文件读取失败', 'error'); return; }
 
   const existing = editingAppId ? applications.find(a => a.id === editingAppId) : null;
+  const storedInterviewInput = existing && existing.interviewDate ? existing.interviewDate.replace(' ', 'T') : '';
+  const interviewScheduleChanged = !existing || existing.status !== status || storedInterviewInput !== interviewDateInput;
+  const nextFollowUpDate = scheduleConfig.isInterview
+    ? (interviewScheduleChanged ? (interviewDateInput ? interviewDateInput.slice(0, 10) : '') : (existing.nextFollowUpDate || ''))
+    : ($('fFollowUpDate').value || '');
   const now = nowDateTimeStr();
   const rec = {
     id: editingAppId || genId(),
@@ -2391,22 +2592,25 @@ async function saveAppFromForm(){
     salary: $('fSalary').value.trim(),
     channel: $('fChannel').value,
     applyDate, jobLink,
-    status: $('fStatus').value,
+    status,
     tags: $('fTags').value.trim(),
     resumeVersion: $('fResumeVersion').value.trim(),
     resumeFileName, resumeFileData,
     notes: $('fNotes').value,
+    notesExtra: $('fNotesExtra').value,
     starred: existing ? (existing.starred || false) : false,
     contactRecords: draftContacts,
-    nextFollowUpDate: $('fFollowUpDate').value || '',
+    nextFollowUpDate,
     followUpReason: $('fFollowUpReason').value.trim(),
-    interviewDate: $('fInterviewDate').value ? $('fInterviewDate').value.replace('T', ' ') : '',
-    deadline: $('fDeadline').value || '',
+    interviewDate: interviewDateInput ? interviewDateInput.replace('T', ' ') : '',
+    deadline: existing ? (existing.deadline || '') : '', // 仅保留旧版截止字段，新界面不再编辑它
     assessmentStatus: $('fAssessmentStatus').value,
     assessmentLink,
-    writtenTestStatus: $('fWrittenTestStatus').value,
+    assessmentDeadline: assessmentDeadlineInput ? assessmentDeadlineInput.replace('T', ' ') : '',
+    writtenTestStatus: writtenTestState,
     writtenTestLink,
-    writtenTestRequired: $('fWrittenTestRequired').value || 'unknown',
+    writtenTestDeadline: writtenTestDeadlineInput ? writtenTestDeadlineInput.replace('T', ' ') : '',
+    writtenTestRequired: writtenTestRequiredForState(writtenTestState),
     createdAt: existing ? existing.createdAt : now,
     updatedAt: now,
     deleted: existing ? (!!existing.deleted) : false
@@ -2684,13 +2888,10 @@ function openNotifyCenter(){
 }
 
 // 汇总当前需要提醒的事项（供浮动卡片与汇总弹窗共用）
-// 是否真正需要笔试：仅「需要笔试」或「待确认但企业已发笔试链接/已笔试」才纳入提醒；
-// 明确「仅测评（无需笔试）」或纯「待确认」且无链接的公司，不打扰（可能根本不需要笔试）
+// 是否真正需要笔试：统一状态为「未笔试 / 已笔试」时纳入相关逻辑
 function needsWrittenTest(a){
-  const r = a.writtenTestRequired;
-  if(r === 'no') return false;
-  if(r === 'yes') return true;
-  return !!(a.writtenTestLink || (a.writtenTestStatus || '未笔试') === '已笔试');
+  const state = writtenTestStateOf(a);
+  return state === '未笔试' || state === '已笔试';
 }
 
 function collectReminders(){
@@ -2703,14 +2904,6 @@ function collectReminders(){
     list.push({tag:'job-followup', title:'求职跟进提醒',
       body: due.length + ' 条跟进事项待处理' + (overdue ? '（其中 ' + overdue + ' 条已过期）' : '') + '：'
         + due.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (due.length > 3 ? ' 等' : '')});
-  }
-  // 网申截止提醒：临近(<=3天)或已过期
-  const dlWarn = alive.filter(a => a.deadline && daysUntil(a.deadline) <= 3);
-  if(dlWarn.length){
-    const overdue = dlWarn.filter(a => daysUntil(a.deadline) < 0).length;
-    list.push({tag:'job-deadline', title:'网申截止提醒',
-      body: dlWarn.length + ' 条投递网申即将截止' + (overdue ? '（其中 ' + overdue + ' 条已过期）' : '') + '：'
-        + dlWarn.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (dlWarn.length > 3 ? ' 等' : '')});
   }
   // 综合测评提醒：已收到链接的待测评；未收到链接的给出留意邮箱的提示
   const pending = alive.filter(a => (a.assessmentStatus || '未测评') === '未测评' && a.assessmentLink);
@@ -2725,8 +2918,8 @@ function collectReminders(){
       body:'你有 ' + waiting.length + ' 条尚未收到测评链接，留意邮箱 / 短信，收到后尽快补填'});
   }
   // 笔试提醒：仅对「需要笔试」的公司；待确认且无链接则不打扰（可能仅测评）
-  const wtPending = alive.filter(a => needsWrittenTest(a) && (a.writtenTestStatus || '未笔试') === '未笔试' && a.writtenTestLink);
-  const wtWaiting = alive.filter(a => needsWrittenTest(a) && (a.writtenTestStatus || '未笔试') === '未笔试' && !a.writtenTestLink);
+  const wtPending = alive.filter(a => needsWrittenTest(a) && writtenTestStateOf(a) === '未笔试' && a.writtenTestLink);
+  const wtWaiting = alive.filter(a => needsWrittenTest(a) && writtenTestStateOf(a) === '未笔试' && !a.writtenTestLink);
   if(wtPending.length){
     let b = '你有 ' + wtPending.length + ' 条投递待完成笔试：'
       + wtPending.slice(0, 3).map(a => a.company + '·' + a.position).join('、') + (wtPending.length > 3 ? ' 等' : '');
@@ -2742,7 +2935,6 @@ function collectReminders(){
 // 提醒相关的元信息与页面内提示组件（浮动卡片 / 汇总弹窗）
 const NOTIFY_META = {
   'job-followup':    {icon:'📌', color:'#3b82f6', label:'求职跟进'},
-  'job-deadline':    {icon:'⏰', color:'#ef4444', label:'网申截止'},
   'job-assessment':  {icon:'📝', color:'#f59e0b', label:'综合测评'},
   'job-writtenTest': {icon:'✍️', color:'#8b5cf6', label:'笔试提醒'}
 };
@@ -2864,7 +3056,7 @@ function openInterviewDetail(id){
         + '</span><span class="muted-text">' + escapeHtml(c.time || '') + '</span></div>'
         + '<div class="contact-content">' + escapeHtml(c.content || '') + '</div></div>').join('')
     : '<div class="muted-text">暂无联系记录</div>';
-  $('ivNotes').textContent = a.notes || '无';
+  $('ivNotes').textContent = [a.notes, a.notesExtra].map(v => (v || '').trim()).filter(Boolean).join('\n\n') || '无';
   showModal('interviewModal');
 }
 
@@ -2897,8 +3089,8 @@ function renderStats(){
   const weekNew = apps.filter(a => a.applyDate >= mondayIso).length;
   const monthNew = apps.filter(a => a.applyDate.startsWith(monthPrefix)).length;
   const interviewRelated = apps.filter(a => INTERVIEW_STATUSES.includes(a.status)).length;
-  // 成功率：拿到 Offer（含已入职）的数量占比
-  const offerCount = apps.filter(a => a.status === 'Offer' || a.status === '已入职').length;
+  // 成功率：拿到 Offer 的数量占比
+  const offerCount = apps.filter(a => a.status === 'Offer').length;
   const pct = n => total ? ((n / total) * 100).toFixed(1) + '%' : '0%';
 
   $('statCards').innerHTML =
@@ -3157,10 +3349,10 @@ function exportData(){
 // 导入记录字段的默认值兜底
 function defaultAppFields(){
   return {id:'',company:'',position:'',location:'',salary:'',channel:'其他',applyDate:'',jobLink:'',
-    status:'已投递',tags:'',resumeVersion:'',resumeFileName:'',resumeFileData:'',notes:'',
+    status:'已投递',tags:'',resumeVersion:'',resumeFileName:'',resumeFileData:'',notes:'',notesExtra:'',
     contactRecords:[],nextFollowUpDate:'',followUpReason:'',interviewDate:'',deadline:'',starred:false,deleted:false,createdAt:'',updatedAt:'',
-    assessmentStatus:'未测评',assessmentLink:'',
-    writtenTestStatus:'未笔试',writtenTestLink:'',writtenTestRequired:'unknown'};
+    assessmentStatus:'未测评',assessmentLink:'',assessmentDeadline:'',
+    writtenTestStatus:'待确认',writtenTestLink:'',writtenTestDeadline:'',writtenTestRequired:'unknown'};
 }
 
 // 解析导入文件内容，兼容多种结构
@@ -3182,9 +3374,13 @@ function normalizeImport(parsed){
       rec.starred = !!(a.starred);
       if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
       if(!rec.assessmentLink) rec.assessmentLink = '';
-      if(!rec.writtenTestStatus) rec.writtenTestStatus = '未笔试';
+      const importedState = WRITTEN_TEST_STATUSES.includes(a.writtenTestStatus) && !Object.prototype.hasOwnProperty.call(a, 'writtenTestRequired')
+        ? a.writtenTestStatus : writtenTestStateOf(rec);
+      setWrittenTestStateFields(rec, importedState);
       if(!rec.writtenTestLink) rec.writtenTestLink = '';
-      if(!rec.writtenTestRequired) rec.writtenTestRequired = 'unknown';
+      if(!rec.assessmentDeadline) rec.assessmentDeadline = '';
+      if(!rec.writtenTestDeadline) rec.writtenTestDeadline = '';
+      if(!rec.notesExtra) rec.notesExtra = '';
       if(!rec.followUpReason) rec.followUpReason = '';
       if(!rec.deadline) rec.deadline = '';
       rec.deleted = !!a.deleted;
@@ -3332,7 +3528,6 @@ const CSV_HEADER_MAP = [
   ['投递日期', 'applyDate'], ['日期', 'applyDate'],
   ['当前状态', 'status'], ['状态', 'status'],
   ['下次跟进日期', 'nextFollowUpDate'], ['跟进日期', 'nextFollowUpDate'], ['跟进', 'nextFollowUpDate'],
-  ['网申截止日期', 'deadline'], ['截止日期', 'deadline'], ['deadline', 'deadline'],
   ['面试时间', 'interviewDate'], ['面试', 'interviewDate'],
   ['简历版本', 'resumeVersion'], ['版本', 'resumeVersion'],
   ['标签', 'tags'],
@@ -3340,9 +3535,12 @@ const CSV_HEADER_MAP = [
   ['是否星标', 'starred'], ['星标', 'starred'],
   ['测评链接', 'assessmentLink'], ['测评', 'assessmentLink'],
   ['测评状态', 'assessmentStatus'],
+  ['测评截止时间', 'assessmentDeadline'], ['评测截止时间', 'assessmentDeadline'],
   ['笔试链接', 'writtenTestLink'], ['笔试', 'writtenTestLink'],
   ['笔试状态', 'writtenTestStatus'],
+  ['笔试截止时间', 'writtenTestDeadline'],
   ['是否需要笔试', 'writtenTestRequired'], ['笔试要求', 'writtenTestRequired'],
+  ['备注补充', 'notesExtra'], ['备注二', 'notesExtra'],
   ['跟进原因', 'followUpReason'], ['原因', 'followUpReason'],
   ['联系记录', 'contactRecords'], ['联系', 'contactRecords']
 ];
@@ -3363,6 +3561,7 @@ function rowsToApplications(rows){
   const positionIdx = colMap.indexOf('position');
   if(companyIdx < 0 || positionIdx < 0) return []; // 缺少必要列
   const dateIdx = colMap.indexOf('applyDate');
+  const writtenStatusIdx = colMap.indexOf('writtenTestStatus');
   const out = [];
   for(let r = 1; r < rows.length; r++){
     const cells = rows[r] || [];
@@ -3384,8 +3583,13 @@ function rowsToApplications(rows){
     if(!rec.channel) rec.channel = '其他';
     if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
     if(!rec.assessmentLink) rec.assessmentLink = '';
-    if(!rec.writtenTestStatus) rec.writtenTestStatus = '未笔试';
+    const importedState = writtenStatusIdx >= 0 && WRITTEN_TEST_STATUSES.includes(rec.writtenTestStatus)
+      ? rec.writtenTestStatus : writtenTestStateOf(rec);
+    setWrittenTestStateFields(rec, importedState);
     if(!rec.writtenTestLink) rec.writtenTestLink = '';
+    if(!rec.assessmentDeadline) rec.assessmentDeadline = '';
+    if(!rec.writtenTestDeadline) rec.writtenTestDeadline = '';
+    if(!rec.notesExtra) rec.notesExtra = '';
     if(!rec.followUpReason) rec.followUpReason = '';
     out.push(rec);
   }
@@ -3461,13 +3665,13 @@ async function onCsvFileChange(e){
 // 下载导入模板（CSV，Excel 可直接打开）；表头与导入映射一致，非必填列留空也可
 function downloadTemplateCsv(){
   const headers = ['公司名称','职位名称','工作地点','薪资范围','招聘渠道','投递日期','当前状态',
-    '下次跟进日期','跟进原因','面试时间','简历版本','标签','职位链接','测评链接','测评状态','笔试链接','笔试状态','是否需要笔试','备注','是否星标'];
+    '下次跟进日期','跟进原因','面试时间','简历版本','标签','职位链接','测评链接','测评状态','测评截止时间','笔试链接','笔试状态','笔试截止时间','备注','备注补充','是否星标'];
   const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
   const rows = [headers.map(esc).join(',')];
   rows.push([
     esc('示例科技有限公司'), esc('机械设计工程师'), esc(''), esc(''), esc('BOSS直聘'),
     esc(todayStr()), esc('已投递'), esc(''), esc(''), esc(''), esc(''), esc('校招'),
-    esc(''), esc(''), esc('未测评'), esc(''), esc('未笔试'), esc(''), esc('可留空，不填也行'), esc('')
+    esc(''), esc(''), esc('未测评'), esc(''), esc(''), esc('待确认'), esc(''), esc('可留空，不填也行'), esc(''), esc('')
   ].join(','));
   const blob = new Blob(['﻿' + rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
   downloadBlob('投递记录导入模板.csv', blob);
@@ -3578,7 +3782,7 @@ function bindEvents(){
     const asmBtn = e.target.closest('[data-detail-asm]');
     if(asmBtn){ toggleAssessment(detailCurrentId); openDetail(detailCurrentId); return; }
     const wtBtn = e.target.closest('[data-detail-wt]');
-    if(wtBtn){ toggleWrittenTest(detailCurrentId); openDetail(detailCurrentId); return; }
+    if(wtBtn){ openWtReqPicker(detailCurrentId); return; }
     const dAct = e.target.closest('[data-detail-action]');
     if(dAct){
       const a = dAct.dataset.detailAction;
@@ -3616,15 +3820,16 @@ function bindEvents(){
     applyBatchStatus(btn.dataset.status);
   });
 
-  // 「是否需要笔试」选择器点击
+  // 统一笔试状态选择器点击
   $('wtReqModal').addEventListener('click', e => {
-    const btn = e.target.closest('[data-wt-req]');
-    if(btn) chooseWtRequired(btn.dataset.wtReq);
+    const btn = e.target.closest('[data-wt-state]');
+    if(btn) chooseWtRequired(btn.dataset.wtState);
   });
 
   // ---- 投递表单 ----
   $('appModalSave').addEventListener('click', saveAppFromForm);
   $('appModalCancel').addEventListener('click', () => hideModal('appModal'));
+  $('fStatus').addEventListener('change', updateScheduleField);
   $('addChannelBtn').addEventListener('click', addCustomChannelFromInput);
   $('appFileInput').addEventListener('change', onAppFileChange);
   $('addContactBtn').addEventListener('click', openContactModal);
