@@ -963,9 +963,18 @@ canvas{display:block;width:100%}
               <div class="form-field app-form-field app-c6" id="scheduleField">
                 <label for="fFollowUpDate" id="scheduleFieldLabel">下次跟进日期</label>
                 <input type="date" id="fFollowUpDate">
-                <div class="schedule-input hidden" id="interviewScheduleControl">
-                  <span class="schedule-prefix" id="interviewSchedulePrefix"></span>
-                  <input type="datetime-local" id="fInterviewDate" aria-label="面试日期和时间">
+                <div class="hidden" id="interviewScheduleControl">
+                  <div class="schedule-input">
+                    <span class="schedule-prefix" id="interviewSchedulePrefix"></span>
+                    <input type="datetime-local" id="fInterviewDate" aria-label="面试日期和时间">
+                  </div>
+                  <div class="form-field" style="margin-top:8px;margin-bottom:0">
+                    <label for="fInterviewLink" style="font-size:12px">面试链接（线上会议入口）</label>
+                    <div class="app-link-control">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg>
+                      <input id="fInterviewLink" type="text" placeholder="https://腾讯会议 / 飞书 / Zoom…">
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -1199,7 +1208,7 @@ canvas{display:block;width:100%}
     <div class="modal-body">
       <div class="iv-title"><span id="ivLogo"></span><span id="ivCompany"></span><span class="sep">·</span><span id="ivPosition"></span></div>
       <div class="app-meta" style="margin-top:8px">
-        <span id="ivTime"></span><span id="ivLocation"></span>
+        <span id="ivTime"></span><span id="ivLocation"></span><span id="ivLink"></span>
       </div>
       <h4>联系记录</h4><div id="ivContacts"></div>
       <h4>备注</h4><div id="ivNotes" class="muted-text"></div>
@@ -1701,7 +1710,7 @@ function assessmentChipHtml(a){
   const status = a.assessmentStatus || '未测评';
   const hasLink = !!a.assessmentLink;
   if(status === '已测评'){
-    return '<button type="button" class="badge asm-chip asm-done" data-action="assessment" title="点击切换回未测评">✅ 已测评</button>';
+    return '<button type="button" class="badge asm-chip asm-done" data-action="assessment" title="点击切换回未测评">✅ 测评完成</button>';
   }
   if(hasLink){
     return '<button type="button" class="badge asm-chip asm-pending" data-action="assessment" title="点击标记为已测评（用于筛选 / 提醒）">📝 待测评</button>';
@@ -1709,7 +1718,14 @@ function assessmentChipHtml(a){
   return '<button type="button" class="badge asm-chip asm-waiting" data-action="assessment-edit" title="企业尚未发送测评链接，留意邮箱 / 短信；点击补填链接">📨 待收测评</button>';
 }
 function assessmentLinkHtml(a){
+  // 已测评后只显示「测评完成」状态徽章，不再展示测评链接（链接仍保留在数据中，编辑页可查看）
+  if((a.assessmentStatus || '未测评') === '已测评') return '';
   return a.assessmentLink ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '';
+}
+function interviewLinkHtml(a){
+  // 仅当状态为面试类（AI面试 / 一轮面试 / 二轮面试）时才显示面试链接，避免状态切走后旧链接干扰
+  if(!a.interviewLink || !scheduleFieldConfig(a.status).isInterview) return '';
+  return '<a class="app-link" href="' + escapeHtml(a.interviewLink) + '" target="_blank" rel="noopener">🔗 面试链接</a>';
 }
 
 // 统一笔试状态，同时兼容旧数据中分开存储的 writtenTestRequired + writtenTestStatus
@@ -1880,7 +1896,7 @@ function appCardHtml(a){
     + (tags ? '<div class="app-tags">' + tags + '</div>' : '')
     + '<div class="app-card-bottom">'
     +   (a.nextFollowUpDate ? followUpHtml(a.nextFollowUpDate) : '')
-    +   link + assessmentLinkHtml(a) + assessmentChipHtml(a)
+    +   link + interviewLinkHtml(a) + assessmentLinkHtml(a) + assessmentChipHtml(a)
     +   (a.assessmentDeadline ? deadlineHtml(a.assessmentDeadline, '测评截止') : '')
     +   (a.writtenTestDeadline && writtenTestStateOf(a) !== '无笔试' ? deadlineHtml(a.writtenTestDeadline, '笔试截止') : '')
     +   resumeFile
@@ -2269,7 +2285,7 @@ function exportCsv(){
   const headers = [
     ['公司名称','company'],['职位名称','position'],['工作地点','location'],['薪资范围','salary'],
     ['招聘渠道','channel'],['投递日期','applyDate'],['当前状态','status'],['下次跟进日期','nextFollowUpDate'],
-    ['面试时间','interviewDate'],['简历版本','resumeVersion'],['标签','tags'],['职位链接','jobLink'],
+    ['面试时间','interviewDate'],['面试链接','interviewLink'],['简历版本','resumeVersion'],['标签','tags'],['职位链接','jobLink'],
     ['测评链接','assessmentLink'],['测评状态','assessmentStatus'],['测评截止时间','assessmentDeadline'],
     ['笔试链接','writtenTestLink'],['笔试状态','writtenTestStatus'],['笔试截止时间','writtenTestDeadline'],
     ['跟进原因','followUpReason'],
@@ -2428,6 +2444,7 @@ function openAppModal(id){
   updateReasonChips();
   // datetime-local 控件需要 YYYY-MM-DDTHH:mm 格式，存储格式为空格分隔
   $('fInterviewDate').value = app && app.interviewDate ? app.interviewDate.replace(' ', 'T') : '';
+  $('fInterviewLink').value = app && app.interviewLink ? app.interviewLink : '';
   updateScheduleField();
   // 简历版本下拉候选来自简历版本库（datalist 同时支持手动输入新名称）
   $('resumeVersionList').innerHTML = resumeVersions.map(r => '<option value="' + escapeHtml(r.name) + '">').join('');
@@ -2480,13 +2497,14 @@ function openDetail(id){
   }).join('');
   const links = [];
   if(a.jobLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>');
-  if(a.assessmentLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>');
+  if(a.interviewLink && scheduleFieldConfig(a.status).isInterview) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.interviewLink) + '" target="_blank" rel="noopener">🔗 面试链接</a>');
+  if(a.assessmentLink && (a.assessmentStatus || '未测评') !== '已测评') links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>');
   if(a.writtenTestLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.writtenTestLink) + '" target="_blank" rel="noopener">✍️ 笔试链接</a>');
   $('dLinks').innerHTML = links.join('') || '<span class="detail-empty">暂无相关链接</span>';
   $('dLinksSection').style.display = links.length ? '' : 'none';
   const asm = a.assessmentStatus || '未测评';
   let asmChip, asmText;
-  if(asm === '已测评'){ asmChip = '<span class="badge asm-chip asm-done">✅ 已测评</span>'; asmText = '已完成综合测评'; }
+  if(asm === '已测评'){ asmChip = '<span class="badge asm-chip asm-done">✅ 测评完成</span>'; asmText = '已完成综合测评'; }
   else if(a.assessmentLink){ asmChip = '<span class="badge asm-chip asm-pending">📝 待测评</span>'; asmText = '企业已发送测评链接，记得按时完成'; }
   else { asmChip = '<span class="badge asm-chip asm-waiting">📨 待收测评</span>'; asmText = '企业尚未发送测评链接，留意邮箱 / 短信'; }
   const wt = writtenTestStateOf(a);
@@ -2604,6 +2622,13 @@ async function saveAppFromForm(){
     try{ const u = new URL(writtenTestLink); ok = /^https?:$/.test(u.protocol); }catch(e){ ok = false; }
     if(!ok){ toast('笔试链接格式不正确（需以 http:// 或 https:// 开头）', 'error'); $('fWrittenTestLink').focus(); return; }
   }
+  // 面试链接校验（选填，填了必须合法；仅面试状态显示，但非面试状态也保留数据）
+  const interviewLink = $('fInterviewLink').value.trim();
+  if(interviewLink){
+    let ok = false;
+    try{ const u = new URL(interviewLink); ok = /^https?:$/.test(u.protocol); }catch(e){ ok = false; }
+    if(!ok){ toast('面试链接格式不正确（需以 http:// 或 https:// 开头）', 'error'); $('fInterviewLink').focus(); return; }
+  }
 
   // ---- 处理简历附件 ----
   let resumeFileName = '', resumeFileData = '';
@@ -2650,6 +2675,7 @@ async function saveAppFromForm(){
     nextFollowUpDate,
     followUpReason: $('fFollowUpReason').value.trim(),
     interviewDate: interviewDateInput ? interviewDateInput.replace('T', ' ') : '',
+    interviewLink,
     deadline: existing ? (existing.deadline || '') : '', // 仅保留旧版截止字段，新界面不再编辑它
     assessmentStatus: $('fAssessmentStatus').value,
     assessmentLink,
@@ -2871,7 +2897,8 @@ function renderFollowUps(){
       +     (a.followUpReason ? '<span class="fu-reason">📌 ' + escapeHtml(a.followUpReason) + '</span>' : '') + '</div>'
       +   '<div class="fu-links">'
       +     (a.jobLink ? '<a class="app-link" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>' : '<span class="muted-text">暂无职位链接</span>')
-      +     (a.assessmentLink ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '<span class="muted-text">暂无测评链接</span>')
+      +     interviewLinkHtml(a)
+      +     (a.assessmentLink && (a.assessmentStatus || '未测评') !== '已测评' ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '<span class="muted-text">暂无测评链接</span>')
       +     (a.writtenTestLink ? '<a class="app-link" href="' + escapeHtml(a.writtenTestLink) + '" target="_blank" rel="noopener">✍️ 笔试链接</a>' : '<span class="muted-text">暂无笔试链接</span>')
       +   '</div>'
       + '</div>'
@@ -3098,6 +3125,7 @@ function openInterviewDetail(id){
   $('ivPosition').textContent = a.position;
   $('ivTime').textContent = '🕐 ' + (a.interviewDate || '');
   $('ivLocation').textContent = a.location ? '📍 ' + a.location : '';
+  $('ivLink').innerHTML = a.interviewLink ? '<a class="app-link" href="' + escapeHtml(a.interviewLink) + '" target="_blank" rel="noopener">🔗 面试链接</a>' : '';
   const contacts = (a.contactRecords || []).slice().sort((x, y) => (x.time || '') < (y.time || '') ? 1 : -1);
   $('ivContacts').innerHTML = contacts.length
     ? contacts.map(c => '<div class="contact-item small"><div class="contact-head"><span class="contact-type">' + escapeHtml(c.type || '其他')
@@ -3398,7 +3426,7 @@ function exportData(){
 function defaultAppFields(){
   return {id:'',company:'',position:'',location:'',salary:'',channel:'其他',applyDate:'',jobLink:'',
     status:'已投递',tags:'',resumeVersion:'',resumeFileName:'',resumeFileData:'',notes:'',notesExtra:'',
-    contactRecords:[],nextFollowUpDate:'',followUpReason:'',interviewDate:'',deadline:'',starred:false,deleted:false,createdAt:'',updatedAt:'',
+    contactRecords:[],nextFollowUpDate:'',followUpReason:'',interviewDate:'',interviewLink:'',deadline:'',starred:false,deleted:false,createdAt:'',updatedAt:'',
     assessmentStatus:'未测评',assessmentLink:'',assessmentDeadline:'',
     writtenTestStatus:'待确认',writtenTestLink:'',writtenTestDeadline:'',writtenTestRequired:'unknown'};
 }
@@ -3422,6 +3450,7 @@ function normalizeImport(parsed){
       rec.starred = !!(a.starred);
       if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
       if(!rec.assessmentLink) rec.assessmentLink = '';
+      if(!rec.interviewLink) rec.interviewLink = '';
       const importedState = WRITTEN_TEST_STATUSES.includes(a.writtenTestStatus) && !Object.prototype.hasOwnProperty.call(a, 'writtenTestRequired')
         ? a.writtenTestStatus : writtenTestStateOf(rec);
       setWrittenTestStateFields(rec, importedState);
@@ -3577,6 +3606,7 @@ const CSV_HEADER_MAP = [
   ['当前状态', 'status'], ['状态', 'status'],
   ['下次跟进日期', 'nextFollowUpDate'], ['跟进日期', 'nextFollowUpDate'], ['跟进', 'nextFollowUpDate'],
   ['面试时间', 'interviewDate'], ['面试', 'interviewDate'],
+  ['面试链接', 'interviewLink'],
   ['简历版本', 'resumeVersion'], ['版本', 'resumeVersion'],
   ['标签', 'tags'],
   ['备注', 'notes'],
@@ -3631,6 +3661,7 @@ function rowsToApplications(rows){
     if(!rec.channel) rec.channel = '其他';
     if(!ASSESSMENT_STATUSES.includes(rec.assessmentStatus)) rec.assessmentStatus = '未测评';
     if(!rec.assessmentLink) rec.assessmentLink = '';
+    if(!rec.interviewLink) rec.interviewLink = '';
     const importedState = writtenStatusIdx >= 0 && WRITTEN_TEST_STATUSES.includes(rec.writtenTestStatus)
       ? rec.writtenTestStatus : writtenTestStateOf(rec);
     setWrittenTestStateFields(rec, importedState);
@@ -3713,12 +3744,12 @@ async function onCsvFileChange(e){
 // 下载导入模板（CSV，Excel 可直接打开）；表头与导入映射一致，非必填列留空也可
 function downloadTemplateCsv(){
   const headers = ['公司名称','职位名称','工作地点','薪资范围','招聘渠道','投递日期','当前状态',
-    '下次跟进日期','跟进原因','面试时间','简历版本','标签','职位链接','测评链接','测评状态','测评截止时间','笔试链接','笔试状态','笔试截止时间','备注','备注补充','是否星标'];
+    '下次跟进日期','跟进原因','面试时间','面试链接','简历版本','标签','职位链接','测评链接','测评状态','测评截止时间','笔试链接','笔试状态','笔试截止时间','备注','备注补充','是否星标'];
   const esc = v => '"' + String(v).replace(/"/g, '""') + '"';
   const rows = [headers.map(esc).join(',')];
   rows.push([
     esc('示例科技有限公司'), esc('机械设计工程师'), esc(''), esc(''), esc('BOSS直聘'),
-    esc(todayStr()), esc('已投递'), esc(''), esc(''), esc(''), esc(''), esc('校招'),
+    esc(todayStr()), esc('已投递'), esc(''), esc(''), esc(''), esc(''), esc(''), esc('校招'),
     esc(''), esc(''), esc('未测评'), esc(''), esc(''), esc('待确认'), esc(''), esc('可留空，不填也行'), esc(''), esc('')
   ].join(','));
   const blob = new Blob(['﻿' + rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
