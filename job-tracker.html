@@ -1727,6 +1727,13 @@ function interviewLinkHtml(a){
   if(!a.interviewLink || !scheduleFieldConfig(a.status).isInterview) return '';
   return '<a class="app-link" href="' + escapeHtml(a.interviewLink) + '" target="_blank" rel="noopener">🔗 面试链接</a>';
 }
+function writtenTestLinkHtml(a){
+  // 笔试链接快速入口：未笔试 / 待确认时展示；已笔试或无笔试后不再展示（链接仍保留在数据中，编辑页可查看）
+  if(!a.writtenTestLink) return '';
+  const st = writtenTestStateOf(a);
+  if(st === '已笔试' || st === '无笔试') return '';
+  return '<a class="app-link" href="' + escapeHtml(a.writtenTestLink) + '" target="_blank" rel="noopener">✍️ 笔试链接</a>';
+}
 
 // 统一笔试状态，同时兼容旧数据中分开存储的 writtenTestRequired + writtenTestStatus
 function writtenTestStateOf(a){
@@ -1896,7 +1903,7 @@ function appCardHtml(a){
     + (tags ? '<div class="app-tags">' + tags + '</div>' : '')
     + '<div class="app-card-bottom">'
     +   (a.nextFollowUpDate ? followUpHtml(a.nextFollowUpDate) : '')
-    +   link + interviewLinkHtml(a) + assessmentLinkHtml(a) + assessmentChipHtml(a)
+    +   link + interviewLinkHtml(a) + assessmentLinkHtml(a) + assessmentChipHtml(a) + writtenTestLinkHtml(a)
     +   (a.assessmentDeadline ? deadlineHtml(a.assessmentDeadline, '测评截止') : '')
     +   (a.writtenTestDeadline && writtenTestStateOf(a) !== '无笔试' ? deadlineHtml(a.writtenTestDeadline, '笔试截止') : '')
     +   resumeFile
@@ -2499,7 +2506,7 @@ function openDetail(id){
   if(a.jobLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>');
   if(a.interviewLink && scheduleFieldConfig(a.status).isInterview) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.interviewLink) + '" target="_blank" rel="noopener">🔗 面试链接</a>');
   if(a.assessmentLink && (a.assessmentStatus || '未测评') !== '已测评') links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>');
-  if(a.writtenTestLink) links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.writtenTestLink) + '" target="_blank" rel="noopener">✍️ 笔试链接</a>');
+  if(a.writtenTestLink && writtenTestStateOf(a) !== '已笔试' && writtenTestStateOf(a) !== '无笔试') links.push('<a class="btn btn-secondary btn-sm" href="' + escapeHtml(a.writtenTestLink) + '" target="_blank" rel="noopener">✍️ 笔试链接</a>');
   $('dLinks').innerHTML = links.join('') || '<span class="detail-empty">暂无相关链接</span>';
   $('dLinksSection').style.display = links.length ? '' : 'none';
   const asm = a.assessmentStatus || '未测评';
@@ -2899,7 +2906,7 @@ function renderFollowUps(){
       +     (a.jobLink ? '<a class="app-link" href="' + escapeHtml(a.jobLink) + '" target="_blank" rel="noopener">🔗 职位链接</a>' : '<span class="muted-text">暂无职位链接</span>')
       +     interviewLinkHtml(a)
       +     (a.assessmentLink && (a.assessmentStatus || '未测评') !== '已测评' ? '<a class="app-link" href="' + escapeHtml(a.assessmentLink) + '" target="_blank" rel="noopener">📝 测评链接</a>' : '<span class="muted-text">暂无测评链接</span>')
-      +     (a.writtenTestLink ? '<a class="app-link" href="' + escapeHtml(a.writtenTestLink) + '" target="_blank" rel="noopener">✍️ 笔试链接</a>' : '<span class="muted-text">暂无笔试链接</span>')
+      +     (writtenTestLinkHtml(a) || (a.writtenTestLink ? '' : '<span class="muted-text">暂无笔试链接</span>'))
       +   '</div>'
       + '</div>'
       + '<div class="fu-actions">'
